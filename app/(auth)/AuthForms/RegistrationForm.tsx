@@ -53,6 +53,11 @@ const validationSchemas = [
         ? schema.required("Board selection is required")
         : schema.optional();
     }),
+    boardCode: Yup.string().when("country", ([country], schema) => {
+      return country === "India"
+        ? schema.required("Board code is required")
+        : schema.optional();
+    }),
     state: Yup.string().when("country", ([country], schema) => {
       return country === "India" || country === "US" || country === "United States"
         ? schema.required("State is required")
@@ -142,6 +147,7 @@ export const RegistrationForm = () => {
     initialValues: {
       country: "",
       board: "",
+      boardCode: "",
       state: "",
       city: "",
       isdName: "",
@@ -174,7 +180,6 @@ export const RegistrationForm = () => {
           (values.country === "India" ? "+91" : "+1");
 
         formData.append("countryId", countryId);
-        formData.append("boardId", "0");
 
         const authorityDetails = values.authorities.map((auth: any) => ({
           AuthorityFullName: auth.name,
@@ -209,8 +214,7 @@ export const RegistrationForm = () => {
         formData.append("boardName", boardName);
         formData.append(
           "boardCode",
-          (values.board || "NB")
-            .slice(0, 3)
+          (values.country === "India" ? values.boardCode : "BOARD")
             .toUpperCase()
             .replace(/\s+/g, ""),
         );
@@ -274,6 +278,7 @@ export const RegistrationForm = () => {
       return;
     }
     formik.setFieldValue("board", "");
+    formik.setFieldValue("boardCode", "");
     formik.setFieldValue("state", "");
     formik.setFieldValue("city", "");
     formik.setFieldValue("isdName", "");

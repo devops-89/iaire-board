@@ -123,6 +123,43 @@ function VerifyOtpContent() {
     },
   });
 
+  const handleResendOtp = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!email) {
+      setSnackbar({
+        open: true,
+        message: "Email address is missing.",
+        severity: "error",
+      });
+      return;
+    }
+    setLoading(true);
+    try {
+      const response = await authControllers.resendOtp(email);
+      if (response.data?.success) {
+        setSnackbar({
+          open: true,
+          message: response.data?.message || "OTP resent successfully!",
+          severity: "success",
+        });
+      } else {
+        setSnackbar({
+          open: true,
+          message: response.data?.message || "Failed to resend OTP.",
+          severity: "error",
+        });
+      }
+    } catch (error: any) {
+      setSnackbar({
+        open: true,
+        message: error.response?.data?.message || "Failed to resend OTP. Please try again.",
+        severity: "error",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleOtpChange = (index: number, value: string) => {
     if (isNaN(Number(value))) return;
 
@@ -307,8 +344,14 @@ function VerifyOtpContent() {
               Didn't receive the code?{" "}
               <Link
                 href="#"
+                onClick={handleResendOtp}
                 underline="none"
-                sx={{ color: Colors.DARK, fontWeight: FontWeights.BOLD }}
+                sx={{
+                  color: Colors.DARK,
+                  fontWeight: FontWeights.BOLD,
+                  cursor: "pointer",
+                  "&:hover": { opacity: 0.8 },
+                }}
               >
                 Resend OTP
               </Link>

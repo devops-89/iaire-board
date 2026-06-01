@@ -108,6 +108,24 @@ export const JurisdictionStep = ({
           />
           <TextField
             fullWidth
+            label="Board Code"
+            name="boardCode"
+            value={formik.values.boardCode}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            {...getErrorProps("boardCode")}
+            sx={textFieldSx}
+            slotProps={{
+              input: {
+                sx: {
+                  bgcolor: Colors.REGISTRATION_FORM_BG,
+                  borderRadius: "12px",
+                },
+              },
+            }}
+          />
+          <TextField
+            fullWidth
             label="State"
             name="state"
             value={formik.values.state}

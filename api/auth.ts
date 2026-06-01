@@ -71,4 +71,14 @@ export const authControllers: any = {
       throw error;
     }
   },
+  resendOtp: async (email: string): Promise<AxiosResponse> => {
+    try {
+      const result = await publicApi.post("/auth/resend-otp", {
+        email: email,
+      });
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
