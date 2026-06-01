@@ -1,6 +1,6 @@
 "use client";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Poppins } from "@/utils/font";
 import {
   Box,
@@ -10,6 +10,8 @@ import {
   Container,
   InputAdornment,
   IconButton,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import {
   Lock as LockIcon,
@@ -21,11 +23,26 @@ import { resetPasswordValidationSchema } from "@/utils/validation";
 import { Colors } from "@/utils/enum";
 import { FontSizes, FontWeights, LineHeights } from "@/utils/style";
 import { ResetPasswordFormValues } from "@/utils/types";
+import { authControllers } from "@/api/auth";
 
-export default function ResetPasswordPage() {
+function ResetPasswordContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email") || "";
+  const otp = searchParams.get("otp") || "";
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success" as "success" | "error",
+  });
+
+  const handleCloseSnackbar = () => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+  };
 
   const formik = useFormik<ResetPasswordFormValues>({
     initialValues: {
@@ -33,9 +50,40 @@ export default function ResetPasswordPage() {
       confirmPassword: "",
     },
     validationSchema: resetPasswordValidationSchema,
-    onSubmit: (values) => {
-      console.log("Password reset submitted:", values);
-      router.push("/");
+    onSubmit: async (values) => {
+      setLoading(true);
+      try {
+        const response = await authControllers.resetPassword({
+          email,
+          otp,
+          newPassword: values.password,
+        });
+
+        if (response.data?.success) {
+          setSnackbar({
+            open: true,
+            message: "Password reset successful! Redirecting to login...",
+            severity: "success",
+          });
+          setTimeout(() => {
+            router.push("/");
+          }, 1500);
+        } else {
+          setSnackbar({
+            open: true,
+            message: response.data?.message || "Failed to reset password.",
+            severity: "error",
+          });
+        }
+      } catch (error: any) {
+        setSnackbar({
+          open: true,
+          message: error.response?.data?.message || "Failed to reset password. Please try again.",
+          severity: "error",
+        });
+      } finally {
+        setLoading(false);
+      }
     },
   });
 
@@ -158,7 +206,8 @@ export default function ResetPasswordPage() {
               fontWeight: FontWeights.MEDIUM,
             }}
           >
-            Create a new password for your account
+            Create a new password for your account: <br />
+            <strong>{email}</strong>
           </Typography>
 
           {/* Fields */}
@@ -228,6 +277,7 @@ export default function ResetPasswordPage() {
             <Button
               fullWidth
               variant="contained"
+              disabled={loading}
               onClick={() => formik.handleSubmit()}
               sx={{
                 bgcolor: Colors.PRIMARY_BLACK,
@@ -241,11 +291,41 @@ export default function ResetPasswordPage() {
                 "&:hover": { bgcolor: Colors.PRIMARY_BLACK, opacity: 0.9 },
               }}
             >
-              Reset Password
+              {loading ? "Resetting..." : "Reset Password"}
             </Button>
           </Box>
         </Box>
       </Container>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={
+      <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
+        <Typography>Loading reset form...</Typography>
+      </Box>
+    }>
+      <VerifyOtpContent />
+    </Suspense>
+  );
+}
+// Renamed helper function for consistency
+const VerifyOtpContent = ResetPasswordContent;

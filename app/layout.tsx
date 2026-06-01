@@ -4,6 +4,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from "@/utils/theme";
 import { Poppins } from "@/utils/font";
+import { ReduxProvider } from "@/redux/ReduxProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -19,13 +20,16 @@ export default function RootLayout({
   return (
     <html lang="en" className={Poppins.variable}>
       <body>
-        <AppRouterCacheProvider>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            {children}
-          </ThemeProvider>
-        </AppRouterCacheProvider>
+        <ReduxProvider>
+          <AppRouterCacheProvider>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              {children}
+            </ThemeProvider>
+          </AppRouterCacheProvider>
+        </ReduxProvider>
       </body>
     </html>
   );
 }
+

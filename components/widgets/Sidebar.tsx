@@ -11,6 +11,7 @@ import {
   ListItemIcon,
   ListItemText,
   Avatar,
+  IconButton,
 } from "@mui/material";
 import {
   GridView as DashboardIcon,
@@ -26,8 +27,9 @@ import { Colors } from "@/utils/enum";
 import { FontSizes, FontWeights } from "@/utils/style";
 import { Poppins } from "@/utils/font";
 import { useRouter, usePathname } from "next/navigation";
+import { Logout } from "./Logout";
 
-const drawerWidth = "18%";
+const drawerWidth = "17%";
 
 const menuGroups = [
   {
@@ -184,34 +186,40 @@ export const Sidebar = () => {
           "&:hover": { bgcolor: "rgba(255,255,255,0.05)" },
         }}
       >
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-          <Avatar
-            sx={{
-              bgcolor: "#00D1C1",
-              width: 32,
-              height: 32,
-              fontSize: "12px",
-              fontWeight: 700,
-            }}
-          >
-            CI
-          </Avatar>
-          <Box>
-            <Typography
+        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, flex: 1, minWidth: 0 }}>
+            <Avatar
               sx={{
-                fontSize: FontSizes.SMALL,
-                fontWeight: FontWeights.MEDIUM,
-                color: Colors.WHITE,
+                bgcolor: "#00D1C1",
+                width: 32,
+                height: 32,
+                fontSize: "12px",
+                fontWeight: 700,
+                flexShrink: 0,
               }}
             >
-              CISCE Admin
-            </Typography>
-            <Typography
-              sx={{ fontSize: FontSizes.SMALL, color: "rgba(255,255,255,0.5)" }}
-            >
-              Super Administrator
-            </Typography>
+              CI
+            </Avatar>
+            <Box sx={{ minWidth: 0 }}>
+              <Typography
+                noWrap
+                sx={{
+                  fontSize: FontSizes.SMALL,
+                  fontWeight: FontWeights.MEDIUM,
+                  color: Colors.WHITE,
+                }}
+              >
+                CISCE Admin
+              </Typography>
+              <Typography
+                noWrap
+                sx={{ fontSize: "11px", color: "rgba(255,255,255,0.5)" }}
+              >
+                Super Administrator
+              </Typography>
+            </Box>
           </Box>
+          <Logout />
         </Box>
       </Box>
     </Drawer>

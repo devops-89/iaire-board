@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, Suspense } from "react";
 import { Poppins } from "@/utils/font";
 import {
   Box,
@@ -7,6 +7,8 @@ import {
   Button,
   Container,
   Link,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import {
   ArrowBack as ArrowBackIcon,
@@ -16,11 +18,28 @@ import { verifyOtpValidationSchema } from "@/utils/validation";
 import { Colors } from "@/utils/enum";
 import { FontSizes, FontWeights, LineHeights } from "@/utils/style";
 import { VerifyOtpFormValues } from "@/utils/types";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { login as loginAction } from "@/redux/slices/authSlice";
+import { authControllers } from "@/api/auth";
+import { jwtDecode } from "jwt-decode";
 
-import { useRouter } from "next/navigation";
-
-export default function VerifyOtpPage() {
+function VerifyOtpContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email") || "";
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success" as "success" | "error",
+  });
+
+  const handleCloseSnackbar = () => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+  };
+
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -29,9 +48,78 @@ export default function VerifyOtpPage() {
       otp: "",
     },
     validationSchema: verifyOtpValidationSchema,
-    onSubmit: (values) => {
-      console.log("OTP submitted:", values.otp);
-      router.push("/reset-password");
+    onSubmit: async (values) => {
+      setLoading(true);
+      try {
+        const mode = searchParams.get("mode") || "";
+        const response = await authControllers.verifyEmailOtp({
+          email,
+          otp: values.otp,
+        });
+
+        if (response.data?.success) {
+          if (mode === "forgot") {
+            setSnackbar({
+              open: true,
+              message: "OTP verified successfully! Redirecting to reset password...",
+              severity: "success",
+            });
+            setTimeout(() => {
+              router.push(`/reset-password?email=${encodeURIComponent(email)}&otp=${encodeURIComponent(values.otp)}`);
+            }, 1500);
+          } else {
+            const accessToken = response.data?.data?.tokens?.accessToken || response.data?.data?.token;
+            if (accessToken) {
+              localStorage.setItem("token", accessToken);
+              let userData = response.data?.data?.user || null;
+              if (!userData) {
+                try {
+                  const decoded: any = jwtDecode(accessToken);
+                  userData = {
+                    id: String(decoded.id || decoded.sub || decoded.userId || ""),
+                    name: decoded.name || "User",
+                    email: decoded.email || email,
+                    role: decoded.role || "admin",
+                    avatar: decoded.avatar || "/images/profile.png",
+                  };
+                } catch (e) {
+                  console.error("Token decoding failed", e);
+                }
+              }
+
+              dispatch(loginAction({ user: userData, token: accessToken }));
+              setSnackbar({
+                open: true,
+                message: "Verification successful! Logging you in...",
+                severity: "success",
+              });
+              setTimeout(() => {
+                router.replace("/dashboard");
+              }, 1500);
+            } else {
+              setSnackbar({
+                open: true,
+                message: "Verification succeeded, but token was missing.",
+                severity: "error",
+              });
+            }
+          }
+        } else {
+          setSnackbar({
+            open: true,
+            message: response.data?.message || "Invalid OTP.",
+            severity: "error",
+          });
+        }
+      } catch (error: any) {
+        setSnackbar({
+          open: true,
+          message: error.response?.data?.message || "OTP verification failed. Please try again.",
+          severity: "error",
+        });
+      } finally {
+        setLoading(false);
+      }
     },
   });
 
@@ -147,7 +235,8 @@ export default function VerifyOtpPage() {
               fontWeight: FontWeights.MEDIUM,
             }}
           >
-            Enter the 6-digit code sent to your email
+            Enter the 6-digit code sent to your email: <br />
+            <strong>{email}</strong>
           </Typography>
 
           {/* OTP Inputs */}
@@ -197,6 +286,7 @@ export default function VerifyOtpPage() {
           <Button
             fullWidth
             variant="contained"
+            disabled={loading}
             onClick={() => formik.handleSubmit()}
             sx={{
               bgcolor: Colors.PRIMARY_BLACK,
@@ -209,7 +299,7 @@ export default function VerifyOtpPage() {
               "&:hover": { bgcolor: Colors.PRIMARY_BLACK, opacity: 0.9 },
             }}
           >
-            Verify OTP
+            {loading ? "Verifying..." : "Verify OTP"}
           </Button>
 
           <Box sx={{ mt: 3, display: "flex", flexDirection: "column", gap: 2 }}>
@@ -225,7 +315,7 @@ export default function VerifyOtpPage() {
             </Typography>
 
             <Link
-              href="/forgot-password"
+              href="/"
               underline="none"
               sx={{
                 fontFamily: Poppins.style.fontFamily,
@@ -239,11 +329,39 @@ export default function VerifyOtpPage() {
                 "&:hover": { color: Colors.PRIMARY_BLACK }
               }}
             >
-              <ArrowBackIcon sx={{ fontSize: 16 }} /> Back
+              <ArrowBackIcon sx={{ fontSize: 16 }} /> Back to Login
             </Link>
           </Box>
         </Box>
       </Container>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Box>
+  );
+}
+
+export default function VerifyOtpPage() {
+  return (
+    <Suspense fallback={
+      <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
+        <Typography>Loading verification...</Typography>
+      </Box>
+    }>
+      <VerifyOtpContent />
+    </Suspense>
   );
 }

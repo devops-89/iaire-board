@@ -9,6 +9,8 @@ import {
   Container,
   Link,
   InputAdornment,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import {
   Email as EmailIcon,
@@ -19,11 +21,23 @@ import { forgotPasswordValidationSchema } from "@/utils/validation";
 import { Colors } from "@/utils/enum";
 import { FontSizes, FontWeights, LineHeights } from "@/utils/style";
 import { ForgotPasswordFormValues } from "@/utils/types";
-
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { authControllers } from "@/api/auth";
 
 export default function ForgotPasswordPage() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success" as "success" | "error",
+  });
+
+  const handleCloseSnackbar = () => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+  };
+
   const formik = useFormik<ForgotPasswordFormValues>({
     initialValues: {
       email: "",
@@ -31,9 +45,35 @@ export default function ForgotPasswordPage() {
     validationSchema: forgotPasswordValidationSchema,
     validateOnChange: true,
     validateOnBlur: true,
-    onSubmit: (values) => {
-      console.log("Forgot password submitted:", values);
-      router.push("/verify-otp");
+    onSubmit: async (values) => {
+      setLoading(true);
+      try {
+        const response = await authControllers.forgotPassword(values.email);
+        if (response.data?.success) {
+          setSnackbar({
+            open: true,
+            message: "OTP sent successfully! Redirecting to verify...",
+            severity: "success",
+          });
+          setTimeout(() => {
+            router.push(`/verify-otp?email=${encodeURIComponent(values.email)}&mode=forgot`);
+          }, 1500);
+        } else {
+          setSnackbar({
+            open: true,
+            message: response.data?.message || "Failed to send OTP.",
+            severity: "error",
+          });
+        }
+      } catch (error: any) {
+        setSnackbar({
+          open: true,
+          message: error.response?.data?.message || "Something went wrong. Please try again.",
+          severity: "error",
+        });
+      } finally {
+        setLoading(false);
+      }
     },
   });
 
@@ -200,6 +240,7 @@ export default function ForgotPasswordPage() {
               fullWidth
               type="button"
               variant="contained"
+              disabled={loading}
               onClick={() => formik.handleSubmit()}
               sx={{
                 bgcolor: Colors.PRIMARY_BLACK,
@@ -213,7 +254,7 @@ export default function ForgotPasswordPage() {
                 "&:hover": { bgcolor: Colors.PRIMARY_BLACK, opacity: 0.9 },
               }}
             >
-              Send OTP
+              {loading ? "Sending..." : "Send OTP"}
             </Button>
 
             <Link
@@ -237,6 +278,22 @@ export default function ForgotPasswordPage() {
           </Box>
         </Box>
       </Container>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

@@ -12,6 +12,8 @@ import {
   Checkbox,
   FormControlLabel,
   IconButton,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import {
   Email as EmailIcon,
@@ -20,31 +22,22 @@ import {
   Visibility,
   VisibilityOff,
 } from "@mui/icons-material";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+import { useAuthForms } from "@/hooks/auth/useAuthForms";
 import { Colors } from "@/utils/enum";
 import { FontSizes, FontWeights, LineHeights } from "@/utils/style";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter();
+  const {
+    loginFormik,
+    showPassword,
+    setShowPassword,
+    loading,
+    snackbar,
+    handleCloseSnackbar,
+  } = useAuthForms();
 
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-      rememberMe: false,
-    },
-    validationSchema: Yup.object({
-      email: Yup.string().email("Invalid email address").required("Required"),
-      password: Yup.string().required("Required"),
-    }),
-    onSubmit: (values) => {
-      console.log("Login submitted:", values);
-      router.push("/admin");
-    },
-  });
+  const formik = loginFormik;
 
   const textFieldSx = {
     "& .MuiOutlinedInput-root": {
@@ -107,7 +100,7 @@ export default function Home() {
         minHeight: "100vh",
         bgcolor: "#f8fafc",
         position: "relative",
-        overflow: "hidden",
+        overflowY: "auto",
         display: "flex",
         flexDirection: "column",
         fontFamily: Poppins.style.fontFamily,
@@ -142,7 +135,7 @@ export default function Home() {
           justifyContent: "space-between",
           alignItems: "center",
           px: { xs: 4, md: 8 },
-          py: 4,
+          py: 2,
           zIndex: 1,
         }}
       >
@@ -191,7 +184,7 @@ export default function Home() {
           justifyContent: "center",
           alignItems: "center",
           zIndex: 1,
-          pb: 10,
+          pb: 4,
         }}
       >
         <Box
@@ -340,6 +333,7 @@ export default function Home() {
               fullWidth
               type="submit"
               variant="contained"
+              disabled={loading}
               sx={{
                 bgcolor: "#122333",
                 color: "#fff",
@@ -352,11 +346,27 @@ export default function Home() {
                 "&:hover": { bgcolor: "#1A2B3B" },
               }}
             >
-              Log In
+              {loading ? "Logging In..." : "Log In"}
             </Button>
           </Box>
         </Box>
       </Container>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

@@ -24,7 +24,7 @@ export default function SignupPage() {
         flexDirection: "column",
         bgcolor: "#f8fafc",
         position: "relative",
-        overflow: "hidden",
+        overflowY: "auto",
         fontFamily: Poppins.style.fontFamily,
         "&::before": {
           content: '""',
@@ -59,13 +59,14 @@ export default function SignupPage() {
           display: "flex",
           flexDirection: "column",
           minHeight: "100vh",
+          overflowY: "auto",
         }}
       >
         {/* Header with Login Link */}
         <Box
           sx={{
             px: { xs: 3, md: 8 },
-            py: 4,
+            py: 2,
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
@@ -106,7 +107,7 @@ export default function SignupPage() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            pb: 8,
+            pb: 4,
             zIndex: 10,
             position: "relative",
           }}

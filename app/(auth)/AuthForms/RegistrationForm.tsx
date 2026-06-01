@@ -16,9 +16,13 @@ import {
   FormControl,
   InputLabel,
   Select,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import { FontSizes, FontWeights, LineHeights } from "@/utils/style";
 import { Colors } from "@/utils/enum";
+import { useRouter } from "next/navigation";
+import { authControllers } from "@/api/auth";
 import {
   Business as SchoolIcon,
   Person as PersonIcon,
@@ -28,9 +32,15 @@ import {
   Groups as GroupIcon,
 } from "@mui/icons-material";
 import { Poppins } from "@/utils/font";
-
+import { useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import {
+  JurisdictionStep,
+  AuthorityStep,
+  StatisticsStep,
+  AccountStep,
+} from "./RegistrationSteps";
 
 const steps = ["Jurisdiction", "Authority", "Statistics", "Account"];
 
@@ -38,26 +48,25 @@ const validationSchemas = [
   // Step 0: Jurisdiction
   Yup.object({
     country: Yup.string().required("Country is required"),
-    board: Yup.string().when("country", {
-      is: "India",
-      then: (schema) => schema.required("Board selection is required"),
-      otherwise: (schema) => schema.optional(),
+    board: Yup.string().when("country", ([country], schema) => {
+      return country === "India"
+        ? schema.required("Board selection is required")
+        : schema.optional();
     }),
-    state: Yup.string().when(["country", "board"], {
-      is: (country: string, board: string) =>
-        country === "US" || (country === "India" && board === "State Board"),
-      then: (schema) => schema.required("State is required"),
-      otherwise: (schema) => schema.optional(),
+    state: Yup.string().when("country", ([country], schema) => {
+      return country === "India" || country === "US" || country === "United States"
+        ? schema.required("State is required")
+        : schema.optional();
     }),
-    city: Yup.string().when("country", {
-      is: "US",
-      then: (schema) => schema.required("City is required"),
-      otherwise: (schema) => schema.optional(),
+    city: Yup.string().when("country", ([country], schema) => {
+      return country === "US" || country === "United States"
+        ? schema.required("City is required")
+        : schema.optional();
     }),
-    isdName: Yup.string().when("country", {
-      is: "US",
-      then: (schema) => schema.required("ISD Name is required"),
-      otherwise: (schema) => schema.optional(),
+    isdName: Yup.string().when("country", ([country], schema) => {
+      return country === "US" || country === "United States"
+        ? schema.required("ISD is required")
+        : schema.optional();
     }),
   }),
   // Step 1: Authority
@@ -87,11 +96,6 @@ const validationSchemas = [
   }),
   // Step 3: Account
   Yup.object({
-    spocName: Yup.string().required("Full name is required"),
-    spocEmail: Yup.string()
-      .email("Invalid email")
-      .required("Email is required"),
-    spocPhone: Yup.string().required("Phone number is required"),
     loginEmail: Yup.string()
       .email("Invalid email")
       .required("Login email is required"),
@@ -103,6 +107,36 @@ const validationSchemas = [
 
 export const RegistrationForm = () => {
   const [activeStep, setActiveStep] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const [countries, setCountries] = useState<any[]>([]);
+  const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const response = await authControllers.getCountries();
+        const list = response.data?.data?.data || response.data?.data || [];
+        const filtered = list.filter((c: any) => {
+          const name = (c.name || "").toLowerCase();
+          return name === "india" || name === "united states" || name === "us";
+        });
+        setCountries(filtered);
+      } catch (err) {
+        console.error("Failed to load countries list", err);
+      }
+    };
+    fetchCountries();
+  }, []);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success" as "success" | "error",
+  });
+
+  const handleCloseSnackbar = () => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -123,15 +157,133 @@ export const RegistrationForm = () => {
       password: "",
     },
     validationSchema: validationSchemas[activeStep],
-    onSubmit: (values) => {
-      console.log("Final Registration Data:", values);
+    onSubmit: async (values) => {
+      setLoading(true);
+      try {
+        const formData = new FormData();
+        const selectedCountryObj = countries.find(
+          (c: any) => c.name === values.country,
+        );
+        const countryId = selectedCountryObj
+          ? String(selectedCountryObj.id)
+          : values.country === "India"
+            ? "11"
+            : "1";
+        const countryCode =
+          selectedCountryObj?.phoneCode ||
+          (values.country === "India" ? "+91" : "+1");
+
+        formData.append("countryId", countryId);
+        formData.append("boardId", "0");
+
+        const authorityDetails = values.authorities.map((auth: any) => ({
+          AuthorityFullName: auth.name,
+          AuthorityEmail: auth.email,
+          AuthorityPhone: auth.phone,
+          AuthorityCountryCode: countryCode,
+          AuthorityRole: (auth.role || "").toUpperCase(),
+        }));
+        formData.append("authorityDetails", JSON.stringify(authorityDetails));
+
+        formData.append("totalSchools", values.totalSchools);
+        formData.append("totalStudents", values.totalStudents);
+        formData.append("totalTeachers", values.totalTeachers);
+        formData.append("boardAdminLoginEmail", values.loginEmail);
+        formData.append("boardAdminLoginPassword", values.password);
+
+        const spocAuthority = values.authorities.find(
+          (auth: any) => auth.role === "SPOC",
+        ) || values.authorities[0] || {};
+        const spocDetails = {
+          name: spocAuthority.name || "",
+          email: spocAuthority.email || "",
+          phone: spocAuthority.phone || "",
+          phoneCode: values.country === "India" ? "+91" : "+1",
+        };
+        formData.append("spocDetails", JSON.stringify(spocDetails));
+
+        formData.append("boardState", values.state || "");
+
+        const boardName = values.board || "";
+
+        formData.append("boardName", boardName);
+        formData.append(
+          "boardCode",
+          (values.board || "NB")
+            .slice(0, 3)
+            .toUpperCase()
+            .replace(/\s+/g, ""),
+        );
+        formData.append("boardDescription", "Board Description");
+
+        const uniqueIsdSuffix = Date.now().toString().slice(-6);
+        const cleanBoard = (values.board || "BOARD").replace(/\s+/g, "_");
+        const isdCode =
+          values.country === "India"
+            ? `ISD-IN-${cleanBoard}-${uniqueIsdSuffix}`
+            : values.isdName;
+
+        formData.append("isdCode", isdCode || `ISD-${uniqueIsdSuffix}`);
+        formData.append(
+          "isd_State",
+          values.state || (values.country === "India" ? "Delhi" : ""),
+        );
+        formData.append(
+          "isd_City",
+          values.city || (values.country === "India" ? "New Delhi" : ""),
+        );
+
+        const response = await authControllers.selfRegisterBoardAdmin(formData);
+        if (response.data?.success) {
+          setSnackbar({
+            open: true,
+            message:
+              "Registration requested successfully! Redirecting to verify OTP...",
+            severity: "success",
+          });
+          setTimeout(() => {
+            router.push(
+              `/verify-otp?email=${encodeURIComponent(values.loginEmail)}`,
+            );
+          }, 1500);
+        } else {
+          setSnackbar({
+            open: true,
+            message: response.data?.message || "Registration failed.",
+            severity: "error",
+          });
+        }
+      } catch (error: any) {
+        setSnackbar({
+          open: true,
+          message:
+            error.response?.data?.message ||
+            "Something went wrong. Please try again.",
+          severity: "error",
+        });
+      } finally {
+        setLoading(false);
+      }
     },
   });
 
-  const availableRoles = ["Chairman", "Secretary", "CEO"];
+  const isFirstRender = React.useRef(true);
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    formik.setFieldValue("board", "");
+    formik.setFieldValue("state", "");
+    formik.setFieldValue("city", "");
+    formik.setFieldValue("isdName", "");
+    formik.setFieldValue("totalSchools", "");
+  }, [formik.values.country]);
+
+  const availableRoles = ["Chairman", "Secretary", "CEO", "SPOC"];
 
   const handleAddAuthority = () => {
-    if (formik.values.authorities.length < 3) {
+    if (formik.values.authorities.length < 4) {
       formik.setFieldValue("authorities", [
         ...formik.values.authorities,
         { role: "", name: "", email: "", phone: "" },
@@ -223,653 +375,28 @@ export const RegistrationForm = () => {
   });
 
   const renderStepContent = (step: number) => {
+    const props = { formik, textFieldSx, getErrorProps };
     switch (step) {
       case 0:
-        return (
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 3,
-              width: "100%",
-            }}
-          >
-            <FormControl
-              fullWidth
-              sx={textFieldSx}
-              error={formik.touched.country && Boolean(formik.errors.country)}
-            >
-              <InputLabel id="country-label">Select Country</InputLabel>
-              <Select
-                labelId="country-label"
-                id="country"
-                name="country"
-                label="Select Country"
-                value={formik.values.country}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                startAdornment={
-                  <InputAdornment position="start" sx={{ ml: 1 }}>
-                    <WorldIcon
-                      sx={{ color: "rgba(18, 35, 51, 0.3)", fontSize: 20 }}
-                    />
-                  </InputAdornment>
-                }
-                sx={{
-                  bgcolor: Colors.REGISTRATION_FORM_BG,
-                  borderRadius: "12px",
-                  height: "56px",
-                  "& .MuiSelect-select": {
-                    display: "flex",
-                    alignItems: "center",
-                    pl: 0.5,
-                  },
-                }}
-              >
-                <MenuItem value="India">India</MenuItem>
-                <MenuItem value="US">United States</MenuItem>
-              </Select>
-              {formik.touched.country && formik.errors.country && (
-                <Typography
-                  sx={{
-                    color: "#d32f2f",
-                    fontSize: "12px",
-                    fontWeight: 500,
-                    mt: 0.5,
-                  }}
-                >
-                  {formik.errors.country}
-                </Typography>
-              )}
-            </FormControl>
-
-            {formik.values.country === "India" && (
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                <FormControl
-                  fullWidth
-                  sx={textFieldSx}
-                  error={formik.touched.board && Boolean(formik.errors.board)}
-                >
-                  <InputLabel id="board-label">Board Selection</InputLabel>
-                  <Select
-                    labelId="board-label"
-                    id="board"
-                    name="board"
-                    label="Board Selection"
-                    value={formik.values.board}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    sx={{
-                      bgcolor: Colors.REGISTRATION_FORM_BG,
-                      borderRadius: "12px",
-                      height: "56px",
-                    }}
-                  >
-                    <MenuItem value="CBSE">CBSE</MenuItem>
-                    <MenuItem value="ICSE">ICSE</MenuItem>
-                    <MenuItem value="State Board">State Board</MenuItem>
-                    <MenuItem value="Other">Other</MenuItem>
-                  </Select>
-                  {formik.touched.board && formik.errors.board && (
-                    <Typography
-                      sx={{
-                        color: "#d32f2f",
-                        fontSize: "12px",
-                        fontWeight: 500,
-                        mt: 0.5,
-                      }}
-                    >
-                      {formik.errors.board}
-                    </Typography>
-                  )}
-                </FormControl>
-                {formik.values.board === "Other" && (
-                  <TextField
-                    fullWidth
-                    label="Specify Board Name"
-                    name="otherBoard"
-                    value={formik.values.otherBoard}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    {...getErrorProps("otherBoard")}
-                    sx={textFieldSx}
-                    slotProps={{
-                      input: {
-                        sx: {
-                          bgcolor: Colors.REGISTRATION_FORM_BG,
-                          borderRadius: "12px",
-                        },
-                      },
-                    }}
-                  />
-                )}
-                {formik.values.board === "State Board" && (
-                  <TextField
-                    fullWidth
-                    label="Select State"
-                    name="state"
-                    value={formik.values.state}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    {...getErrorProps("state")}
-                    sx={textFieldSx}
-                    slotProps={{
-                      input: {
-                        sx: {
-                          bgcolor: Colors.REGISTRATION_FORM_BG,
-                          borderRadius: "12px",
-                        },
-                      },
-                    }}
-                  />
-                )}
-              </Box>
-            )}
-
-            {formik.values.country === "US" && (
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                <Box sx={{ display: "flex", gap: 2 }}>
-                  <TextField
-                    fullWidth
-                    label="State"
-                    name="state"
-                    value={formik.values.state}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    {...getErrorProps("state")}
-                    sx={textFieldSx}
-                    slotProps={{
-                      input: {
-                        sx: {
-                          bgcolor: Colors.REGISTRATION_FORM_BG,
-                          borderRadius: "12px",
-                        },
-                      },
-                    }}
-                  />
-                  <TextField
-                    fullWidth
-                    label="City"
-                    name="city"
-                    value={formik.values.city}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    {...getErrorProps("city")}
-                    sx={textFieldSx}
-                    slotProps={{
-                      input: {
-                        sx: {
-                          bgcolor: Colors.REGISTRATION_FORM_BG,
-                          borderRadius: "12px",
-                        },
-                      },
-                    }}
-                  />
-                </Box>
-                <TextField
-                  fullWidth
-                  label="ISD Name"
-                  name="isdName"
-                  value={formik.values.isdName}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  {...getErrorProps("isdName")}
-                  sx={textFieldSx}
-                  slotProps={{
-                    input: {
-                      sx: {
-                        bgcolor: Colors.REGISTRATION_FORM_BG,
-                        borderRadius: "12px",
-                      },
-                    },
-                  }}
-                />
-              </Box>
-            )}
-          </Box>
-        );
+        return <JurisdictionStep {...props} countries={countries} />;
       case 1:
         return (
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 4,
-              width: "100%",
-            }}
-          >
-            {formik.values.authorities.map((auth, index) => {
-              const currentRoles = formik.values.authorities
-                .map((a, i) => (i !== index ? a.role : null))
-                .filter(Boolean);
-              const filteredRoles = availableRoles.filter(
-                (r) => !currentRoles.includes(r),
-              );
-
-              return (
-                <Box
-                  key={index}
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 3,
-                    p: 3,
-                    borderRadius: "20px",
-                    bgcolor: "rgba(18, 35, 51, 0.03)",
-                    border: "1px solid rgba(18, 35, 51, 0.05)",
-                    position: "relative",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      mb: 1,
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        fontWeight: 700,
-                        fontSize: "14px",
-                        color: Colors.PRIMARY_BLACK,
-                      }}
-                    >
-                      {auth.role || "Select Authority"} Details
-                    </Typography>
-                    {index > 0 && (
-                      <Button
-                        size="small"
-                        onClick={() => handleRemoveAuthority(index)}
-                        sx={{
-                          color: "#d32f2f",
-                          textTransform: "none",
-                          fontSize: "12px",
-                          fontWeight: 600,
-                        }}
-                      >
-                        Remove
-                      </Button>
-                    )}
-                  </Box>
-
-                  <FormControl
-                    fullWidth
-                    sx={textFieldSx}
-                    error={
-                      formik.touched.authorities?.[index]?.role &&
-                      Boolean((formik.errors.authorities as any)?.[index]?.role)
-                    }
-                  >
-                    <InputLabel>Select Role</InputLabel>
-                    <Select
-                      name={`authorities[${index}].role`}
-                      value={auth.role}
-                      label="Select Role"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      sx={{ bgcolor: Colors.WHITE, borderRadius: "12px" }}
-                    >
-                      {filteredRoles.map((role) => (
-                        <MenuItem key={role} value={role}>
-                          {role}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-
-                  <TextField
-                    fullWidth
-                    label="Full Name"
-                    name={`authorities[${index}].name`}
-                    value={auth.name}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    error={
-                      formik.touched.authorities?.[index]?.name &&
-                      Boolean((formik.errors.authorities as any)?.[index]?.name)
-                    }
-                    helperText={
-                      formik.touched.authorities?.[index]?.name &&
-                      (formik.errors.authorities as any)?.[index]?.name
-                    }
-                    sx={textFieldSx}
-                    slotProps={{
-                      input: {
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <PersonIcon
-                              sx={{
-                                color: "rgba(18, 35, 51, 0.3)",
-                                fontSize: 20,
-                                ml: 1,
-                              }}
-                            />
-                          </InputAdornment>
-                        ),
-                        sx: { bgcolor: Colors.WHITE, borderRadius: "12px" },
-                      },
-                    }}
-                  />
-
-                  <Box sx={{ display: "flex", gap: 2 }}>
-                    <TextField
-                      fullWidth
-                      label="Email Id"
-                      name={`authorities[${index}].email`}
-                      value={auth.email}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      error={
-                        formik.touched.authorities?.[index]?.email &&
-                        Boolean(
-                          (formik.errors.authorities as any)?.[index]?.email,
-                        )
-                      }
-                      helperText={
-                        formik.touched.authorities?.[index]?.email &&
-                        (formik.errors.authorities as any)?.[index]?.email
-                      }
-                      sx={textFieldSx}
-                      slotProps={{
-                        input: {
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <EmailIcon
-                                sx={{
-                                  color: "rgba(18, 35, 51, 0.3)",
-                                  fontSize: 20,
-                                  ml: 1,
-                                }}
-                              />
-                            </InputAdornment>
-                          ),
-                          sx: { bgcolor: Colors.WHITE, borderRadius: "12px" },
-                        },
-                      }}
-                    />
-                    <TextField
-                      fullWidth
-                      label="Phone Number"
-                      name={`authorities[${index}].phone`}
-                      value={auth.phone}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      error={
-                        formik.touched.authorities?.[index]?.phone &&
-                        Boolean(
-                          (formik.errors.authorities as any)?.[index]?.phone,
-                        )
-                      }
-                      helperText={
-                        formik.touched.authorities?.[index]?.phone &&
-                        (formik.errors.authorities as any)?.[index]?.phone
-                      }
-                      sx={textFieldSx}
-                      slotProps={{
-                        input: {
-                          sx: { bgcolor: Colors.WHITE, borderRadius: "12px" },
-                        },
-                      }}
-                    />
-                  </Box>
-                </Box>
-              );
-            })}
-
-            {formik.values.authorities.length < 3 && (
-              <Button
-                variant="outlined"
-                onClick={handleAddAuthority}
-                sx={{
-                  py: 1.5,
-                  borderRadius: "12px",
-                  borderColor: "rgba(18, 35, 51, 0.2)",
-                  color: Colors.PRIMARY_BLACK,
-                  textTransform: "none",
-                  fontWeight: 700,
-                  fontSize: "14px",
-                  "&:hover": {
-                    borderColor: Colors.PRIMARY_BLACK,
-                    bgcolor: "rgba(18, 35, 51, 0.02)",
-                  },
-                }}
-              >
-                + Add Another Authority
-              </Button>
-            )}
-          </Box>
+          <AuthorityStep
+            {...props}
+            availableRoles={availableRoles}
+            handleAddAuthority={handleAddAuthority}
+            handleRemoveAuthority={handleRemoveAuthority}
+          />
         );
       case 2:
-        return (
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 3,
-              width: "100%",
-            }}
-          >
-            <TextField
-              fullWidth
-              type="number"
-              label="Total Schools"
-              name="totalSchools"
-              value={formik.values.totalSchools}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              {...getErrorProps("totalSchools")}
-              sx={textFieldSx}
-              slotProps={{
-                input: {
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SchoolIcon
-                        sx={{
-                          color: "rgba(18, 35, 51, 0.3)",
-                          fontSize: 20,
-                          ml: 1,
-                        }}
-                      />
-                    </InputAdornment>
-                  ),
-                  sx: {
-                    bgcolor: Colors.REGISTRATION_FORM_BG,
-                    borderRadius: "12px",
-                  },
-                },
-              }}
-            />
-            <Box sx={{ display: "flex", gap: 2 }}>
-              <TextField
-                fullWidth
-                type="number"
-                label="Total Students"
-                name="totalStudents"
-                value={formik.values.totalStudents}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                {...getErrorProps("totalStudents")}
-                sx={textFieldSx}
-                slotProps={{
-                  input: {
-                    sx: {
-                      bgcolor: Colors.REGISTRATION_FORM_BG,
-                      borderRadius: "12px",
-                    },
-                  },
-                }}
-              />
-              <TextField
-                fullWidth
-                type="number"
-                label="Total Teachers"
-                name="totalTeachers"
-                value={formik.values.totalTeachers}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                {...getErrorProps("totalTeachers")}
-                sx={textFieldSx}
-                slotProps={{
-                  input: {
-                    sx: {
-                      bgcolor: Colors.REGISTRATION_FORM_BG,
-                      borderRadius: "12px",
-                    },
-                  },
-                }}
-              />
-            </Box>
-          </Box>
-        );
+        return <StatisticsStep {...props} />;
       case 3:
         return (
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 2,
-              width: "100%",
-            }}
-          >
-            <TextField
-              fullWidth
-              label="Login Email Id"
-              name="loginEmail"
-              autoComplete="off"
-              value={formik.values.loginEmail}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              {...getErrorProps("loginEmail")}
-              sx={textFieldSx}
-              slotProps={{
-                input: {
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <EmailIcon
-                        sx={{
-                          color: "rgba(18, 35, 51, 0.3)",
-                          fontSize: 20,
-                          ml: 1,
-                        }}
-                      />
-                    </InputAdornment>
-                  ),
-                  sx: { bgcolor: Colors.WHITE, borderRadius: "12px" },
-                },
-              }}
-            />
-            <TextField
-              fullWidth
-              type="password"
-              label="Password"
-              name="password"
-              autoComplete="new-password"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              {...getErrorProps("password")}
-              sx={textFieldSx}
-              slotProps={{
-                input: {
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <LockIcon
-                        sx={{
-                          color: "rgba(18, 35, 51, 0.3)",
-                          fontSize: 20,
-                          ml: 1,
-                        }}
-                      />
-                    </InputAdornment>
-                  ),
-                  sx: { bgcolor: Colors.WHITE, borderRadius: "12px" },
-                },
-              }}
-            />
-
-            <Divider sx={{ my: 0.5, borderColor: "rgba(0,0,0,0.05)" }} />
-
-            <Typography
-              sx={{
-                fontWeight: 700,
-                fontSize: "14px",
-                color: "rgba(0,0,0,0.6)",
-                mb: 0.5,
-              }}
-            >
-              Single point of Contact person
-            </Typography>
-            <TextField
-              fullWidth
-              label="Full Name"
-              name="spocName"
-              value={formik.values.spocName}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              {...getErrorProps("spocName")}
-              sx={textFieldSx}
-              slotProps={{
-                input: {
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <PersonIcon
-                        sx={{
-                          color: "rgba(18, 35, 51, 0.3)",
-                          fontSize: 20,
-                          ml: 1,
-                        }}
-                      />
-                    </InputAdornment>
-                  ),
-                  sx: { bgcolor: Colors.WHITE, borderRadius: "12px" },
-                },
-              }}
-            />
-            <Box sx={{ display: "flex", gap: 2 }}>
-              <TextField
-                fullWidth
-                label="Email Id"
-                name="spocEmail"
-                value={formik.values.spocEmail}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                {...getErrorProps("spocEmail")}
-                sx={textFieldSx}
-                slotProps={{
-                  input: {
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <EmailIcon
-                          sx={{
-                            color: "rgba(18, 35, 51, 0.3)",
-                            fontSize: 20,
-                            ml: 1,
-                          }}
-                        />
-                      </InputAdornment>
-                    ),
-                    sx: { bgcolor: Colors.WHITE, borderRadius: "12px" },
-                  },
-                }}
-              />
-              <TextField
-                fullWidth
-                label="Phone Number"
-                name="spocPhone"
-                value={formik.values.spocPhone}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                {...getErrorProps("spocPhone")}
-                sx={textFieldSx}
-                slotProps={{
-                  input: {
-                    sx: { bgcolor: Colors.WHITE, borderRadius: "12px" },
-                  },
-                }}
-              />
-            </Box>
-          </Box>
+          <AccountStep
+            {...props}
+            showPassword={showPassword}
+            setShowPassword={setShowPassword}
+          />
         );
       default:
         return null;
@@ -992,7 +519,7 @@ export const RegistrationForm = () => {
         }}
       >
         <Button
-          disabled={activeStep === 0}
+          disabled={activeStep === 0 || loading}
           onClick={handleBack}
           sx={{
             color: Colors.PRIMARY_BLACK,
@@ -1005,6 +532,7 @@ export const RegistrationForm = () => {
         <Button
           variant="contained"
           onClick={handleNext}
+          disabled={loading}
           sx={{
             bgcolor: Colors.PRIMARY_BLACK,
             color: Colors.WHITE,
@@ -1017,10 +545,28 @@ export const RegistrationForm = () => {
           }}
         >
           {activeStep === steps.length - 1
-            ? "Complete Registration"
+            ? loading
+              ? "Registering..."
+              : "Complete Registration"
             : "Continue"}
         </Button>
       </Box>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Paper>
   );
 };
