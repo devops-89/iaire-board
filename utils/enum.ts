@@ -10,5 +10,6 @@ export enum Colors {
   WHITE = "#ffffff",
   BLACK = "#000000",
   REGISTRATION_FORM_BG = "#F8F9FA",
+  PRIMARY_DARK = "#112333",
 }
 

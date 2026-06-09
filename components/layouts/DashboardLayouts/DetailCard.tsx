@@ -7,7 +7,8 @@ import {
   Verified as VerifiedIcon,
   CheckCircle as SuccessIcon,
   HourglassEmpty as PendingIcon,
-  EmojiEvents as AwardIcon
+  EmojiEvents as AwardIcon,
+  Groups as GroupsIcon
 } from "@mui/icons-material";
 
 // Local Icon Mapping for Detail Cards
@@ -18,6 +19,7 @@ const IconMap: any = {
   success: SuccessIcon,
   pending: PendingIcon,
   award: AwardIcon,
+  groups: GroupsIcon,
 };
 
 export const DetailCard = ({ title, value, subtext, iconKey, color }: any) => {

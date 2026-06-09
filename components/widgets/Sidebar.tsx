@@ -77,7 +77,7 @@ export const Sidebar = () => {
           width: drawerWidth,
           boxSizing: "border-box",
           border: "none",
-          background: "#122333",
+          background: Colors.PRIMARY_DARK,
           color: Colors.WHITE,
         },
       }}

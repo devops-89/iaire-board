@@ -3,9 +3,9 @@ import React from "react";
 import { Box, Container } from "@mui/material";
 import { Sidebar } from "@/components/widgets/Sidebar";
 import { Navbar } from "@/components/widgets/Navbar";
-import { MembershipMetrics } from "./MembershipMetrics";
 import { MembershipHeader } from "./MembershipHeader";
 import { MembershipFooter } from "./MembershipFooter";
+import { SchoolTable } from "./SchoolTable";
 import { Poppins } from "@/utils/font";
 
 export const SchoolMembershipLayout = () => {
@@ -30,10 +30,12 @@ export const SchoolMembershipLayout = () => {
         }}
       >
         <Navbar />
-        <Container maxWidth="xl" sx={{ mt: 3 }}>
-          <MembershipMetrics />
+        <Box sx={{ mt: 3 }}>
+          <Box sx={{ mb: 3 }}>
+            <SchoolTable />
+          </Box>
           <MembershipFooter />
-        </Container>
+        </Box>
       </Box>
     </Box>
   );

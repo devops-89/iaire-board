@@ -17,6 +17,19 @@ const GRID_5_COL = {
   alignItems: "stretch"
 };
 
+const GRID_6_COL = {
+  display: "grid",
+  gridTemplateColumns: {
+    xs: "1fr",
+    sm: "repeat(2, 1fr)",
+    md: "repeat(3, 1fr)",
+    lg: "repeat(6, 1fr)"
+  },
+  gap: 2,
+  width: "100%",
+  alignItems: "stretch"
+};
+
 const GRID_4_COL = {
   display: "grid",
   gridTemplateColumns: {
@@ -41,22 +54,22 @@ const GRID_3_COL = {
 };
 
 export const MembershipOverview = () => {
-  const categories = DashboardData.membership?.categories || [];
+  const metrics = DashboardData.membership?.detailedMetrics || [];
 
   return (
     <Box sx={{ mb: 6 }}>
       <SectionHeader
         title="School Membership Status"
-        badge={`${categories.length} categories`}
+        badge={`${metrics.length} metrics`}
         color="#00D1C1"
       />
-      <Box sx={GRID_5_COL}>
-        {categories.map((item: any, index: number) => (
+      <Box sx={GRID_6_COL}>
+        {metrics.map((item: any, index: number) => (
           <DetailCard
             key={index}
             title={item.title}
             value={item.value}
-            subtext={item.subtext}
+            subtext={item.subtext || "+12%"}
             color={item.color}
             iconKey={item.iconKey}
           />

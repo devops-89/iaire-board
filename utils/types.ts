@@ -74,6 +74,20 @@ export interface MenuGroup {
 }
 
 // --- Shared Data Models & Structures ---
+export interface School {
+  id: number;
+  name: string;
+  code: string | null;
+  address: string | null;
+  logo: string | null;
+  isActive: boolean;
+  boardId: number;
+  logoDownloadUrl: string | null;
+  displayId: string | null;
+  membershipCode: string | null;
+  registrationYear: number | null;
+}
+
 export interface DistributionItem {
   label: string;
   value: number;

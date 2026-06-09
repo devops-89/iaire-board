@@ -15,8 +15,8 @@ const PAGE_CONFIG: any = {
     showActions: true,
   },
   "/membership-overview": {
-    title: "School Membership Overview",
-    description: "Comprehensive analytics and tracking for institutional enrollment and tiered memberships.",
+    title: "",
+    description: "",
     showActions: false,
   },
   "/teacher-certification": {
@@ -42,6 +42,10 @@ export const Navbar = () => {
   // Find matching config or fallback to dashboard
   const activeKey = Object.keys(PAGE_CONFIG).find(key => pathname.includes(key)) || "/dashboard";
   const config = PAGE_CONFIG[activeKey];
+
+  if (!config.title && !config.description && !config.showActions) {
+    return null;
+  }
 
   return (
     <Box
