@@ -30,4 +30,13 @@ export const schoolControllers = {
       throw error;
     }
   },
+
+  getSchoolStats: async (): Promise<AxiosResponse> => {
+    try {
+      const result = await secureApi.get(`/boards/schools/stats`);
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
