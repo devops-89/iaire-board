@@ -45,9 +45,4 @@ const addLoggingInterceptor = (instance: any, name: string) => {
 addLoggingInterceptor(publicApi, "PUBLIC");
 addLoggingInterceptor(secureApi, "SECURE");
 
-console.log(`[API Config] URLs:`, {
-  public: publicApi.defaults.baseURL,
-  secure: secureApi.defaults.baseURL,
-});
-
 export { publicApi, secureApi };

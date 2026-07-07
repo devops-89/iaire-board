@@ -88,6 +88,29 @@ export interface School {
   registrationYear: number | null;
 }
 
+export interface Teacher {
+  id: number;
+  email: string;
+  username: string;
+  fullName?: string;
+  role: string;
+  isActive: boolean;
+  phoneNumber?: string;
+  createdAt?: string;
+  displayId?: string;
+  schoolId?: number | string | null;
+  phone?: string | null;
+  gender?: string | null;
+  primarySubjects?: string[] | null;
+  experienceinYears?: string | number | null;
+  school?: any;
+  board?: any;
+  students?: any[];
+  schoolAdmins?: any[];
+  status?: string | null;
+  approvedAt?: string | null;
+}
+
 export interface DistributionItem {
   label: string;
   value: number;

@@ -83,27 +83,18 @@ export const Sidebar = () => {
       }}
     >
       {/* Logo Section */}
-      <Box sx={{ p: 3, mb: 2 }}>
-        <Typography
+      <Box sx={{ p: 3, mb: 1 }}>
+        <Box
+          component="img"
+          src="/IAIRE_logo.png"
+          alt="IAIRE Logo"
           sx={{
-            fontSize: FontSizes.HEADING,
-            fontWeight: FontWeights.SEMIBOLD,
-            letterSpacing: "1px",
-            color: Colors.WHITE,
+            height: 50,
+            width: "auto",
+            objectFit: "contain",
+            maxWidth: "100%",
           }}
-        >
-          IAIRE
-        </Typography>
-        <Typography
-          sx={{
-            fontSize: FontSizes.SMALL,
-            fontWeight: FontWeights.MEDIUM,
-            color: "rgba(255,255,255,0.5)",
-            mt: -0.5,
-          }}
-        >
-          CISCE PORTAL
-        </Typography>
+        />
       </Box>
 
       <Box sx={{ overflowY: "auto", px: 1.5 }}>

@@ -3,7 +3,7 @@ import React from "react";
 import { Box } from "@mui/material";
 import { Sidebar } from "@/components/widgets/Sidebar";
 import { Navbar } from "@/components/widgets/Navbar";
-import { TeacherMetrics } from "./TeacherMetrics";
+import { TeacherTable } from "./TeacherTable";
 import { Poppins } from "@/utils/font";
 
 export const TeacherCertificationLayout = () => {
@@ -19,13 +19,18 @@ export const TeacherCertificationLayout = () => {
       <Sidebar />
       <Box
         component="main"
-        sx={{ flexGrow: 1, height: "100vh", overflowY: "auto", px: 4, pb: 4 }}
+        sx={{ flexGrow: 1, height: "100vh", overflowY: "auto", px: 2, pb: 2 }}
       >
         <Navbar />
 
-        {/* Content Grid */}
-        <TeacherMetrics />
+        <Box sx={{ mt: 2 }}>
+          <Box sx={{ mb: 2 }}>
+            <TeacherTable />
+          </Box>
+        </Box>
       </Box>
     </Box>
   );
 };
+
+export * from "./TeacherDetailsLayout";

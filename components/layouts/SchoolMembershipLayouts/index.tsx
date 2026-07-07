@@ -25,13 +25,13 @@ export const SchoolMembershipLayout = () => {
           flexGrow: 1,
           height: "100vh",
           overflowY: "auto",
-          px: 4,
-          pb: 4,
+          px: 2,
+          pb: 2,
         }}
       >
         <Navbar />
-        <Box sx={{ mt: 3 }}>
-          <Box sx={{ mb: 3 }}>
+        <Box sx={{ mt: 2 }}>
+          <Box sx={{ mb: 2 }}>
             <SchoolTable />
           </Box>
           <MembershipFooter />

@@ -18,8 +18,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={Poppins.variable}>
-      <body>
+    <html lang="en" className={Poppins.variable} suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <ReduxProvider>
           <AppRouterCacheProvider>
             <ThemeProvider theme={theme}>

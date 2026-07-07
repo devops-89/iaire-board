@@ -19,20 +19,24 @@ import {
   Divider,
   Card,
   CardContent,
+  IconButton,
+  Grid,
 } from "@mui/material";
-import Grid from "@mui/material/Grid";
 import {
   ArrowBack as BackIcon,
-  LocationOn as LocationIcon,
-  CalendarToday as CalendarIcon,
+  LocationOnOutlined as LocationIcon,
+  CalendarTodayOutlined as CalendarIcon,
   Language as WebIcon,
-  Description as DocIcon,
-  School as SchoolIcon,
-  People as PeopleIcon,
-  CheckCircle as ActiveIcon,
-  Cancel as InactiveIcon,
-  AssignmentTurnedIn as CertificateIcon,
-  Email as EmailIcon,
+  DescriptionOutlined as DocIcon,
+  SchoolOutlined as SchoolIcon,
+  PeopleOutlined as PeopleIcon,
+  CheckCircleOutlined as ActiveIcon,
+  HighlightOff as InactiveIcon,
+  AssignmentTurnedInOutlined as CertificateIcon,
+  EmailOutlined as EmailIcon,
+  CorporateFareOutlined as BoardIcon,
+  KeyboardArrowLeft as PrevIcon,
+  KeyboardArrowRight as NextIcon,
 } from "@mui/icons-material";
 import { useParams, useRouter } from "next/navigation";
 import { Sidebar } from "@/components/widgets/Sidebar";
@@ -75,6 +79,11 @@ export const SchoolDetailsLayout = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [activeTab, setActiveTab] = useState<number>(0);
 
+  // Pagination states for teachers and students tables
+  const [teacherPage, setTeacherPage] = useState<number>(1);
+  const [studentPage, setStudentPage] = useState<number>(1);
+  const itemsPerPage = 10;
+
   useEffect(() => {
     if (!schoolId) return;
 
@@ -83,7 +92,7 @@ export const SchoolDetailsLayout = () => {
         setLoading(true);
         const res = await schoolControllers.getSchoolDetails(schoolId);
         if (res?.data && res.data.success) {
-          setSchoolData(res.data.data.data);
+          setSchoolData(res.data.data.data || res.data.data);
         }
       } catch (error) {
         console.error("Failed to fetch school details:", error);
@@ -109,7 +118,7 @@ export const SchoolDetailsLayout = () => {
         sx={{
           display: "flex",
           minHeight: "100vh",
-          bgcolor: "#FAF6F0",
+          bgcolor: "#FAF7F0",
           fontFamily: Poppins.style.fontFamily,
         }}
       >
@@ -145,7 +154,7 @@ export const SchoolDetailsLayout = () => {
         sx={{
           display: "flex",
           minHeight: "100vh",
-          bgcolor: "#FAF6F0",
+          bgcolor: "#FAF7F0",
           fontFamily: Poppins.style.fontFamily,
         }}
       >
@@ -170,10 +179,7 @@ export const SchoolDetailsLayout = () => {
               gap: 2,
             }}
           >
-            <Typography
-              variant="h5"
-              sx={{ color: Colors.PRIMARY_DARK, fontWeight: 700 }}
-            >
+            <Typography variant="h5" sx={{ color: Colors.PRIMARY_DARK, fontWeight: 700 }}>
               School Details Not Found
             </Typography>
             <Button
@@ -197,22 +203,41 @@ export const SchoolDetailsLayout = () => {
   }
 
   const { school, teachers, students } = schoolData;
+
+  const capitalizeWord = (str: string | undefined | null) => {
+    if (!str) return "";
+    return str
+      .split(" ")
+      .filter(Boolean)
+      .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  };
+
   const fullAddress = [
-    school.addressLine1,
-    school.addressLine2,
-    school.city,
-    school.state,
+    capitalizeWord(school.addressLine1),
+    capitalizeWord(school.addressLine2),
+    capitalizeWord(school.city),
+    capitalizeWord(school.state),
     school.zipCode,
   ]
     .filter(Boolean)
     .join(", ");
+
+  // Paginated calculations
+  const totalTeachers = teachers?.length || 0;
+  const totalTeacherPages = Math.ceil(totalTeachers / itemsPerPage) || 1;
+  const currentTeachers = teachers?.slice((teacherPage - 1) * itemsPerPage, teacherPage * itemsPerPage) || [];
+
+  const totalStudents = students?.length || 0;
+  const totalStudentPages = Math.ceil(totalStudents / itemsPerPage) || 1;
+  const currentStudents = students?.slice((studentPage - 1) * itemsPerPage, studentPage * itemsPerPage) || [];
 
   return (
     <Box
       sx={{
         display: "flex",
         minHeight: "100vh",
-        bgcolor: "#FAF6F0",
+        bgcolor: "#FAF7F0",
         fontFamily: Poppins.style.fontFamily,
       }}
     >
@@ -223,18 +248,17 @@ export const SchoolDetailsLayout = () => {
           flexGrow: 1,
           height: "100vh",
           overflowY: "auto",
-          px: 4,
-          pb: 4,
+          px: 2,
+          pb: 2,
         }}
       >
         <Navbar />
 
-        {/* Back Button & Title Row */}
+        {/* Back Button Row */}
         <Box
           sx={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
             mt: 3,
             mb: 4,
           }}
@@ -263,26 +287,27 @@ export const SchoolDetailsLayout = () => {
           </Button>
         </Box>
 
-        {/* School Profile Banner Card */}
+        {/* School Profile Banner Card - Premium Slate Gradient */}
         <Paper
           elevation={0}
           sx={{
             p: 4,
             borderRadius: "24px",
-            border: "1px solid rgba(18, 35, 51, 0.05)",
-            bgcolor: "#fff",
-            boxShadow: "0 10px 40px rgba(18, 35, 51, 0.03)",
+            background: "linear-gradient(135deg, #111E2E 0%, #0A1420 100%)",
+            boxShadow: "0 20px 40px rgba(18, 35, 51, 0.08)",
             position: "relative",
             overflow: "hidden",
             mb: 4,
-            "&::before": {
+            color: "#fff",
+            "&::after": {
               content: '""',
               position: "absolute",
-              top: 0,
-              left: 0,
-              width: "6px",
-              height: "100%",
-              bgcolor: school.isActive ? "#10B981" : "#6B7280",
+              top: "-50%",
+              right: "-10%",
+              width: "300px",
+              height: "300px",
+              borderRadius: "50%",
+              background: "radial-gradient(circle, rgba(0, 209, 193, 0.12) 0%, transparent 70%)",
             },
           }}
         >
@@ -291,230 +316,189 @@ export const SchoolDetailsLayout = () => {
               <Avatar
                 src={school.schoolLogoDownloadUrl || school.logo || undefined}
                 sx={{
-                  width: 96,
-                  height: 96,
+                  width: 90,
+                  height: 90,
                   borderRadius: "24px",
-                  bgcolor: "rgba(18, 35, 51, 0.05)",
-                  color: Colors.PRIMARY_DARK,
+                  bgcolor: "rgba(255, 255, 255, 0.08)",
+                  color: "#00D1C1",
                   fontSize: "32px",
                   fontWeight: 800,
-                  border: "2px solid rgba(18, 35, 51, 0.08)",
+                  border: "2px solid rgba(0, 209, 193, 0.3)",
+                  boxShadow: "0 8px 24px rgba(0, 0, 0, 0.2)",
                 }}
               >
                 {!school.schoolLogoDownloadUrl && !school.logo
-                  ? school.name.charAt(0)
+                  ? school.name.charAt(0).toUpperCase()
                   : undefined}
               </Avatar>
             </Grid>
-            <Grid size={{ xs: 12, sm: "grow" }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  alignItems: "center",
-                  gap: 1.5,
-                  mb: 1,
-                }}
-              >
+            <Grid size="grow">
+              <Box>
                 <Typography
                   sx={{
-                    fontSize: "24px",
+                    fontSize: "26px",
                     fontWeight: 800,
-                    color: Colors.PRIMARY_DARK,
+                    color: "#fff",
                     letterSpacing: "-0.5px",
                     lineHeight: 1.2,
                   }}
                 >
                   {school.name}
                 </Typography>
-                <Chip
-                  icon={
-                    school.isActive ? (
-                      <ActiveIcon sx={{ fontSize: "16px !important" }} />
-                    ) : (
-                      <InactiveIcon sx={{ fontSize: "16px !important" }} />
-                    )
-                  }
-                  label={school.isActive ? "Active Institution" : "Inactive"}
-                  size="small"
-                  sx={{
-                    bgcolor: school.isActive
-                      ? "rgba(16, 185, 129, 0.08)"
-                      : "rgba(107, 114, 128, 0.08)",
-                    color: school.isActive ? "#10B981" : "#6B7280",
-                    fontWeight: 800,
-                    fontSize: "11px",
-                    borderRadius: "8px",
-                    border: `1px solid ${school.isActive ? "rgba(16, 185, 129, 0.15)" : "rgba(107, 114, 128, 0.15)"}`,
-                    pl: 0.5,
-                  }}
-                />
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 3, mt: 1.5 }}>
+                  {school.city && (
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 0.8 }}>
+                      <LocationIcon sx={{ color: "rgba(255, 255, 255, 0.65)", fontSize: 18 }} />
+                      <Typography sx={{ fontSize: "13px", fontWeight: 600, color: "rgba(255, 255, 255, 0.8)" }}>
+                        {capitalizeWord(school.city)}, {capitalizeWord(school.state) || "India"}
+                      </Typography>
+                    </Box>
+                  )}
+                  {school.registrationYear && (
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 0.8 }}>
+                      <CalendarIcon sx={{ color: "rgba(255, 255, 255, 0.65)", fontSize: 18 }} />
+                      <Typography sx={{ fontSize: "13px", fontWeight: 600, color: "rgba(255, 255, 255, 0.8)" }}>
+                        Registered: {school.registrationYear}
+                      </Typography>
+                    </Box>
+                  )}
+                  {school.website && (
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 0.8 }}>
+                      <WebIcon sx={{ color: "rgba(255, 255, 255, 0.65)", fontSize: 18 }} />
+                      <Typography
+                        component="a"
+                        href={school.website.startsWith("http") ? school.website : `https://${school.website}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        sx={{
+                          fontSize: "13px",
+                          fontWeight: 600,
+                          color: "#00D1C1",
+                          textDecoration: "none",
+                          "&:hover": { textDecoration: "underline" },
+                        }}
+                      >
+                        {school.website}
+                      </Typography>
+                    </Box>
+                  )}
+                </Box>
               </Box>
-
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 3, mt: 1.5 }}>
-                {school.city && (
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 0.8 }}>
-                    <LocationIcon
-                      sx={{ color: "rgba(18, 35, 51, 0.4)", fontSize: 18 }}
-                    />
-                    <Typography
+            </Grid>
+            <Grid>
+              <Chip
+                label={school.isActive ? "Active Institution" : "Inactive"}
+                icon={
+                  school.isActive ? (
+                    <Box
                       sx={{
-                        fontSize: "13px",
-                        fontWeight: 600,
-                        color: "rgba(18, 35, 51, 0.6)",
+                        width: 6,
+                        height: 6,
+                        borderRadius: "50%",
+                        bgcolor: "#10B981",
+                        ml: 1,
+                        boxShadow: "0 0 8px #10B981",
                       }}
-                    >
-                      {school.city}, {school.state || "India"}
-                    </Typography>
-                  </Box>
-                )}
-                {school.registrationYear && (
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 0.8 }}>
-                    <CalendarIcon
-                      sx={{ color: "rgba(18, 35, 51, 0.4)", fontSize: 18 }}
                     />
-                    <Typography
-                      sx={{
-                        fontSize: "13px",
-                        fontWeight: 600,
-                        color: "rgba(18, 35, 51, 0.6)",
-                      }}
-                    >
-                      Registered: {school.registrationYear}
-                    </Typography>
-                  </Box>
-                )}
-                {school.website && (
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 0.8 }}>
-                    <WebIcon
-                      sx={{ color: "rgba(18, 35, 51, 0.4)", fontSize: 18 }}
-                    />
-                    <Typography
-                      component="a"
-                      href={
-                        school.website.startsWith("http")
-                          ? school.website
-                          : `https://${school.website}`
-                      }
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      sx={{
-                        fontSize: "13px",
-                        fontWeight: 600,
-                        color: "#00D1C1",
-                        textDecoration: "none",
-                        "&:hover": { textDecoration: "underline" },
-                      }}
-                    >
-                      {school.website}
-                    </Typography>
-                  </Box>
-                )}
-              </Box>
+                  ) : undefined
+                }
+                sx={{
+                  bgcolor: school.isActive ? "rgba(16, 185, 129, 0.15)" : "rgba(255, 255, 255, 0.1)",
+                  color: school.isActive ? "#10B981" : "rgba(255, 255, 255, 0.65)",
+                  fontWeight: 800,
+                  fontSize: "12px",
+                  borderRadius: "10px",
+                  border: `1px solid ${school.isActive ? "rgba(16, 185, 129, 0.3)" : "rgba(255, 255, 255, 0.2)"}`,
+                  pl: school.isActive ? 0.5 : 0,
+                  "& .MuiChip-icon": { color: "inherit", margin: 0 },
+                  "& .MuiChip-label": { pl: 1, color: "inherit" },
+                }}
+              />
             </Grid>
           </Grid>
         </Paper>
 
-        {/* Premium Mini metrics */}
+        {/* Premium Statistics Metrics */}
         <Grid container spacing={3} sx={{ mb: 4 }}>
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+          {/* Total Teachers Card */}
+          <Grid size={{ xs: 12, sm: 6 }}>
             <Card
               elevation={0}
               sx={{
-                borderRadius: "18px",
+                borderRadius: "24px",
                 border: "1px solid rgba(18, 35, 51, 0.05)",
                 bgcolor: "#fff",
+                boxShadow: "0 10px 40px rgba(18, 35, 51, 0.03)",
+                transition: "all 0.2s ease",
+                "&:hover": {
+                  boxShadow: "0 16px 40px rgba(18, 35, 51, 0.06)",
+                  transform: "translateY(-2px)",
+                },
               }}
             >
-              <CardContent
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 2,
-                  p: "20px !important",
-                }}
-              >
-                <Avatar
+              <CardContent sx={{ display: "flex", alignItems: "center", gap: 2.5, p: "24px !important" }}>
+                <Box
                   sx={{
-                    bgcolor: "rgba(0, 209, 193, 0.08)",
-                    color: "#00D1C1",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
                     width: 48,
                     height: 48,
                     borderRadius: "12px",
+                    bgcolor: "rgba(59, 130, 246, 0.08)",
+                    color: "#3B82F6",
                   }}
                 >
-                  <PeopleIcon />
-                </Avatar>
+                  <PeopleIcon sx={{ fontSize: 24 }} />
+                </Box>
                 <Box>
-                  <Typography
-                    sx={{
-                      fontSize: "12px",
-                      fontWeight: 700,
-                      color: "rgba(18, 35, 51, 0.4)",
-                      letterSpacing: "0.5px",
-                    }}
-                  >
-                    TOTAL TEACHERS
+                  <Typography sx={{ fontSize: "11px", fontWeight: 700, color: "rgba(18, 35, 51, 0.4)", letterSpacing: "0.5px", textTransform: "uppercase" }}>
+                    Total Teachers
                   </Typography>
-                  <Typography
-                    sx={{
-                      fontSize: "20px",
-                      fontWeight: 800,
-                      color: Colors.PRIMARY_DARK,
-                    }}
-                  >
+                  <Typography sx={{ fontSize: "22px", fontWeight: 800, color: Colors.PRIMARY_DARK, mt: 0.5 }}>
                     {teachers?.length || 0}
                   </Typography>
                 </Box>
               </CardContent>
             </Card>
           </Grid>
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+
+          {/* Total Enrolled Students Card */}
+          <Grid size={{ xs: 12, sm: 6 }}>
             <Card
               elevation={0}
               sx={{
-                borderRadius: "18px",
+                borderRadius: "24px",
                 border: "1px solid rgba(18, 35, 51, 0.05)",
                 bgcolor: "#fff",
+                boxShadow: "0 10px 40px rgba(18, 35, 51, 0.03)",
+                transition: "all 0.2s ease",
+                "&:hover": {
+                  boxShadow: "0 16px 40px rgba(18, 35, 51, 0.06)",
+                  transform: "translateY(-2px)",
+                },
               }}
             >
-              <CardContent
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 2,
-                  p: "20px !important",
-                }}
-              >
-                <Avatar
+              <CardContent sx={{ display: "flex", alignItems: "center", gap: 2.5, p: "24px !important" }}>
+                <Box
                   sx={{
-                    bgcolor: "rgba(16, 185, 129, 0.08)",
-                    color: "#10B981",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
                     width: 48,
                     height: 48,
                     borderRadius: "12px",
+                    bgcolor: "rgba(16, 185, 129, 0.08)",
+                    color: "#10B981",
                   }}
                 >
-                  <SchoolIcon />
-                </Avatar>
+                  <SchoolIcon sx={{ fontSize: 24 }} />
+                </Box>
                 <Box>
-                  <Typography
-                    sx={{
-                      fontSize: "12px",
-                      fontWeight: 700,
-                      color: "rgba(18, 35, 51, 0.4)",
-                      letterSpacing: "0.5px",
-                    }}
-                  >
-                    TOTAL STUDENTS
+                  <Typography sx={{ fontSize: "11px", fontWeight: 700, color: "rgba(18, 35, 51, 0.4)", letterSpacing: "0.5px", textTransform: "uppercase" }}>
+                    Total Students
                   </Typography>
-                  <Typography
-                    sx={{
-                      fontSize: "20px",
-                      fontWeight: 800,
-                      color: Colors.PRIMARY_DARK,
-                    }}
-                  >
+                  <Typography sx={{ fontSize: "22px", fontWeight: 800, color: Colors.PRIMARY_DARK, mt: 0.5 }}>
                     {students?.length || 0}
                   </Typography>
                 </Box>
@@ -524,9 +508,7 @@ export const SchoolDetailsLayout = () => {
         </Grid>
 
         {/* Tab section selection */}
-        <Box
-          sx={{ borderBottom: 1, borderColor: "rgba(18, 35, 51, 0.08)", mb: 3 }}
-        >
+        <Box sx={{ borderBottom: 1, borderColor: "rgba(18, 35, 51, 0.08)", mb: 3 }}>
           <Tabs
             value={activeTab}
             onChange={handleTabChange}
@@ -565,7 +547,7 @@ export const SchoolDetailsLayout = () => {
         {activeTab === 0 && (
           <Grid container spacing={4}>
             {/* General Info Card */}
-            <Grid size={{ xs: 12, md: 7 }}>
+            <Grid size={{ xs: 12, md: 8 }}>
               <Paper
                 elevation={0}
                 sx={{
@@ -574,156 +556,250 @@ export const SchoolDetailsLayout = () => {
                   border: "1px solid rgba(18, 35, 51, 0.05)",
                   bgcolor: "#fff",
                   boxShadow: "0 10px 40px rgba(18, 35, 51, 0.03)",
-                  height: "100%",
                 }}
               >
                 <Typography
                   sx={{
-                    fontSize: "18px",
+                    fontSize: "16px",
                     fontWeight: 800,
                     color: Colors.PRIMARY_DARK,
-                    mb: 3,
+                    mb: 3.5,
                   }}
                 >
                   Contact & Address Details
                 </Typography>
 
-                <Grid container spacing={3}>
+                <Grid container spacing={3.5}>
+                  {/* Full Address */}
                   <Grid size={{ xs: 12 }}>
                     <Box
-                      sx={{ display: "flex", gap: 2, alignItems: "flex-start" }}
+                      sx={{
+                        p: 2.5,
+                        borderRadius: "16px",
+                        bgcolor: "rgba(18, 35, 51, 0.015)",
+                        border: "1px solid rgba(18, 35, 51, 0.03)",
+                        display: "flex",
+                        gap: 2,
+                        alignItems: "center",
+                        transition: "all 0.2s ease",
+                        "&:hover": {
+                          bgcolor: "#fff",
+                          boxShadow: "0 8px 24px rgba(18, 35, 51, 0.04)",
+                          borderColor: "rgba(18, 35, 51, 0.08)",
+                          transform: "translateY(-2px)",
+                        },
+                      }}
                     >
-                      <LocationIcon
-                        sx={{ color: "rgba(18, 35, 51, 0.4)", mt: 0.5 }}
-                      />
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          width: 38,
+                          height: 38,
+                          borderRadius: "10px",
+                          bgcolor: "rgba(244, 63, 94, 0.08)",
+                          color: "#F43F5E",
+                        }}
+                      >
+                        <LocationIcon sx={{ fontSize: 20 }} />
+                      </Box>
                       <Box>
-                        <Typography
-                          sx={{
-                            fontSize: "11px",
-                            fontWeight: 700,
-                            color: "rgba(18, 35, 51, 0.4)",
-                            textTransform: "uppercase",
-                            mb: 0.5,
-                          }}
-                        >
-                          FULL ADDRESS
+                        <Typography sx={{ fontSize: "11px", color: "rgba(18, 35, 51, 0.5)", fontWeight: 700, textTransform: "uppercase" }}>
+                          Full Address
                         </Typography>
-                        <Typography
-                          sx={{
-                            fontSize: "14px",
-                            fontWeight: 600,
-                            color: Colors.PRIMARY_DARK,
-                          }}
-                        >
+                        <Typography sx={{ fontSize: "14px", color: Colors.PRIMARY_DARK, fontWeight: 700, mt: 0.5 }}>
                           {fullAddress || "No address details available."}
                         </Typography>
                       </Box>
                     </Box>
                   </Grid>
 
-                  <Grid size={{ xs: 6 }}>
-                    <Box>
-                      <Typography
+                  {/* City */}
+                  <Grid size={{ xs: 12, sm: 6 }}>
+                    <Box
+                      sx={{
+                        p: 2.5,
+                        borderRadius: "16px",
+                        bgcolor: "rgba(18, 35, 51, 0.015)",
+                        border: "1px solid rgba(18, 35, 51, 0.03)",
+                        display: "flex",
+                        gap: 2,
+                        alignItems: "center",
+                        transition: "all 0.2s ease",
+                        "&:hover": {
+                          bgcolor: "#fff",
+                          boxShadow: "0 8px 24px rgba(18, 35, 51, 0.04)",
+                          borderColor: "rgba(18, 35, 51, 0.08)",
+                          transform: "translateY(-2px)",
+                        },
+                      }}
+                    >
+                      <Box
                         sx={{
-                          fontSize: "11px",
-                          fontWeight: 700,
-                          color: "rgba(18, 35, 51, 0.4)",
-                          mb: 0.5,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          width: 38,
+                          height: 38,
+                          borderRadius: "10px",
+                          bgcolor: "rgba(59, 130, 246, 0.08)",
+                          color: "#3B82F6",
                         }}
                       >
-                        CITY
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontSize: "14px",
-                          fontWeight: 600,
-                          color: Colors.PRIMARY_DARK,
-                        }}
-                      >
-                        {school.city || "--"}
-                      </Typography>
+                        <LocationIcon sx={{ fontSize: 20 }} />
+                      </Box>
+                      <Box>
+                        <Typography sx={{ fontSize: "11px", color: "rgba(18, 35, 51, 0.5)", fontWeight: 700, textTransform: "uppercase" }}>
+                          City
+                        </Typography>
+                        <Typography sx={{ fontSize: "14px", color: Colors.PRIMARY_DARK, fontWeight: 700, mt: 0.5 }}>
+                          {capitalizeWord(school.city) || "--"}
+                        </Typography>
+                      </Box>
                     </Box>
                   </Grid>
 
-                  <Grid size={{ xs: 6 }}>
-                    <Box>
-                      <Typography
+                  {/* State */}
+                  <Grid size={{ xs: 12, sm: 6 }}>
+                    <Box
+                      sx={{
+                        p: 2.5,
+                        borderRadius: "16px",
+                        bgcolor: "rgba(18, 35, 51, 0.015)",
+                        border: "1px solid rgba(18, 35, 51, 0.03)",
+                        display: "flex",
+                        gap: 2,
+                        alignItems: "center",
+                        transition: "all 0.2s ease",
+                        "&:hover": {
+                          bgcolor: "#fff",
+                          boxShadow: "0 8px 24px rgba(18, 35, 51, 0.04)",
+                          borderColor: "rgba(18, 35, 51, 0.08)",
+                          transform: "translateY(-2px)",
+                        },
+                      }}
+                    >
+                      <Box
                         sx={{
-                          fontSize: "11px",
-                          fontWeight: 700,
-                          color: "rgba(18, 35, 51, 0.4)",
-                          mb: 0.5,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          width: 38,
+                          height: 38,
+                          borderRadius: "10px",
+                          bgcolor: "rgba(245, 158, 11, 0.08)",
+                          color: "#F59E0B",
                         }}
                       >
-                        STATE
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontSize: "14px",
-                          fontWeight: 600,
-                          color: Colors.PRIMARY_DARK,
-                        }}
-                      >
-                        {school.state || "--"}
-                      </Typography>
+                        <LocationIcon sx={{ fontSize: 20 }} />
+                      </Box>
+                      <Box>
+                        <Typography sx={{ fontSize: "11px", color: "rgba(18, 35, 51, 0.5)", fontWeight: 700, textTransform: "uppercase" }}>
+                          State
+                        </Typography>
+                        <Typography sx={{ fontSize: "14px", color: Colors.PRIMARY_DARK, fontWeight: 700, mt: 0.5 }}>
+                          {capitalizeWord(school.state) || "--"}
+                        </Typography>
+                      </Box>
                     </Box>
                   </Grid>
 
-                  <Grid size={{ xs: 6 }}>
-                    <Box>
-                      <Typography
+                  {/* Zip Code */}
+                  <Grid size={{ xs: 12, sm: 6 }}>
+                    <Box
+                      sx={{
+                        p: 2.5,
+                        borderRadius: "16px",
+                        bgcolor: "rgba(18, 35, 51, 0.015)",
+                        border: "1px solid rgba(18, 35, 51, 0.03)",
+                        display: "flex",
+                        gap: 2,
+                        alignItems: "center",
+                        transition: "all 0.2s ease",
+                        "&:hover": {
+                          bgcolor: "#fff",
+                          boxShadow: "0 8px 24px rgba(18, 35, 51, 0.04)",
+                          borderColor: "rgba(18, 35, 51, 0.08)",
+                          transform: "translateY(-2px)",
+                        },
+                      }}
+                    >
+                      <Box
                         sx={{
-                          fontSize: "11px",
-                          fontWeight: 700,
-                          color: "rgba(18, 35, 51, 0.4)",
-                          mb: 0.5,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          width: 38,
+                          height: 38,
+                          borderRadius: "10px",
+                          bgcolor: "rgba(20, 184, 166, 0.08)",
+                          color: "#14B8A6",
                         }}
                       >
-                        POSTAL ZIP CODE
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontSize: "14px",
-                          fontWeight: 600,
-                          color: Colors.PRIMARY_DARK,
-                        }}
-                      >
-                        {school.zipCode || "--"}
-                      </Typography>
+                        <LocationIcon sx={{ fontSize: 20 }} />
+                      </Box>
+                      <Box>
+                        <Typography sx={{ fontSize: "11px", color: "rgba(18, 35, 51, 0.5)", fontWeight: 700, textTransform: "uppercase" }}>
+                          Postal Zip Code
+                        </Typography>
+                        <Typography sx={{ fontSize: "14px", color: Colors.PRIMARY_DARK, fontWeight: 700, mt: 0.5 }}>
+                          {school.zipCode || "--"}
+                        </Typography>
+                      </Box>
                     </Box>
                   </Grid>
 
-                  <Grid size={{ xs: 6 }}>
-                    <Box>
-                      <Typography
+                  {/* Affiliation Board */}
+                  <Grid size={{ xs: 12, sm: 6 }}>
+                    <Box
+                      sx={{
+                        p: 2.5,
+                        borderRadius: "16px",
+                        bgcolor: "rgba(18, 35, 51, 0.015)",
+                        border: "1px solid rgba(18, 35, 51, 0.03)",
+                        display: "flex",
+                        gap: 2,
+                        alignItems: "center",
+                        transition: "all 0.2s ease",
+                        "&:hover": {
+                          bgcolor: "#fff",
+                          boxShadow: "0 8px 24px rgba(18, 35, 51, 0.04)",
+                          borderColor: "rgba(18, 35, 51, 0.08)",
+                          transform: "translateY(-2px)",
+                        },
+                      }}
+                    >
+                      <Box
                         sx={{
-                          fontSize: "11px",
-                          fontWeight: 700,
-                          color: "rgba(18, 35, 51, 0.4)",
-                          mb: 0.5,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          width: 38,
+                          height: 38,
+                          borderRadius: "10px",
+                          bgcolor: "rgba(139, 92, 246, 0.08)",
+                          color: "#8B5CF6",
                         }}
                       >
-                        AFFILIATION BOARD
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontSize: "14px",
-                          fontWeight: 600,
-                          color: Colors.PRIMARY_DARK,
-                        }}
-                      >
-                        {school.boardId === 1
-                          ? "CISCE Board"
-                          : `Board ID: ${school.boardId}`}
-                      </Typography>
+                        <BoardIcon sx={{ fontSize: 20 }} />
+                      </Box>
+                      <Box>
+                        <Typography sx={{ fontSize: "11px", color: "rgba(18, 35, 51, 0.5)", fontWeight: 700, textTransform: "uppercase" }}>
+                          Affiliation Board
+                        </Typography>
+                        <Typography sx={{ fontSize: "14px", color: Colors.PRIMARY_DARK, fontWeight: 700, mt: 0.5 }}>
+                          {school.boardId === 1 ? "CISCE Board" : `Board ID: ${school.boardId}`}
+                        </Typography>
+                      </Box>
                     </Box>
                   </Grid>
                 </Grid>
               </Paper>
             </Grid>
 
-            {/* Documents & Certificates Card */}
-            <Grid size={{ xs: 12, md: 5 }}>
+            {/* Accreditation & Certificates */}
+            <Grid size={{ xs: 12, md: 4 }}>
               <Paper
                 elevation={0}
                 sx={{
@@ -739,10 +815,10 @@ export const SchoolDetailsLayout = () => {
               >
                 <Typography
                   sx={{
-                    fontSize: "18px",
+                    fontSize: "16px",
                     fontWeight: 800,
                     color: Colors.PRIMARY_DARK,
-                    mb: 3,
+                    mb: 3.5,
                   }}
                 >
                   Accreditation & Certificates
@@ -757,14 +833,15 @@ export const SchoolDetailsLayout = () => {
                     justifyContent: "center",
                     p: 3,
                     borderRadius: "16px",
-                    bgcolor: "rgba(18, 35, 51, 0.02)",
+                    bgcolor: "rgba(18, 35, 51, 0.015)",
                     border: "1px dashed rgba(18, 35, 51, 0.1)",
                     textAlign: "center",
+                    minHeight: "220px",
                   }}
                 >
                   <Avatar
                     sx={{
-                      bgcolor: "rgba(0, 209, 193, 0.1)",
+                      bgcolor: "rgba(0, 209, 193, 0.08)",
                       color: "#00D1C1",
                       width: 64,
                       height: 64,
@@ -790,24 +867,17 @@ export const SchoolDetailsLayout = () => {
                       fontSize: "11px",
                       fontWeight: 600,
                       color: "rgba(18, 35, 51, 0.4)",
-                      mb: 2,
+                      mb: 2.5,
                     }}
                   >
-                    {school.affiliationNumber
-                      ? `Affiliation No: ${school.affiliationNumber}`
-                      : "Official affiliation document"}
+                    {school.affiliationNumber ? `Affiliation No: ${school.affiliationNumber}` : "Official affiliation document"}
                   </Typography>
 
-                  {school.affiliationCertificateDownloadUrl ||
-                  school.affiliationCertificate ? (
+                  {school.affiliationCertificateDownloadUrl || school.affiliationCertificate ? (
                     <Button
                       variant="contained"
                       component="a"
-                      href={
-                        school.affiliationCertificateDownloadUrl ||
-                        school.affiliationCertificate ||
-                        undefined
-                      }
+                      href={school.affiliationCertificateDownloadUrl || school.affiliationCertificate || undefined}
                       target="_blank"
                       rel="noopener noreferrer"
                       startIcon={<DocIcon />}
@@ -848,200 +918,194 @@ export const SchoolDetailsLayout = () => {
           <Paper
             elevation={0}
             sx={{
-              p: 4,
+              pt: 4,
+              px: 4,
+              pb: 0,
               borderRadius: "24px",
               border: "1px solid rgba(18, 35, 51, 0.05)",
               bgcolor: "#fff",
               boxShadow: "0 10px 40px rgba(18, 35, 51, 0.03)",
+              overflow: "hidden",
             }}
           >
-            {teachers && teachers.length > 0 ? (
-              <TableContainer>
-                <Table>
-                  <TableHead sx={{ bgcolor: "rgba(18, 35, 51, 0.04)" }}>
-                    <TableRow>
-                      <TableCell
-                        sx={{
-                          fontWeight: 800,
-                          fontSize: "11px",
-                          color: Colors.PRIMARY_DARK,
-                          textTransform: "uppercase",
-                        }}
-                      >
-                        ID
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          fontWeight: 800,
-                          fontSize: "11px",
-                          color: Colors.PRIMARY_DARK,
-                          textTransform: "uppercase",
-                        }}
-                      >
-                        Name
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          fontWeight: 800,
-                          fontSize: "11px",
-                          color: Colors.PRIMARY_DARK,
-                          textTransform: "uppercase",
-                        }}
-                      >
-                        Email
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          fontWeight: 800,
-                          fontSize: "11px",
-                          color: Colors.PRIMARY_DARK,
-                          textTransform: "uppercase",
-                        }}
-                      >
-                        Designation / Subject
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {teachers.map((teacher: any) => (
-                      <TableRow
-                        key={teacher.id}
-                        sx={{
-                          "&:hover": { bgcolor: "rgba(18, 35, 51, 0.01)" },
-                        }}
-                      >
-                        <TableCell
-                          sx={{
-                            fontSize: "13px",
-                            fontWeight: 700,
-                            color: Colors.PRIMARY_DARK,
-                          }}
-                        >
-                          #{teacher.id}
-                        </TableCell>
-                        <TableCell>
-                          <Box
-                            sx={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 1.5,
-                            }}
-                          >
-                            <Avatar
-                              src={teacher.avatar}
-                              sx={{
-                                width: 32,
-                                height: 32,
-                                bgcolor: "rgba(18, 35, 51, 0.05)",
-                                color: Colors.PRIMARY_DARK,
-                                fontWeight: 700,
-                                fontSize: 13,
-                              }}
-                            >
-                              {teacher.fullName?.charAt(0) ||
-                                teacher.name?.charAt(0)}
-                            </Avatar>
-                            <Typography
-                              sx={{
-                                fontSize: "13px",
-                                fontWeight: 700,
-                                color: Colors.PRIMARY_DARK,
-                              }}
-                            >
-                              {teacher.fullName || teacher.name}
-                            </Typography>
-                          </Box>
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            fontSize: "13px",
-                            color: "rgba(18, 35, 51, 0.6)",
-                            fontWeight: 600,
-                          }}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 0.5,
-                            }}
-                          >
-                            <EmailIcon
-                              sx={{
-                                fontSize: 16,
-                                color: "rgba(18, 35, 51, 0.3)",
-                              }}
-                            />
-                            {teacher.email}
-                          </Box>
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            fontSize: "13px",
-                            fontWeight: 700,
-                            color: Colors.PRIMARY_DARK,
-                          }}
-                        >
-                          <Chip
-                            label={
-                              teacher.designation ||
-                              teacher.subject ||
-                              "Teacher"
-                            }
-                            size="small"
-                            sx={{
-                              bgcolor: "rgba(0, 209, 193, 0.06)",
-                              color: "#00D1C1",
-                              fontWeight: 800,
-                              fontSize: "11px",
-                              borderRadius: "6px",
-                            }}
-                          />
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            ) : (
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 3 }}>
               <Box
                 sx={{
                   display: "flex",
-                  flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
-                  py: 8,
-                  textAlign: "center",
+                  width: 32,
+                  height: 32,
+                  borderRadius: "8px",
+                  bgcolor: "rgba(59, 130, 246, 0.08)",
+                  color: "#3B82F6",
                 }}
               >
-                <Avatar
+                <PeopleIcon sx={{ fontSize: 18 }} />
+              </Box>
+              <Typography sx={{ fontSize: "16px", fontWeight: 800, color: Colors.PRIMARY_DARK }}>
+                Registered Teachers ({totalTeachers})
+              </Typography>
+            </Box>
+
+            {totalTeachers > 0 ? (
+              <>
+                <TableContainer>
+                  <Table>
+                    <TableHead sx={{ bgcolor: "rgba(18, 35, 51, 0.03)" }}>
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: 800, fontSize: "11px", color: Colors.PRIMARY_DARK, py: 1.5 }}>
+                          Name
+                        </TableCell>
+                        <TableCell sx={{ fontWeight: 800, fontSize: "11px", color: Colors.PRIMARY_DARK, py: 1.5 }}>
+                          Email Address
+                        </TableCell>
+                        <TableCell sx={{ fontWeight: 800, fontSize: "11px", color: Colors.PRIMARY_DARK, py: 1.5 }}>
+                          Designation / Subject
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {currentTeachers.map((teacher: any) => {
+                        const teacherName = teacher.fullName || teacher.name || "Teacher";
+                        return (
+                          <TableRow key={teacher.id} sx={{ "&:hover": { bgcolor: "rgba(18, 35, 51, 0.01)" } }}>
+                            <TableCell sx={{ py: 1.5 }}>
+                              <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                                <Avatar
+                                  src={teacher.avatar || undefined}
+                                  sx={{ width: 32, height: 32, fontSize: 12, fontWeight: 700 }}
+                                >
+                                  {teacherName.charAt(0).toUpperCase()}
+                                </Avatar>
+                                <Typography sx={{ fontSize: "13px", fontWeight: 700, color: Colors.PRIMARY_DARK }}>
+                                  {teacherName}
+                                </Typography>
+                              </Box>
+                            </TableCell>
+                            <TableCell sx={{ fontSize: "13px", fontWeight: 600, color: "rgba(18, 35, 51, 0.8)", py: 1.5 }}>
+                              <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                                <EmailIcon sx={{ fontSize: 16, color: "rgba(18, 35, 51, 0.35)" }} />
+                                {teacher.email}
+                              </Box>
+                            </TableCell>
+                            <TableCell sx={{ py: 1.5 }}>
+                              <Chip
+                                  label={teacher.designation || teacher.subject || "Teacher"}
+                                  size="small"
+                                  sx={{
+                                    bgcolor: "rgba(0, 209, 193, 0.06)",
+                                    color: "#00D1C1",
+                                    fontWeight: 800,
+                                    fontSize: "11px",
+                                    borderRadius: "6px",
+                                  }}
+                                />
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+
+                <Box
                   sx={{
-                    bgcolor: "rgba(18, 35, 51, 0.03)",
-                    color: "rgba(18, 35, 51, 0.2)",
-                    width: 72,
-                    height: 72,
-                    mb: 2,
+                    display: "flex",
+                    flexDirection: { xs: "column", sm: "row" },
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    px: 4,
+                    py: 2.5,
+                    borderTop: "1px solid rgba(18, 35, 51, 0.05)",
+                    bgcolor: "#FBF9F6",
+                    gap: 2,
+                    mt: 3,
+                    mx: -4,
+                    mb: 0,
+                    borderRadius: "0 0 24px 24px",
                   }}
                 >
+                  <Typography sx={{ fontSize: "12px", fontWeight: 600, color: "rgba(18, 35, 51, 0.5)" }}>
+                    Showing {(teacherPage - 1) * itemsPerPage + 1} to{" "}
+                    {Math.min(teacherPage * itemsPerPage, totalTeachers)} of {totalTeachers} teachers
+                  </Typography>
+
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                    <IconButton
+                      onClick={() => setTeacherPage((prev) => Math.max(prev - 1, 1))}
+                      disabled={teacherPage === 1}
+                      size="small"
+                      sx={{
+                        border: "1px solid rgba(18, 35, 51, 0.08)",
+                        borderRadius: "8px",
+                        bgcolor: "#fff",
+                        "&:hover": { bgcolor: "rgba(18, 35, 51, 0.04)" },
+                        width: 34,
+                        height: 34,
+                        "&.Mui-disabled": { opacity: 0.4 },
+                      }}
+                    >
+                      <PrevIcon sx={{ fontSize: 16 }} />
+                    </IconButton>
+
+                    {Array.from({ length: totalTeacherPages }, (_, i) => {
+                      const pageNum = i + 1;
+                      const isActive = pageNum === teacherPage;
+                      return (
+                        <Button
+                          key={pageNum}
+                          onClick={() => setTeacherPage(pageNum)}
+                          sx={{
+                            minWidth: 34,
+                            height: 34,
+                            borderRadius: "8px",
+                            fontSize: "12px",
+                            fontWeight: isActive ? 800 : 600,
+                            color: isActive ? "#fff" : Colors.PRIMARY_DARK,
+                            bgcolor: isActive ? Colors.PRIMARY_DARK : "transparent",
+                            border: isActive ? "none" : "1px solid transparent",
+                            "&:hover": {
+                              bgcolor: isActive ? Colors.PRIMARY_DARK : "rgba(18, 35, 51, 0.04)",
+                              opacity: isActive ? 0.9 : 1,
+                              borderColor: isActive ? "transparent" : "rgba(18, 35, 51, 0.1)",
+                            },
+                            p: 0,
+                          }}
+                        >
+                          {pageNum}
+                        </Button>
+                      );
+                    })}
+
+                    <IconButton
+                      onClick={() => setTeacherPage((prev) => Math.min(prev + 1, totalTeacherPages))}
+                      disabled={teacherPage === totalTeacherPages}
+                      size="small"
+                      sx={{
+                        border: "1px solid rgba(18, 35, 51, 0.08)",
+                        borderRadius: "8px",
+                        bgcolor: "#fff",
+                        "&:hover": { bgcolor: "rgba(18, 35, 51, 0.04)" },
+                        width: 34,
+                        height: 34,
+                        "&.Mui-disabled": { opacity: 0.4 },
+                      }}
+                    >
+                      <NextIcon sx={{ fontSize: 16 }} />
+                    </IconButton>
+                  </Box>
+                </Box>
+              </>
+            ) : (
+              <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", py: 8, px: 4, textAlign: "center" }}>
+                <Avatar sx={{ bgcolor: "rgba(18, 35, 51, 0.03)", color: "rgba(18, 35, 51, 0.2)", width: 72, height: 72, mb: 2 }}>
                   <PeopleIcon sx={{ fontSize: 36 }} />
                 </Avatar>
-                <Typography
-                  sx={{
-                    fontSize: "16px",
-                    fontWeight: 800,
-                    color: Colors.PRIMARY_DARK,
-                    mb: 0.5,
-                  }}
-                >
+                <Typography sx={{ fontSize: "16px", fontWeight: 800, color: Colors.PRIMARY_DARK, mb: 0.5 }}>
                   No Teachers Registered
                 </Typography>
-                <Typography
-                  sx={{
-                    fontSize: "13px",
-                    fontWeight: 600,
-                    color: "rgba(18, 35, 51, 0.4)",
-                  }}
-                >
+                <Typography sx={{ fontSize: "13px", fontWeight: 600, color: "rgba(18, 35, 51, 0.4)", mb: 4 }}>
                   There are currently no teachers associated with this school.
                 </Typography>
               </Box>
@@ -1054,196 +1118,194 @@ export const SchoolDetailsLayout = () => {
           <Paper
             elevation={0}
             sx={{
-              p: 4,
+              pt: 4,
+              px: 4,
+              pb: 0,
               borderRadius: "24px",
               border: "1px solid rgba(18, 35, 51, 0.05)",
               bgcolor: "#fff",
               boxShadow: "0 10px 40px rgba(18, 35, 51, 0.03)",
+              overflow: "hidden",
             }}
           >
-            {students && students.length > 0 ? (
-              <TableContainer>
-                <Table>
-                  <TableHead sx={{ bgcolor: "rgba(18, 35, 51, 0.04)" }}>
-                    <TableRow>
-                      <TableCell
-                        sx={{
-                          fontWeight: 800,
-                          fontSize: "11px",
-                          color: Colors.PRIMARY_DARK,
-                          textTransform: "uppercase",
-                        }}
-                      >
-                        ID
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          fontWeight: 800,
-                          fontSize: "11px",
-                          color: Colors.PRIMARY_DARK,
-                          textTransform: "uppercase",
-                        }}
-                      >
-                        Name
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          fontWeight: 800,
-                          fontSize: "11px",
-                          color: Colors.PRIMARY_DARK,
-                          textTransform: "uppercase",
-                        }}
-                      >
-                        Email
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          fontWeight: 800,
-                          fontSize: "11px",
-                          color: Colors.PRIMARY_DARK,
-                          textTransform: "uppercase",
-                        }}
-                      >
-                        Grade / Class
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {students.map((student: any) => (
-                      <TableRow
-                        key={student.id}
-                        sx={{
-                          "&:hover": { bgcolor: "rgba(18, 35, 51, 0.01)" },
-                        }}
-                      >
-                        <TableCell
-                          sx={{
-                            fontSize: "13px",
-                            fontWeight: 700,
-                            color: Colors.PRIMARY_DARK,
-                          }}
-                        >
-                          #{student.id}
-                        </TableCell>
-                        <TableCell>
-                          <Box
-                            sx={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 1.5,
-                            }}
-                          >
-                            <Avatar
-                              src={student.avatar}
-                              sx={{
-                                width: 32,
-                                height: 32,
-                                bgcolor: "rgba(18, 35, 51, 0.05)",
-                                color: Colors.PRIMARY_DARK,
-                                fontWeight: 700,
-                                fontSize: 13,
-                              }}
-                            >
-                              {student.fullName?.charAt(0) ||
-                                student.name?.charAt(0)}
-                            </Avatar>
-                            <Typography
-                              sx={{
-                                fontSize: "13px",
-                                fontWeight: 700,
-                                color: Colors.PRIMARY_DARK,
-                              }}
-                            >
-                              {student.fullName || student.name}
-                            </Typography>
-                          </Box>
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            fontSize: "13px",
-                            color: "rgba(18, 35, 51, 0.6)",
-                            fontWeight: 600,
-                          }}
-                        >
-                          <Box
-                            sx={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 0.5,
-                            }}
-                          >
-                            <EmailIcon
-                              sx={{
-                                fontSize: 16,
-                                color: "rgba(18, 35, 51, 0.3)",
-                              }}
-                            />
-                            {student.email}
-                          </Box>
-                        </TableCell>
-                        <TableCell
-                          sx={{
-                            fontSize: "13px",
-                            fontWeight: 700,
-                            color: Colors.PRIMARY_DARK,
-                          }}
-                        >
-                          <Chip
-                            label={student.grade || student.class || "Student"}
-                            size="small"
-                            sx={{
-                              bgcolor: "rgba(16, 185, 129, 0.06)",
-                              color: "#10B981",
-                              fontWeight: 800,
-                              fontSize: "11px",
-                              borderRadius: "6px",
-                            }}
-                          />
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            ) : (
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 3 }}>
               <Box
                 sx={{
                   display: "flex",
-                  flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
-                  py: 8,
-                  textAlign: "center",
+                  width: 32,
+                  height: 32,
+                  borderRadius: "8px",
+                  bgcolor: "rgba(16, 185, 129, 0.08)",
+                  color: "#10B981",
                 }}
               >
-                <Avatar
+                <SchoolIcon sx={{ fontSize: 18 }} />
+              </Box>
+              <Typography sx={{ fontSize: "16px", fontWeight: 800, color: Colors.PRIMARY_DARK }}>
+                Enrolled Students ({totalStudents})
+              </Typography>
+            </Box>
+
+            {totalStudents > 0 ? (
+              <>
+                <TableContainer>
+                  <Table>
+                    <TableHead sx={{ bgcolor: "rgba(18, 35, 51, 0.03)" }}>
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: 800, fontSize: "11px", color: Colors.PRIMARY_DARK, py: 1.5 }}>
+                          Name
+                        </TableCell>
+                        <TableCell sx={{ fontWeight: 800, fontSize: "11px", color: Colors.PRIMARY_DARK, py: 1.5 }}>
+                          Email Address
+                        </TableCell>
+                        <TableCell sx={{ fontWeight: 800, fontSize: "11px", color: Colors.PRIMARY_DARK, py: 1.5 }}>
+                          Grade / Class
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {currentStudents.map((student: any) => {
+                        const studentName = student.fullName || student.name || "Student";
+                        return (
+                          <TableRow key={student.id} sx={{ "&:hover": { bgcolor: "rgba(18, 35, 51, 0.01)" } }}>
+                            <TableCell sx={{ py: 1.5 }}>
+                              <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+                                <Avatar
+                                  src={student.avatar || undefined}
+                                  sx={{ width: 32, height: 32, fontSize: 12, fontWeight: 700 }}
+                                >
+                                  {studentName.charAt(0).toUpperCase()}
+                                </Avatar>
+                                <Typography sx={{ fontSize: "13px", fontWeight: 700, color: Colors.PRIMARY_DARK }}>
+                                  {studentName}
+                                </Typography>
+                              </Box>
+                            </TableCell>
+                            <TableCell sx={{ fontSize: "13px", fontWeight: 600, color: "rgba(18, 35, 51, 0.8)", py: 1.5 }}>
+                              <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                                <EmailIcon sx={{ fontSize: 16, color: "rgba(18, 35, 51, 0.35)" }} />
+                                {student.email}
+                              </Box>
+                            </TableCell>
+                            <TableCell sx={{ py: 1.5 }}>
+                              <Chip
+                                label={student.grade || student.class || "Student"}
+                                size="small"
+                                sx={{
+                                  bgcolor: "rgba(16, 185, 129, 0.06)",
+                                  color: "#10B981",
+                                  fontWeight: 800,
+                                  fontSize: "11px",
+                                  borderRadius: "6px",
+                                }}
+                              />
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+
+                <Box
                   sx={{
-                    bgcolor: "rgba(18, 35, 51, 0.03)",
-                    color: "rgba(18, 35, 51, 0.2)",
-                    width: 72,
-                    height: 72,
-                    mb: 2,
+                    display: "flex",
+                    flexDirection: { xs: "column", sm: "row" },
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    px: 4,
+                    py: 2.5,
+                    borderTop: "1px solid rgba(18, 35, 51, 0.05)",
+                    bgcolor: "#FBF9F6",
+                    gap: 2,
+                    mt: 3,
+                    mx: -4,
+                    mb: 0,
+                    borderRadius: "0 0 24px 24px",
                   }}
                 >
+                  <Typography sx={{ fontSize: "12px", fontWeight: 600, color: "rgba(18, 35, 51, 0.5)" }}>
+                    Showing {(studentPage - 1) * itemsPerPage + 1} to{" "}
+                    {Math.min(studentPage * itemsPerPage, totalStudents)} of {totalStudents} students
+                  </Typography>
+
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                    <IconButton
+                      onClick={() => setStudentPage((prev) => Math.max(prev - 1, 1))}
+                      disabled={studentPage === 1}
+                      size="small"
+                      sx={{
+                        border: "1px solid rgba(18, 35, 51, 0.08)",
+                        borderRadius: "8px",
+                        bgcolor: "#fff",
+                        "&:hover": { bgcolor: "rgba(18, 35, 51, 0.04)" },
+                        width: 34,
+                        height: 34,
+                        "&.Mui-disabled": { opacity: 0.4 },
+                      }}
+                    >
+                      <PrevIcon sx={{ fontSize: 16 }} />
+                    </IconButton>
+
+                    {Array.from({ length: totalStudentPages }, (_, i) => {
+                      const pageNum = i + 1;
+                      const isActive = pageNum === studentPage;
+                      return (
+                        <Button
+                          key={pageNum}
+                          onClick={() => setStudentPage(pageNum)}
+                          sx={{
+                            minWidth: 34,
+                            height: 34,
+                            borderRadius: "8px",
+                            fontSize: "12px",
+                            fontWeight: isActive ? 800 : 600,
+                            color: isActive ? "#fff" : Colors.PRIMARY_DARK,
+                            bgcolor: isActive ? Colors.PRIMARY_DARK : "transparent",
+                            border: isActive ? "none" : "1px solid transparent",
+                            "&:hover": {
+                              bgcolor: isActive ? Colors.PRIMARY_DARK : "rgba(18, 35, 51, 0.04)",
+                              opacity: isActive ? 0.9 : 1,
+                              borderColor: isActive ? "transparent" : "rgba(18, 35, 51, 0.1)",
+                            },
+                            p: 0,
+                          }}
+                        >
+                          {pageNum}
+                        </Button>
+                      );
+                    })}
+
+                    <IconButton
+                      onClick={() => setStudentPage((prev) => Math.min(prev + 1, totalStudentPages))}
+                      disabled={studentPage === totalStudentPages}
+                      size="small"
+                      sx={{
+                        border: "1px solid rgba(18, 35, 51, 0.08)",
+                        borderRadius: "8px",
+                        bgcolor: "#fff",
+                        "&:hover": { bgcolor: "rgba(18, 35, 51, 0.04)" },
+                        width: 34,
+                        height: 34,
+                        "&.Mui-disabled": { opacity: 0.4 },
+                      }}
+                    >
+                      <NextIcon sx={{ fontSize: 16 }} />
+                    </IconButton>
+                  </Box>
+                </Box>
+              </>
+            ) : (
+              <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", py: 8, px: 4, textAlign: "center" }}>
+                <Avatar sx={{ bgcolor: "rgba(18, 35, 51, 0.03)", color: "rgba(18, 35, 51, 0.2)", width: 72, height: 72, mb: 2 }}>
                   <SchoolIcon sx={{ fontSize: 36 }} />
                 </Avatar>
-                <Typography
-                  sx={{
-                    fontSize: "16px",
-                    fontWeight: 800,
-                    color: Colors.PRIMARY_DARK,
-                    mb: 0.5,
-                  }}
-                >
+                <Typography sx={{ fontSize: "16px", fontWeight: 800, color: Colors.PRIMARY_DARK, mb: 0.5 }}>
                   No Students Registered
                 </Typography>
-                <Typography
-                  sx={{
-                    fontSize: "13px",
-                    fontWeight: 600,
-                    color: "rgba(18, 35, 51, 0.4)",
-                  }}
-                >
+                <Typography sx={{ fontSize: "13px", fontWeight: 600, color: "rgba(18, 35, 51, 0.4)", mb: 4 }}>
                   There are currently no students enrolled in this institution.
                 </Typography>
               </Box>

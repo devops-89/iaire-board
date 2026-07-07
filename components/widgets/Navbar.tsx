@@ -7,7 +7,6 @@ import {
 } from "@mui/icons-material";
 import { usePathname } from "next/navigation";
 
-// Mapping for dynamic header content based on actual pathnames
 const PAGE_CONFIG: any = {
   "/dashboard": {
     title: "IAIRE Overview Dashboard",
@@ -20,27 +19,29 @@ const PAGE_CONFIG: any = {
     showActions: false,
   },
   "/teacher-certification": {
-    title: "Teacher Certification Distribution",
-    description: "Monitoring academic excellence through standardized teacher training and global certifications.",
+    title: "",
+    description: "",
     showActions: false,
   },
   "/innovation-research": {
     title: "Innovation & Research Status",
-    description: "Tracking intellectual property, patents, and academic research publications across schools.",
+    description:
+      "Tracking intellectual property, patents, and academic research publications across schools.",
     showActions: false,
   },
   "/student-startup": {
     title: "Student Startup Status",
-    description: "Fostering entrepreneurship and monitoring student-led startup ventures and funding.",
+    description:
+      "Fostering entrepreneurship and monitoring student-led startup ventures and funding.",
     showActions: false,
   },
 };
 
 export const Navbar = () => {
   const pathname = usePathname();
-  
-  // Find matching config or fallback to dashboard
-  const activeKey = Object.keys(PAGE_CONFIG).find(key => pathname.includes(key)) || "/dashboard";
+  const activeKey =
+    Object.keys(PAGE_CONFIG).find((key) => pathname.includes(key)) ||
+    "/dashboard";
   const config = PAGE_CONFIG[activeKey];
 
   if (!config.title && !config.description && !config.showActions) {
@@ -94,7 +95,10 @@ export const Navbar = () => {
           <Chip
             icon={
               <LiveIcon
-                sx={{ fontSize: "10px !important", color: "#00D1C1 !important" }}
+                sx={{
+                  fontSize: "10px !important",
+                  color: "#00D1C1 !important",
+                }}
               />
             }
             label="Live Data"

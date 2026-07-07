@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import {
   Box,
@@ -17,85 +16,89 @@ import {
   ListItemText,
 } from "@mui/material";
 import { VisibilityOutlined as ViewIcon } from "@mui/icons-material";
-import { schoolControllers } from "@/api/school";
+import { teacherControllers } from "@/api/teacher";
 import { Colors } from "@/utils/enum";
-import { School } from "@/utils/types";
-import { SchoolTableHeader } from "./SchoolTableHeader";
-import { SchoolTableRow } from "./SchoolTableRow";
-import { SchoolTablePagination } from "./SchoolTablePagination";
-
+import { Teacher } from "@/utils/types";
+import { TeacherTableHeader } from "./TeacherTableHeader";
+import { TeacherTableRow } from "./TeacherTableRow";
+import { TeacherTablePagination } from "./TeacherTablePagination";
 import { useRouter } from "next/navigation";
 
-export const SchoolTable = () => {
+export const TeacherTable = () => {
   const router = useRouter();
-  const [schools, setSchools] = useState<School[]>([]);
+  const [teachers, setTeachers] = useState<Teacher[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalSchools, setTotalSchools] = useState(0);
+  const [totalTeachers, setTotalTeachers] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
-  const schoolsPerPage = 10;
+  const teachersPerPage = 10;
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
+  const [selectedTeacher, setSelectedTeacher] = useState<Teacher | null>(null);
 
   const handleOpenMenu = (
     event: React.MouseEvent<HTMLElement>,
-    school: School,
+    teacher: Teacher,
   ) => {
     setAnchorEl(event.currentTarget);
-    setSelectedSchool(school);
+    setSelectedTeacher(teacher);
   };
 
   const handleCloseMenu = () => {
     setAnchorEl(null);
-    setSelectedSchool(null);
+    setSelectedTeacher(null);
   };
 
   const handleViewDetails = () => {
-    if (selectedSchool) {
-      router.push(`/membership-overview/${selectedSchool.id}`);
+    if (selectedTeacher) {
+      router.push(`/teacher-certification/${selectedTeacher.id}`);
     }
     handleCloseMenu();
   };
 
   useEffect(() => {
-    const fetchSchools = async () => {
+    const fetchTeachers = async () => {
       try {
         setLoading(true);
-        const res = await schoolControllers.getSchools(
-          1,
+        const res = await teacherControllers.getTeachers(
           currentPage,
-          10,
+          teachersPerPage,
           searchQuery,
         );
+
         if (res?.data && res.data.success) {
           const payload = res.data.data;
+
+          let parsedTeachers: Teacher[] = [];
           if (payload && Array.isArray(payload.data)) {
-            setSchools(payload.data);
+            parsedTeachers = payload.data;
           } else if (Array.isArray(payload)) {
-            setSchools(payload);
-          } else {
-            setSchools([]);
+            parsedTeachers = payload;
+          } else if (payload && typeof payload === "object") {
+            // Some APIs structure it as res.data.data = [...]
+            // or nested data object.
+            parsedTeachers = [];
           }
+          setTeachers(parsedTeachers);
 
           if (payload?.pagination) {
-            setTotalSchools(payload.pagination.total || 0);
+            setTotalTeachers(payload.pagination.total || parsedTeachers.length);
             setTotalPages(payload.pagination.totalPages || 1);
           } else {
-            const size = payload?.data?.length || payload?.length || 0;
-            setTotalSchools(size);
-            setTotalPages(Math.ceil(size / schoolsPerPage) || 1);
+            const size = payload?.total || parsedTeachers.length || 0;
+            setTotalTeachers(size);
+            setTotalPages(Math.ceil(size / teachersPerPage) || 1);
           }
         } else {
-          setSchools([]);
-          setTotalSchools(0);
+          setTeachers([]);
+          setTotalTeachers(0);
           setTotalPages(1);
         }
       } catch (error) {
-        console.error("Failed to fetch schools from API:", error);
-        setSchools([]);
-        setTotalSchools(0);
+        console.error("Failed to fetch teachers from API:", error);
+        setTeachers([]);
+        setTotalTeachers(0);
         setTotalPages(1);
       } finally {
         setLoading(false);
@@ -103,32 +106,30 @@ export const SchoolTable = () => {
     };
 
     const delayDebounceFn = setTimeout(() => {
-      fetchSchools();
+      fetchTeachers();
     }, 300);
 
     return () => clearTimeout(delayDebounceFn);
   }, [currentPage, searchQuery]);
 
-  // Handle page resets on search changes
+  // Reset page when search term changes
   useEffect(() => {
     setCurrentPage(1);
   }, [searchQuery]);
 
-  // Filter logic
-  const filteredSchools = schools.filter((school) => {
+  // Client-side filtering as a fallback/safety measure
+  const filteredTeachers = teachers.filter((teacher) => {
     const query = searchQuery.toLowerCase();
+    const name = (teacher.fullName || teacher.username || "").toLowerCase();
+    const email = (teacher.email || "").toLowerCase();
+    const displayId = (teacher.displayId || `#${teacher.id}`).toLowerCase();
     return (
-      school.name.toLowerCase().includes(query) ||
-      (school.displayId?.toLowerCase() || "").includes(query) ||
-      (school.membershipCode?.toLowerCase() || "").includes(query) ||
-      String(school.registrationYear || "").includes(query) ||
-      (school.address?.toLowerCase() || "").includes(query)
+      name.includes(query) || email.includes(query) || displayId.includes(query)
     );
   });
 
-  const indexOfFirstSchool = (currentPage - 1) * schoolsPerPage;
-  const indexOfLastSchool = indexOfFirstSchool + filteredSchools.length;
-  const currentSchools = filteredSchools;
+  const indexOfFirstTeacher = (currentPage - 1) * teachersPerPage;
+  const indexOfLastTeacher = indexOfFirstTeacher + filteredTeachers.length;
 
   const handlePrevPage = () => {
     setCurrentPage((prev) => Math.max(prev - 1, 1));
@@ -140,13 +141,11 @@ export const SchoolTable = () => {
 
   return (
     <Box>
-      {/* Header bar with Search and Add Actions */}
-      <SchoolTableHeader
+      <TeacherTableHeader
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
       />
 
-      {/* Main Table Container Card */}
       <TableContainer
         component={Paper}
         sx={{
@@ -192,7 +191,7 @@ export const SchoolTable = () => {
                       px: 3,
                     }}
                   >
-                    Display ID
+                    School ID
                   </TableCell>
                   <TableCell
                     sx={{
@@ -205,21 +204,7 @@ export const SchoolTable = () => {
                       px: 3,
                     }}
                   >
-                    School Name
-                  </TableCell>
-                  <TableCell
-                    align="center"
-                    sx={{
-                      fontWeight: 800,
-                      fontSize: "11px",
-                      color: Colors.PRIMARY_DARK,
-                      letterSpacing: "0.5px",
-                      textTransform: "uppercase",
-                      py: 2,
-                      px: 3,
-                    }}
-                  >
-                    Membership Code
+                    Teacher Name
                   </TableCell>
                   <TableCell
                     sx={{
@@ -232,7 +217,7 @@ export const SchoolTable = () => {
                       px: 3,
                     }}
                   >
-                    Registration Year
+                    Email Address
                   </TableCell>
                   <TableCell
                     sx={{
@@ -264,9 +249,9 @@ export const SchoolTable = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {currentSchools.length === 0 ? (
+                {filteredTeachers.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={6} align="center" sx={{ py: 6 }}>
+                    <TableCell colSpan={5} align="center" sx={{ py: 6 }}>
                       <Typography
                         sx={{
                           color: "rgba(18, 35, 51, 0.4)",
@@ -274,30 +259,31 @@ export const SchoolTable = () => {
                           fontSize: "14px",
                         }}
                       >
-                        No schools found
+                        No teachers found
                       </Typography>
                     </TableCell>
                   </TableRow>
                 ) : (
-                  currentSchools.map((school) => (
-                    <SchoolTableRow
-                      key={school.id}
-                      school={school}
+                  filteredTeachers.map((teacher) => (
+                    <TeacherTableRow
+                      key={teacher.id}
+                      teacher={teacher}
                       onOpenMenu={handleOpenMenu}
-                      onRowClick={(school) => router.push(`/membership-overview/${school.id}`)}
+                      onRowClick={(teacher) =>
+                        router.push(`/teacher-certification/${teacher.id}`)
+                      }
                     />
                   ))
                 )}
               </TableBody>
             </Table>
 
-            {/* Premium Pagination Footer */}
-            <SchoolTablePagination
+            <TeacherTablePagination
               currentPage={currentPage}
               totalPages={totalPages}
-              totalSchools={totalSchools}
-              indexOfFirstSchool={indexOfFirstSchool}
-              indexOfLastSchool={indexOfLastSchool}
+              totalTeachers={totalTeachers}
+              indexOfFirstTeacher={indexOfFirstTeacher}
+              indexOfLastTeacher={indexOfLastTeacher}
               onPrevPage={handlePrevPage}
               onNextPage={handleNextPage}
               onPageChange={setCurrentPage}
@@ -306,7 +292,6 @@ export const SchoolTable = () => {
         )}
       </TableContainer>
 
-      {/* Action Menu */}
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
