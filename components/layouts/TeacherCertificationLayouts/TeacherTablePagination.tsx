@@ -49,7 +49,8 @@ export const TeacherTablePagination: React.FC<TeacherTablePaginationProps> = ({
         }}
       >
         Showing {totalTeachers === 0 ? 0 : indexOfFirstTeacher + 1} to{" "}
-        {Math.min(indexOfLastTeacher, totalTeachers)} of {totalTeachers} teachers
+        {Math.min(indexOfLastTeacher, totalTeachers)} of {totalTeachers}{" "}
+        teachers
       </Typography>
 
       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>

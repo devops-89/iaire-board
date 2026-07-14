@@ -1,6 +1,9 @@
 import React from "react";
 import { Box, Typography, Paper, InputBase, IconButton } from "@mui/material";
-import { Search as SearchIcon, PersonAdd as AddIcon } from "@mui/icons-material";
+import {
+  Search as SearchIcon,
+  PersonAdd as AddIcon,
+} from "@mui/icons-material";
 import { Colors } from "@/utils/enum";
 
 interface TeacherTableHeaderProps {

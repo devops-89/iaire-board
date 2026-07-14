@@ -83,13 +83,21 @@ export const Sidebar = () => {
       }}
     >
       {/* Logo Section */}
-      <Box sx={{ p: 3, mb: 1 }}>
+      <Box
+        sx={{
+          height: "72px",
+          px: 3,
+          display: "flex",
+          alignItems: "center",
+          mb: 2,
+        }}
+      >
         <Box
           component="img"
           src="/IAIRE_logo.png"
           alt="IAIRE Logo"
           sx={{
-            height: 50,
+            height: 46,
             width: "auto",
             objectFit: "contain",
             maxWidth: "100%",
@@ -125,7 +133,7 @@ export const Sidebar = () => {
                           ? "rgba(255,255,255,0.1)"
                           : "transparent",
                         borderLeft: isActive
-                          ? "4px solid #00D1C1"
+                          ? `4px solid ${Colors.PRIMARY}`
                           : "4px solid transparent",
                         "&:hover": { bgcolor: "rgba(255,255,255,0.05)" },
                         py: 1,
@@ -133,7 +141,7 @@ export const Sidebar = () => {
                     >
                       <ListItemIcon
                         sx={{
-                          color: isActive ? "#00D1C1" : "rgba(255,255,255,0.6)",
+                          color: isActive ? Colors.PRIMARY : "rgba(255,255,255,0.6)",
                           minWidth: 38,
                           "& svg": { fontSize: 20 },
                         }}
@@ -181,7 +189,7 @@ export const Sidebar = () => {
           <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, flex: 1, minWidth: 0 }}>
             <Avatar
               sx={{
-                bgcolor: "#00D1C1",
+                bgcolor: Colors.PRIMARY,
                 width: 32,
                 height: 32,
                 fontSize: "12px",

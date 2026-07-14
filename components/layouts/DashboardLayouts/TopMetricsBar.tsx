@@ -14,6 +14,7 @@ import {
   FiberManualRecord as DotIcon,
 } from "@mui/icons-material";
 import { schoolControllers } from "@/api/school";
+import { Colors } from "@/utils/enum";
 
 const defaultStats = {
   totalSchools: 24,
@@ -55,7 +56,7 @@ const GroupedMetricCard = ({
           borderRadius: "20px",
           bgcolor: "#fff",
           border: "1px solid rgba(0, 0, 0, 0.05)",
-          borderTop: `5px solid ${color}`,
+          borderTop: `5px solid ${Colors.PRIMARY}`,
           boxShadow: "0 8px 24px rgba(18, 35, 51, 0.06)",
           position: "relative",
           overflow: "hidden",
@@ -67,8 +68,8 @@ const GroupedMetricCard = ({
           minHeight: "200px",
           "&:hover": {
             transform: "translateY(-6px)",
-            boxShadow: `0 16px 40px ${alpha(color, 0.15)}`,
-            borderColor: alpha(color, 0.4),
+            boxShadow: `0 16px 40px ${alpha(Colors.PRIMARY, 0.15)}`,
+            borderColor: alpha(Colors.PRIMARY, 0.4),
           },
         }}
       >
@@ -94,8 +95,8 @@ const GroupedMetricCard = ({
             </Typography>
             <Box
               sx={{
-                bgcolor: `${color}15`,
-                color: color,
+                bgcolor: alpha(Colors.PRIMARY, 0.08),
+                color: Colors.PRIMARY,
                 p: 1,
                 borderRadius: "12px",
                 display: "flex",
@@ -180,7 +181,7 @@ const SingleMetricCard = ({
           borderRadius: "16px",
           bgcolor: "#fff",
           border: "1px solid rgba(0, 0, 0, 0.05)",
-          borderTop: `4px solid ${color}`,
+          borderTop: `4px solid ${Colors.PRIMARY}`,
           boxShadow: "0 8px 24px rgba(18, 35, 51, 0.06)",
           position: "relative",
           overflow: "hidden",
@@ -192,8 +193,8 @@ const SingleMetricCard = ({
           minHeight: "120px",
           "&:hover": {
             transform: "translateY(-4px)",
-            boxShadow: `0 16px 36px ${alpha(color, 0.15)}`,
-            borderColor: alpha(color, 0.4),
+            boxShadow: `0 16px 36px ${alpha(Colors.PRIMARY, 0.15)}`,
+            borderColor: alpha(Colors.PRIMARY, 0.4),
           },
         }}
       >
@@ -220,8 +221,8 @@ const SingleMetricCard = ({
           </Typography>
           <Box
             sx={{
-              bgcolor: `${color}15`,
-              color: color,
+              bgcolor: alpha(Colors.PRIMARY, 0.08),
+              color: Colors.PRIMARY,
               p: 0.8,
               borderRadius: "10px",
               display: "flex",

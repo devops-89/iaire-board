@@ -1,5 +1,13 @@
 import React from "react";
-import { Box, Typography, TableCell, TableRow, Chip, IconButton, Avatar } from "@mui/material";
+import {
+  Box,
+  Typography,
+  TableCell,
+  TableRow,
+  Chip,
+  IconButton,
+  Avatar,
+} from "@mui/material";
 import { MoreVert as MoreIcon } from "@mui/icons-material";
 import { Teacher } from "@/utils/types";
 import { Colors } from "@/utils/enum";
@@ -21,11 +29,18 @@ export const TeacherTableRow: React.FC<TeacherTableRowProps> = ({
     .filter(Boolean)
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(" ");
-  const schoolIdVal = teacher.schoolId || (teacher as any).school_id || (teacher as any).school?.id;
-  const displaySchoolId = schoolIdVal ? (typeof schoolIdVal === 'number' ? String(schoolIdVal).padStart(4, "0") : String(schoolIdVal)) : "--";
+  const schoolIdVal =
+    teacher.schoolId ||
+    (teacher as any).school_id ||
+    (teacher as any).school?.id;
+  const displaySchoolId = schoolIdVal
+    ? typeof schoolIdVal === "number"
+      ? String(schoolIdVal).padStart(4, "0")
+      : String(schoolIdVal)
+    : "--";
 
-  const isTeacherActive = 
-    teacher.isActive === true || 
+  const isTeacherActive =
+    teacher.isActive === true ||
     (teacher as any).isActive === "true" ||
     (teacher as any).active === true ||
     (teacher as any).active === "true" ||

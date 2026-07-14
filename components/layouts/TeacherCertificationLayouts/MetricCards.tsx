@@ -9,7 +9,9 @@ import {
 
 export const MetricCards = () => {
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 3, height: "100%" }}>
+    <Box
+      sx={{ display: "flex", flexDirection: "column", gap: 3, height: "100%" }}
+    >
       {/* Total Certified Staff Card */}
       <Paper
         sx={{
@@ -42,12 +44,20 @@ export const MetricCards = () => {
           </Typography>
         </Box>
 
-        <Typography sx={{ fontSize: "48px", fontWeight: 900, mb: 1, color: "#fff" }}>
+        <Typography
+          sx={{ fontSize: "48px", fontWeight: 900, mb: 1, color: "#fff" }}
+        >
           3,482
         </Typography>
 
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <Typography sx={{ fontSize: "13px", fontWeight: 600, color: "rgba(255,255,255,0.6)" }}>
+          <Typography
+            sx={{
+              fontSize: "13px",
+              fontWeight: 600,
+              color: "rgba(255,255,255,0.6)",
+            }}
+          >
             +12% increase from last quarter
           </Typography>
         </Box>

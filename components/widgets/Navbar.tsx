@@ -9,9 +9,9 @@ import { usePathname } from "next/navigation";
 
 const PAGE_CONFIG: any = {
   "/dashboard": {
-    title: "IAIRE Overview Dashboard",
-    description: "Academic Year 2024–25 • All Affiliated Schools",
-    showActions: true,
+    title: "Dashboard",
+    description: "",
+    showActions: false,
   },
   "/membership-overview": {
     title: "",
@@ -60,8 +60,9 @@ export const Navbar = () => {
         bgcolor: "#FAF7F0",
         mx: -6,
         px: 6,
-        pt: 2,
-        pb: 2,
+        height: "72px",
+        pt: 0,
+        pb: 0,
         mb: 4,
         borderBottom: "1px solid rgba(18, 35, 51, 0.1)",
       }}
@@ -69,8 +70,8 @@ export const Navbar = () => {
       <Box>
         <Typography
           sx={{
-            fontSize: "28px",
-            fontWeight: 800,
+            fontSize: "22px",
+            fontWeight: 700,
             color: "#122333",
             letterSpacing: "-0.5px",
             lineHeight: 1.2,
@@ -78,16 +79,18 @@ export const Navbar = () => {
         >
           {config.title}
         </Typography>
-        <Typography
-          sx={{
-            fontSize: "14px",
-            fontWeight: 500,
-            color: "rgba(18, 35, 51, 0.6)",
-            mt: 0.5,
-          }}
-        >
-          {config.description}
-        </Typography>
+        {config.description && (
+          <Typography
+            sx={{
+              fontSize: "14px",
+              fontWeight: 500,
+              color: "rgba(18, 35, 51, 0.6)",
+              mt: 0.5,
+            }}
+          >
+            {config.description}
+          </Typography>
+        )}
       </Box>
 
       {config.showActions && (
