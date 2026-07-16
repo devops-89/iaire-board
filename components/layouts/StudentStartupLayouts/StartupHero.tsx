@@ -1,11 +1,23 @@
 "use client";
 import React from "react";
-import { Box, Typography, Paper, Stack, Divider } from "@mui/material";
+import { Box, Typography, Paper, Stack, Divider, CircularProgress } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { RocketLaunch as StartupIcon } from "@mui/icons-material";
 import { Colors } from "@/utils/enum";
 
-export const StartupHero = () => {
+interface StartupHeroProps {
+  total: number;
+  activeProjects: number;
+  growth: string;
+  loading: boolean;
+}
+
+export const StartupHero: React.FC<StartupHeroProps> = ({
+  total,
+  activeProjects,
+  growth,
+  loading,
+}) => {
   return (
     <Grid size={{ xs: 12 }}>
       <Paper
@@ -33,8 +45,8 @@ export const StartupHero = () => {
           sx={{
             display: "flex",
             flexDirection: "row",
-            spacing: { xs: 2, md: 4 },
             alignItems: "center",
+            gap: 3,
           }}
         >
           <Box
@@ -65,17 +77,21 @@ export const StartupHero = () => {
             >
               Number of student startups
             </Typography>
-            <Typography
-              sx={{
-                fontSize: { xs: "40px", md: "56px" },
-                fontWeight: 900,
-                lineHeight: 1,
-                color: "#00D1C1",
-                letterSpacing: "-2px",
-              }}
-            >
-              482
-            </Typography>
+            {loading ? (
+              <CircularProgress size={30} sx={{ color: "#00D1C1", mt: 1 }} />
+            ) : (
+              <Typography
+                sx={{
+                  fontSize: { xs: "40px", md: "56px" },
+                  fontWeight: 900,
+                  lineHeight: 1,
+                  color: "#00D1C1",
+                  letterSpacing: "-2px",
+                }}
+              >
+                {total}
+              </Typography>
+            )}
           </Box>
         </Stack>
 
@@ -96,7 +112,7 @@ export const StartupHero = () => {
               ACTIVE PROJECTS
             </Typography>
             <Typography sx={{ fontSize: "28px", fontWeight: 900 }}>
-              310
+              {loading ? "..." : activeProjects}
             </Typography>
           </Box>
           <Divider
@@ -118,7 +134,7 @@ export const StartupHero = () => {
             <Typography
               sx={{ fontSize: "28px", fontWeight: 900, color: "#10B981" }}
             >
-              +12.5%
+              {growth}
             </Typography>
           </Box>
         </Stack>

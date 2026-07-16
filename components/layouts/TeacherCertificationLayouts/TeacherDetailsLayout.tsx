@@ -14,7 +14,6 @@ import { Teacher } from "@/utils/types";
 import { TeacherProfileBanner } from "./TeacherProfileBanner";
 import { TeacherPersonalCard } from "./TeacherPersonalCard";
 import { TeacherInstitutionCard } from "./TeacherInstitutionCard";
-import { TeacherStudentsCard } from "./TeacherStudentsCard";
 import { TeacherAccountCard } from "./TeacherAccountCard";
 import { TeacherAdminsCard } from "./TeacherAdminsCard";
 import { TeacherTeamsCard } from "./TeacherTeamsCard";
@@ -26,8 +25,6 @@ export const TeacherDetailsLayout = () => {
 
   const [teacherData, setTeacherData] = useState<Teacher | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [studentPage, setStudentPage] = useState<number>(1);
-  const studentsPerPage = 10;
   const [teamPage, setTeamPage] = useState<number>(1);
   const teamsPerPage = 10;
 
@@ -271,14 +268,6 @@ export const TeacherDetailsLayout = () => {
                 boardCode={boardCode}
                 boardDesc={boardDesc}
                 schoolLocation={schoolLocation}
-              />
-
-              {/* Registered Students Card */}
-              <TeacherStudentsCard
-                students={teacherData.students || []}
-                studentPage={studentPage}
-                setStudentPage={setStudentPage}
-                studentsPerPage={studentsPerPage}
               />
             </Box>
           </Grid>

@@ -1,10 +1,9 @@
 "use client";
 import React from "react";
-import { Box, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 import { Sidebar } from "@/components/widgets/Sidebar";
 import { Navbar } from "@/components/widgets/Navbar";
-import { StartupHero } from "./StartupHero";
-import { StartupMetrics } from "./StartupMetrics";
+import { StartupTable } from "./StartupTable";
 import { Poppins } from "@/utils/font";
 
 export const StudentStartupLayout = () => {
@@ -30,10 +29,9 @@ export const StudentStartupLayout = () => {
       >
         <Navbar />
 
-        <Grid container spacing={4}>
-          <StartupHero />
-          <StartupMetrics />
-        </Grid>
+        <Box sx={{ mt: 3 }}>
+          <StartupTable />
+        </Box>
       </Box>
     </Box>
   );

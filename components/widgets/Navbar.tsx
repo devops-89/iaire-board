@@ -24,15 +24,28 @@ const PAGE_CONFIG: any = {
     showActions: false,
   },
   "/innovation-research": {
-    title: "Innovation & Research Status",
-    description:
-      "Tracking intellectual property, patents, and academic research publications across schools.",
+    title: "",
+    description: "",
     showActions: false,
   },
   "/student-startup": {
-    title: "Student Startup Status",
-    description:
-      "Fostering entrepreneurship and monitoring student-led startup ventures and funding.",
+    title: "",
+    description: "",
+    showActions: false,
+  },
+  "/team": {
+    title: "",
+    description: "",
+    showActions: false,
+  },
+  "/school": {
+    title: "",
+    description: "",
+    showActions: false,
+  },
+  "/teacher": {
+    title: "",
+    description: "",
     showActions: false,
   },
 };

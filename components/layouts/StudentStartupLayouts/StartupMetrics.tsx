@@ -6,7 +6,6 @@ import {
   MonetizationOn as MoneyIcon,
 } from "@mui/icons-material";
 import { IndividualDistributionCard } from "@/components/layouts/TeacherCertificationLayouts/IndividualDistributionCard";
-import { DashboardData } from "@/assets/generic-data";
 
 // Icon mapping for Startup Metrics
 const IconMap: any = {
@@ -14,8 +13,38 @@ const IconMap: any = {
   money: MoneyIcon,
 };
 
-export const StartupMetrics = () => {
-  const metrics = DashboardData.startups?.detailedMetrics || [];
+interface StartupMetricsProps {
+  fundedCount: number;
+  notFundedCount: number;
+  total: number;
+  loading: boolean;
+}
+
+export const StartupMetrics: React.FC<StartupMetricsProps> = ({
+  fundedCount,
+  notFundedCount,
+  total,
+  loading,
+}) => {
+  const fundedPercent = total > 0 ? Math.round((fundedCount / total) * 100) : 0;
+  const notFundedPercent = total > 0 ? 100 - fundedPercent : 0;
+
+  const metrics = [
+    {
+      label: "Number of student startups: Funded",
+      value: fundedPercent,
+      schools: loading ? "..." : String(fundedCount),
+      color: "#4CAF50",
+      iconKey: "startup",
+    },
+    {
+      label: "Number of student startups: Not Funded",
+      value: notFundedPercent,
+      schools: loading ? "..." : String(notFundedCount),
+      color: "#FF9800",
+      iconKey: "money",
+    },
+  ];
 
   return (
     <>
