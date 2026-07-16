@@ -14,18 +14,18 @@ import {
 } from "@mui/material";
 import {
   ArrowBack as BackIcon,
-  HelpOutlined as ProblemIcon,
-  DoneAll as SolutionIcon,
+  MenuBookOutlined as ResearchIcon,
   InfoOutlined as InfoIcon,
   Business as SchoolIcon,
   Person as PersonIcon,
   Download as DownloadIcon,
   Language as WebIcon,
+  Topic as TopicIcon,
 } from "@mui/icons-material";
 import { useParams, useRouter } from "next/navigation";
 import { Sidebar } from "@/components/widgets/Sidebar";
 import { Navbar } from "@/components/widgets/Navbar";
-import { innovationControllers } from "@/api/innovation";
+import { researchControllers } from "@/api/research";
 import { Colors } from "@/utils/enum";
 import { Poppins } from "@/utils/font";
 
@@ -69,12 +69,12 @@ const formatStatus = (status: string) => {
     .trim();
 };
 
-export default function InnovationDetailsPage() {
+export default function ResearchDetailsPage() {
   const params = useParams();
   const router = useRouter();
   const id = params?.id as string;
 
-  const [innovation, setInnovation] = useState<any | null>(null);
+  const [research, setResearch] = useState<any | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -83,14 +83,14 @@ export default function InnovationDetailsPage() {
     const fetchDetails = async () => {
       try {
         setLoading(true);
-        const res = await innovationControllers.getInnovationDetails(id);
+        const res = await researchControllers.getResearchDetails(id);
         if (res?.data && res.data.success) {
           const payload = res.data.data;
           const data = payload.data || payload;
-          setInnovation(data);
+          setResearch(data);
         }
       } catch (error) {
-        console.error("Failed to fetch innovation details:", error);
+        console.error("Failed to fetch research details:", error);
       } finally {
         setLoading(false);
       }
@@ -130,7 +130,7 @@ export default function InnovationDetailsPage() {
     );
   }
 
-  if (!innovation) {
+  if (!research) {
     return (
       <Box
         sx={{
@@ -155,7 +155,7 @@ export default function InnovationDetailsPage() {
           }}
         >
           <Typography sx={{ color: "rgba(18, 35, 51, 0.4)", fontWeight: 600 }}>
-            Innovation details not found
+            Research details not found
           </Typography>
           <Button
             onClick={handleBack}
@@ -169,10 +169,10 @@ export default function InnovationDetailsPage() {
     );
   }
 
-  const statusStyle = getStatusColor(innovation?.status);
+  const statusStyle = getStatusColor(research?.status);
 
-  const formattedDate = innovation.createdAt
-    ? new Date(innovation.createdAt).toLocaleDateString("en-US", {
+  const formattedDate = research.createdAt
+    ? new Date(research.createdAt).toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",
         day: "numeric",
@@ -180,16 +180,16 @@ export default function InnovationDetailsPage() {
     : "--";
 
   // Build school address safely
-  const school = innovation.school;
+  const school = research.school;
   const schoolAddressParts = [
     school?.addressLine1 || school?.address,
     school?.city,
     school?.state,
-    innovation.country?.name || school?.country?.name || "India",
+    research.country?.name || school?.country?.name || "India",
   ].filter(Boolean);
   const schoolAddress = schoolAddressParts.join(", ") || "--";
 
-  const creator = innovation.creator;
+  const creator = research.creator;
 
   return (
     <Box
@@ -272,11 +272,11 @@ export default function InnovationDetailsPage() {
                       mb: 1,
                     }}
                   >
-                    {formatText(innovation.title)}
+                    {formatText(research.title)}
                   </Typography>
                   <Stack
                     direction="row"
-                    spacing={2}
+                    spacing={3}
                     sx={{ alignItems: "center", flexWrap: "wrap" }}
                   >
                     <Typography
@@ -288,10 +288,31 @@ export default function InnovationDetailsPage() {
                     >
                       Submitted on: {formattedDate}
                     </Typography>
+
+                    {research.topic && (
+                      <Stack
+                        direction="row"
+                        spacing={1}
+                        sx={{ alignItems: "center" }}
+                      >
+                        <TopicIcon
+                          sx={{ fontSize: 16, color: "rgba(18, 35, 51, 0.4)" }}
+                        />
+                        <Typography
+                          sx={{
+                            fontSize: "13px",
+                            color: "rgba(18, 35, 51, 0.6)",
+                            fontWeight: 700,
+                          }}
+                        >
+                          Topic: {research.topic}
+                        </Typography>
+                      </Stack>
+                    )}
                   </Stack>
                 </Box>
                 <Chip
-                  label={formatStatus(innovation.status || "PENDING")}
+                  label={formatStatus(research.status || "PENDING")}
                   sx={{
                     bgcolor: statusStyle.bg,
                     color: statusStyle.text,
@@ -309,7 +330,7 @@ export default function InnovationDetailsPage() {
           {/* Left Column - Details Description & Creator cards */}
           <Grid size={{ xs: 12, md: 8 }}>
             <Stack spacing={4}>
-              {/* Problem Description Card */}
+              {/* Research Description Card */}
               <Paper
                 elevation={0}
                 sx={{
@@ -325,7 +346,7 @@ export default function InnovationDetailsPage() {
                   spacing={1.5}
                   sx={{ mb: 2, alignItems: "center" }}
                 >
-                  <ProblemIcon sx={{ color: "#FF9800", fontSize: 24 }} />
+                  <ResearchIcon sx={{ color: "#2196F3", fontSize: 24 }} />
                   <Typography
                     sx={{
                       fontSize: "16px",
@@ -333,7 +354,7 @@ export default function InnovationDetailsPage() {
                       color: Colors.PRIMARY_DARK,
                     }}
                   >
-                    Problem Statement
+                    Research Description
                   </Typography>
                 </Stack>
                 <Typography
@@ -344,49 +365,7 @@ export default function InnovationDetailsPage() {
                     lineHeight: 1.6,
                   }}
                 >
-                  {innovation.problemDescription ||
-                    "No problem statement description provided."}
-                </Typography>
-              </Paper>
-
-              {/* Proposed Solution Card */}
-              <Paper
-                elevation={0}
-                sx={{
-                  p: 4,
-                  borderRadius: "24px",
-                  border: "1px solid rgba(18, 35, 51, 0.05)",
-                  boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
-                  bgcolor: "#fff",
-                }}
-              >
-                <Stack
-                  direction="row"
-                  spacing={1.5}
-                  sx={{ mb: 2, alignItems: "center" }}
-                >
-                  <SolutionIcon sx={{ color: "#4CAF50", fontSize: 24 }} />
-                  <Typography
-                    sx={{
-                      fontSize: "16px",
-                      fontWeight: 800,
-                      color: Colors.PRIMARY_DARK,
-                    }}
-                  >
-                    Proposed Solution
-                  </Typography>
-                </Stack>
-                <Typography
-                  sx={{
-                    fontSize: "14px",
-                    color: "rgba(18, 35, 51, 0.7)",
-                    fontWeight: 500,
-                    lineHeight: 1.6,
-                  }}
-                >
-                  {innovation.solution ||
-                    innovation.solutionDescription ||
-                    "No solution description provided."}
+                  {research.description || "No research description provided."}
                 </Typography>
               </Paper>
 
@@ -956,7 +935,7 @@ export default function InnovationDetailsPage() {
                       </Box>
                     )}
 
-                    {(innovation.country?.name || school.country?.name) && (
+                    {(research.country?.name || school.country?.name) && (
                       <Box>
                         <Typography
                           sx={{
@@ -976,7 +955,7 @@ export default function InnovationDetailsPage() {
                             color: Colors.PRIMARY_DARK,
                           }}
                         >
-                          {innovation.country?.name || school.country?.name}
+                          {research.country?.name || school.country?.name}
                         </Typography>
                       </Box>
                     )}
@@ -1068,14 +1047,14 @@ export default function InnovationDetailsPage() {
                         color: Colors.PRIMARY_DARK,
                       }}
                     >
-                      {innovation.team?.name ||
-                        (innovation.teamId
-                          ? `Team #${innovation.teamId}`
+                      {research.team?.name ||
+                        (research.teamId
+                          ? `Team #${research.teamId}`
                           : "No Team Assigned")}
                     </Typography>
                   </Box>
 
-                  {innovation.attorneyTemplateDownloadUrl && (
+                  {research.attorneyTemplateDownloadUrl && (
                     <Box sx={{ mt: 1 }}>
                       <Typography
                         sx={{
@@ -1089,7 +1068,7 @@ export default function InnovationDetailsPage() {
                         Template Attachments
                       </Typography>
                       <Button
-                        href={innovation.attorneyTemplateDownloadUrl}
+                        href={research.attorneyTemplateDownloadUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         variant="contained"

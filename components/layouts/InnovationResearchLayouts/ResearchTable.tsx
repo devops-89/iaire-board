@@ -21,6 +21,7 @@ import {
 } from "@mui/icons-material";
 import { researchControllers } from "@/api/research";
 import { Colors } from "@/utils/enum";
+import { useRouter } from "next/navigation";
 
 const getStatusColor = (status: string) => {
   const s = status?.toUpperCase();
@@ -62,6 +63,7 @@ interface ResearchTableProps {
 }
 
 export const ResearchTable: React.FC<ResearchTableProps> = ({ searchQuery }) => {
+  const router = useRouter();
   const [researchList, setResearchList] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -232,6 +234,7 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({ searchQuery }) => 
                   return (
                     <TableRow
                       key={submission.id}
+                      onClick={() => router.push(`/innovation-research/research/${submission.id}`)}
                       sx={{
                         cursor: "pointer",
                         transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",

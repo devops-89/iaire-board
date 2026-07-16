@@ -20,4 +20,13 @@ export const researchControllers = {
       throw error;
     }
   },
+
+  getResearchDetails: async (id: string | number): Promise<AxiosResponse> => {
+    try {
+      const result = await secureApi.get(`/research-submissions/${id}`);
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
