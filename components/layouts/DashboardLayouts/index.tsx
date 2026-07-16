@@ -32,8 +32,8 @@ export default function DashboardLayouts() {
           flexGrow: 1,
           height: "100vh",
           overflowY: "auto",
-          px: 4,
-          pb: 4,
+          px: 2,
+          pb: 2,
           position: "relative",
           bgcolor: "#FAF7F0",
         }}

@@ -14,18 +14,18 @@ import {
 } from "@mui/material";
 import {
   ArrowBack as BackIcon,
+  LightbulbOutlined as IdeaIcon,
   HelpOutlined as ProblemIcon,
-  DoneAll as SolutionIcon,
-  InfoOutlined as InfoIcon,
   Business as SchoolIcon,
   Person as PersonIcon,
   Download as DownloadIcon,
   Language as WebIcon,
+  RocketLaunchOutlined as StageIcon,
 } from "@mui/icons-material";
 import { useParams, useRouter } from "next/navigation";
 import { Sidebar } from "@/components/widgets/Sidebar";
 import { Navbar } from "@/components/widgets/Navbar";
-import { innovationControllers } from "@/api/innovation";
+import { startupControllers } from "@/api/startup";
 import { Colors } from "@/utils/enum";
 import { Poppins } from "@/utils/font";
 
@@ -34,6 +34,7 @@ const getStatusColor = (status: string) => {
   if (
     s === "APPROVED" ||
     s === "ACTIVE" ||
+    s === "FUNDED" ||
     s === "PATENT_GRANTED" ||
     s === "PUBLISHED"
   ) {
@@ -69,12 +70,12 @@ const formatStatus = (status: string) => {
     .trim();
 };
 
-export default function InnovationDetailsPage() {
+export default function StartupDetailsPage() {
   const params = useParams();
   const router = useRouter();
   const id = params?.id as string;
 
-  const [innovation, setInnovation] = useState<any | null>(null);
+  const [startup, setStartup] = useState<any | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -83,14 +84,14 @@ export default function InnovationDetailsPage() {
     const fetchDetails = async () => {
       try {
         setLoading(true);
-        const res = await innovationControllers.getInnovationDetails(id);
+        const res = await startupControllers.getStartupDetails(id);
         if (res?.data && res.data.success) {
           const payload = res.data.data;
           const data = payload.data || payload;
-          setInnovation(data);
+          setStartup(data);
         }
       } catch (error) {
-        console.error("Failed to fetch innovation details:", error);
+        console.error("Failed to fetch startup details:", error);
       } finally {
         setLoading(false);
       }
@@ -100,7 +101,7 @@ export default function InnovationDetailsPage() {
   }, [id]);
 
   const handleBack = () => {
-    router.push("/innovation-research");
+    router.push("/student-startups");
   };
 
   if (loading) {
@@ -130,7 +131,7 @@ export default function InnovationDetailsPage() {
     );
   }
 
-  if (!innovation) {
+  if (!startup) {
     return (
       <Box
         sx={{
@@ -155,7 +156,7 @@ export default function InnovationDetailsPage() {
           }}
         >
           <Typography sx={{ color: "rgba(18, 35, 51, 0.4)", fontWeight: 600 }}>
-            Innovation details not found
+            Startup details not found
           </Typography>
           <Button
             onClick={handleBack}
@@ -169,10 +170,10 @@ export default function InnovationDetailsPage() {
     );
   }
 
-  const statusStyle = getStatusColor(innovation?.status);
+  const statusStyle = getStatusColor(startup?.status);
 
-  const formattedDate = innovation.createdAt
-    ? new Date(innovation.createdAt).toLocaleDateString("en-US", {
+  const formattedDate = startup.createdAt
+    ? new Date(startup.createdAt).toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",
         day: "numeric",
@@ -180,16 +181,16 @@ export default function InnovationDetailsPage() {
     : "--";
 
   // Build school address safely
-  const school = innovation.school;
+  const school = startup.school;
   const schoolAddressParts = [
     school?.addressLine1 || school?.address,
     school?.city,
     school?.state,
-    innovation.country?.name || school?.country?.name || "India",
+    startup.country?.name || school?.country?.name || "India",
   ].filter(Boolean);
   const schoolAddress = schoolAddressParts.join(", ") || "--";
 
-  const creator = innovation.creator;
+  const creator = startup.creator;
 
   return (
     <Box
@@ -235,7 +236,7 @@ export default function InnovationDetailsPage() {
               },
             }}
           >
-            Back to Innovation & Research
+            Back to Student Startups
           </Button>
         </Box>
 
@@ -272,11 +273,11 @@ export default function InnovationDetailsPage() {
                       mb: 1,
                     }}
                   >
-                    {formatText(innovation.title)}
+                    {formatText(startup.startupName)}
                   </Typography>
                   <Stack
                     direction="row"
-                    spacing={2}
+                    spacing={3}
                     sx={{ alignItems: "center", flexWrap: "wrap" }}
                   >
                     <Typography
@@ -288,10 +289,39 @@ export default function InnovationDetailsPage() {
                     >
                       Submitted on: {formattedDate}
                     </Typography>
+
+                    {startup.sector && (
+                      <Chip
+                        label={formatStatus(startup.sector)}
+                        size="small"
+                        sx={{
+                          bgcolor: "rgba(33, 150, 243, 0.08)",
+                          color: "#2196F3",
+                          fontWeight: 700,
+                          fontSize: "11px",
+                          borderRadius: "6px",
+                        }}
+                      />
+                    )}
+
+                    {startup.stage && (
+                      <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
+                        <StageIcon sx={{ fontSize: 16, color: "rgba(18, 35, 51, 0.4)" }} />
+                        <Typography
+                          sx={{
+                            fontSize: "13px",
+                            color: "rgba(18, 35, 51, 0.6)",
+                            fontWeight: 700,
+                          }}
+                        >
+                          Stage: {formatStatus(startup.stage)}
+                        </Typography>
+                      </Stack>
+                    )}
                   </Stack>
                 </Box>
                 <Chip
-                  label={formatStatus(innovation.status || "PENDING")}
+                  label={formatStatus(startup.status || "PENDING")}
                   sx={{
                     bgcolor: statusStyle.bg,
                     color: statusStyle.text,
@@ -309,7 +339,7 @@ export default function InnovationDetailsPage() {
           {/* Left Column - Details Description & Creator cards */}
           <Grid size={{ xs: 12, md: 8 }}>
             <Stack spacing={4}>
-              {/* Problem Description Card */}
+              {/* Business Idea Card */}
               <Paper
                 elevation={0}
                 sx={{
@@ -325,7 +355,7 @@ export default function InnovationDetailsPage() {
                   spacing={1.5}
                   sx={{ mb: 2, alignItems: "center" }}
                 >
-                  <ProblemIcon sx={{ color: "#FF9800", fontSize: 24 }} />
+                  <IdeaIcon sx={{ color: "#FFC107", fontSize: 24 }} />
                   <Typography
                     sx={{
                       fontSize: "16px",
@@ -333,7 +363,7 @@ export default function InnovationDetailsPage() {
                       color: Colors.PRIMARY_DARK,
                     }}
                   >
-                    Problem Statement
+                    Business Idea / Pitch
                   </Typography>
                 </Stack>
                 <Typography
@@ -344,51 +374,50 @@ export default function InnovationDetailsPage() {
                     lineHeight: 1.6,
                   }}
                 >
-                  {innovation.problemDescription ||
-                    "No problem statement description provided."}
+                  {startup.businessIdea || "No business idea details provided."}
                 </Typography>
               </Paper>
 
-              {/* Proposed Solution Card */}
-              <Paper
-                elevation={0}
-                sx={{
-                  p: 4,
-                  borderRadius: "24px",
-                  border: "1px solid rgba(18, 35, 51, 0.05)",
-                  boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
-                  bgcolor: "#fff",
-                }}
-              >
-                <Stack
-                  direction="row"
-                  spacing={1.5}
-                  sx={{ mb: 2, alignItems: "center" }}
-                >
-                  <SolutionIcon sx={{ color: "#4CAF50", fontSize: 24 }} />
-                  <Typography
-                    sx={{
-                      fontSize: "16px",
-                      fontWeight: 800,
-                      color: Colors.PRIMARY_DARK,
-                    }}
-                  >
-                    Proposed Solution
-                  </Typography>
-                </Stack>
-                <Typography
+              {/* Problem Statement Card */}
+              {startup.problemStatement && (
+                <Paper
+                  elevation={0}
                   sx={{
-                    fontSize: "14px",
-                    color: "rgba(18, 35, 51, 0.7)",
-                    fontWeight: 500,
-                    lineHeight: 1.6,
+                    p: 4,
+                    borderRadius: "24px",
+                    border: "1px solid rgba(18, 35, 51, 0.05)",
+                    boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
+                    bgcolor: "#fff",
                   }}
                 >
-                  {innovation.solution ||
-                    innovation.solutionDescription ||
-                    "No solution description provided."}
-                </Typography>
-              </Paper>
+                  <Stack
+                    direction="row"
+                    spacing={1.5}
+                    sx={{ mb: 2, alignItems: "center" }}
+                  >
+                    <ProblemIcon sx={{ color: "#F44336", fontSize: 24 }} />
+                    <Typography
+                      sx={{
+                        fontSize: "16px",
+                        fontWeight: 800,
+                        color: Colors.PRIMARY_DARK,
+                      }}
+                    >
+                      Problem Statement
+                    </Typography>
+                  </Stack>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      color: "rgba(18, 35, 51, 0.7)",
+                      fontWeight: 500,
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    {startup.problemStatement}
+                  </Typography>
+                </Paper>
+              )}
 
               {/* Creator details card - "Submitted By" with Parent Information */}
               {creator && (
@@ -809,6 +838,147 @@ export default function InnovationDetailsPage() {
                   )}
                 </Paper>
               )}
+
+              {/* School Membership Tier Progress Card */}
+              {startup.tierProgressDetails && Object.keys(startup.tierProgressDetails).length > 0 && (
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 4,
+                    borderRadius: "24px",
+                    border: "1px solid rgba(18, 35, 51, 0.05)",
+                    boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
+                    bgcolor: "#fff",
+                  }}
+                >
+                  <Stack
+                    direction="row"
+                    spacing={1.5}
+                    sx={{ mb: 3, alignItems: "center" }}
+                  >
+                    <StageIcon sx={{ color: "#4CAF50", fontSize: 24 }} />
+                    <Typography
+                      sx={{
+                        fontSize: "16px",
+                        fontWeight: 800,
+                        color: Colors.PRIMARY_DARK,
+                      }}
+                    >
+                      School Membership Tier Progress
+                    </Typography>
+                  </Stack>
+
+                  <Stack spacing={4}>
+                    {Object.entries(startup.tierProgressDetails).map(([role, tiers]: [string, any]) => (
+                      <Box key={role}>
+                        <Typography
+                          sx={{
+                            fontSize: "11px",
+                            fontWeight: 800,
+                            color: "rgba(18, 35, 51, 0.4)",
+                            textTransform: "uppercase",
+                            letterSpacing: "1px",
+                            mb: 2,
+                          }}
+                        >
+                          Role: {formatStatus(role)}
+                        </Typography>
+
+                        <Stack spacing={3}>
+                          {tiers.map((tier: any, idx: number) => (
+                            <Box
+                              key={idx}
+                              sx={{
+                                p: 2.5,
+                                borderRadius: "16px",
+                                border: "1px solid rgba(18, 35, 51, 0.04)",
+                                bgcolor: "rgba(18, 35, 51, 0.015)",
+                              }}
+                            >
+                              <Typography
+                                sx={{
+                                  fontSize: "14px",
+                                  fontWeight: 800,
+                                  color: Colors.PRIMARY_DARK,
+                                  mb: 2,
+                                }}
+                              >
+                                {formatText(tier.membershipTier)}
+                              </Typography>
+
+                              <Stack spacing={2}>
+                                {tier.requirements?.map((req: any, reqIdx: number) => {
+                                  const isCompleted = req.current >= req.required;
+                                  const progressPercent = Math.min(
+                                    (req.current / req.required) * 100,
+                                    100
+                                  );
+
+                                  return (
+                                    <Box key={reqIdx}>
+                                      <Box
+                                        sx={{
+                                          display: "flex",
+                                          flexDirection: "row",
+                                          justifyContent: "space-between",
+                                          alignItems: "flex-start",
+                                          mb: 1,
+                                        }}
+                                      >
+                                        <Typography
+                                          sx={{
+                                            fontSize: "13px",
+                                            fontWeight: 600,
+                                            color: isCompleted
+                                              ? Colors.PRIMARY_DARK
+                                              : "rgba(18, 35, 51, 0.7)",
+                                            flex: 1,
+                                            pr: 2,
+                                          }}
+                                        >
+                                          {req.description}
+                                        </Typography>
+                                        <Typography
+                                          sx={{
+                                            fontSize: "12px",
+                                            fontWeight: 700,
+                                            color: isCompleted ? "#0F9D58" : "#F4B400",
+                                          }}
+                                        >
+                                          {req.current} / {req.required}
+                                        </Typography>
+                                      </Box>
+                                      <Box
+                                        sx={{
+                                          width: "100%",
+                                          height: 6,
+                                          bgcolor: "rgba(18, 35, 51, 0.06)",
+                                          borderRadius: "3px",
+                                          overflow: "hidden",
+                                        }}
+                                      >
+                                        <Box
+                                          sx={{
+                                            width: `${progressPercent}%`,
+                                            height: "100%",
+                                            bgcolor: isCompleted ? "#0F9D58" : "#F4B400",
+                                            borderRadius: "3px",
+                                            transition: "width 0.5s ease-in-out",
+                                          }}
+                                        />
+                                      </Box>
+                                    </Box>
+                                  );
+                                })}
+                              </Stack>
+                            </Box>
+                          ))}
+                        </Stack>
+                      </Box>
+                    ))}
+                  </Stack>
+                </Paper>
+              )}
             </Stack>
           </Grid>
 
@@ -853,32 +1023,48 @@ export default function InnovationDetailsPage() {
                       mb: 3,
                     }}
                   >
-                    {school.schoolLogoDownloadUrl || school.logo ? (
-                      <Avatar
-                        src={school.schoolLogoDownloadUrl || school.logo}
-                        variant="rounded"
-                        sx={{
-                          width: 64,
-                          height: 64,
-                          border: "1px solid rgba(18,35,51,0.08)",
-                          bgcolor: "#fafafa",
-                          flexShrink: 0,
-                        }}
-                      />
-                    ) : (
-                      <Avatar
-                        variant="rounded"
-                        sx={{
-                          width: 64,
-                          height: 64,
-                          bgcolor: "rgba(33, 150, 243, 0.1)",
-                          color: "#2196F3",
-                          flexShrink: 0,
-                        }}
-                      >
-                        <SchoolIcon sx={{ fontSize: 32 }} />
-                      </Avatar>
-                    )}
+                    {(() => {
+                      let logoSrc =
+                        school.schoolLogoDownloadUrl ||
+                        school.logo ||
+                        startup.creator?.school?.schoolLogoDownloadUrl ||
+                        startup.creator?.school?.logo;
+
+                      if (
+                        logoSrc &&
+                        !logoSrc.startsWith("http://") &&
+                        !logoSrc.startsWith("https://")
+                      ) {
+                        logoSrc = undefined;
+                      }
+
+                      return logoSrc ? (
+                        <Avatar
+                          src={logoSrc}
+                          variant="rounded"
+                          sx={{
+                            width: 64,
+                            height: 64,
+                            border: "1px solid rgba(18,35,51,0.08)",
+                            bgcolor: "#fafafa",
+                            flexShrink: 0,
+                          }}
+                        />
+                      ) : (
+                        <Avatar
+                          variant="rounded"
+                          sx={{
+                            width: 64,
+                            height: 64,
+                            bgcolor: "rgba(33, 150, 243, 0.1)",
+                            color: "#2196F3",
+                            flexShrink: 0,
+                          }}
+                        >
+                          <SchoolIcon sx={{ fontSize: 32 }} />
+                        </Avatar>
+                      );
+                    })()}
                     <Box sx={{ flex: 1, minWidth: 0 }}>
                       <Typography
                         sx={{
@@ -956,7 +1142,7 @@ export default function InnovationDetailsPage() {
                       </Box>
                     )}
 
-                    {(innovation.country?.name || school.country?.name) && (
+                    {school.country?.name && (
                       <Box>
                         <Typography
                           sx={{
@@ -976,7 +1162,7 @@ export default function InnovationDetailsPage() {
                             color: Colors.PRIMARY_DARK,
                           }}
                         >
-                          {innovation.country?.name || school.country?.name}
+                          {school.country.name}
                         </Typography>
                       </Box>
                     )}
@@ -1036,7 +1222,7 @@ export default function InnovationDetailsPage() {
                   spacing={1.5}
                   sx={{ mb: 3, alignItems: "center" }}
                 >
-                  <InfoIcon sx={{ color: Colors.PRIMARY_DARK, fontSize: 24 }} />
+                  <StageIcon sx={{ color: Colors.PRIMARY_DARK, fontSize: 24 }} />
                   <Typography
                     sx={{
                       fontSize: "16px",
@@ -1068,13 +1254,13 @@ export default function InnovationDetailsPage() {
                         color: Colors.PRIMARY_DARK,
                       }}
                     >
-                      {innovation.team?.title ||
-                        innovation.team?.name ||
-                        (innovation.teamId
-                          ? `Team #${innovation.teamId}`
+                      {startup.team?.title ||
+                        startup.team?.name ||
+                        (startup.teamId
+                          ? `Team #${startup.teamId}`
                           : "No Team Assigned")}
                     </Typography>
-                    {innovation.team?.teamCode && (
+                    {startup.team?.teamCode && (
                       <Typography
                         sx={{
                           fontSize: "12px",
@@ -1083,12 +1269,12 @@ export default function InnovationDetailsPage() {
                           mt: 0.5,
                         }}
                       >
-                        Code: {innovation.team.teamCode}
+                        Code: {startup.team.teamCode}
                       </Typography>
                     )}
                   </Box>
 
-                  {innovation.attorneyTemplateDownloadUrl && (
+                  {startup.pitchDeckDownloadUrl && (
                     <Box sx={{ mt: 1 }}>
                       <Typography
                         sx={{
@@ -1099,10 +1285,10 @@ export default function InnovationDetailsPage() {
                           mb: 1,
                         }}
                       >
-                        Template Attachments
+                        Pitch Deck Attachments
                       </Typography>
                       <Button
-                        href={innovation.attorneyTemplateDownloadUrl}
+                        href={startup.pitchDeckDownloadUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         variant="contained"
@@ -1123,8 +1309,61 @@ export default function InnovationDetailsPage() {
                           },
                         }}
                       >
-                        Attorney Template
+                        Pitch Deck
                       </Button>
+                    </Box>
+                  )}
+
+                  {startup.documents && startup.documents.length > 0 && (
+                    <Box sx={{ mt: 1 }}>
+                      <Typography
+                        sx={{
+                          fontSize: "11px",
+                          fontWeight: 700,
+                          color: "rgba(18, 35, 51, 0.4)",
+                          textTransform: "uppercase",
+                          mb: 1.5,
+                        }}
+                      >
+                        Attachments / Documents
+                      </Typography>
+                      <Stack spacing={1.5}>
+                        {startup.documents.map((doc: any) => (
+                          <Button
+                            key={doc.id}
+                            href={doc.downloadUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            variant="outlined"
+                            startIcon={<DownloadIcon />}
+                            sx={{
+                              textTransform: "none",
+                              justifyContent: "flex-start",
+                              fontSize: "12px",
+                              fontWeight: 700,
+                              color: Colors.PRIMARY_DARK,
+                              borderColor: "rgba(18, 35, 51, 0.1)",
+                              borderRadius: "10px",
+                              py: 1,
+                              px: 2,
+                              width: "100%",
+                              "&:hover": {
+                                borderColor: Colors.PRIMARY_DARK,
+                                bgcolor: "rgba(18, 35, 51, 0.02)",
+                              },
+                            }}
+                          >
+                            <Box sx={{ textAlign: "left", minWidth: 0, flex: 1 }}>
+                              <Typography sx={{ fontSize: "12px", fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                                {formatText(doc.type)}
+                              </Typography>
+                              <Typography sx={{ fontSize: "10px", color: "rgba(18, 35, 51, 0.4)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                                {doc.originalFileName} ({(doc.fileSize / 1024).toFixed(1)} KB)
+                              </Typography>
+                            </Box>
+                          </Button>
+                        ))}
+                      </Stack>
                     </Box>
                   )}
                 </Stack>

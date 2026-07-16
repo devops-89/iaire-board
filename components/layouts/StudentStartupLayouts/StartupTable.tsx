@@ -15,6 +15,7 @@ import {
   IconButton,
   Button,
   InputBase,
+  Avatar,
 } from "@mui/material";
 import {
   KeyboardArrowLeft as PrevIcon,
@@ -23,6 +24,7 @@ import {
 } from "@mui/icons-material";
 import { startupControllers } from "@/api/startup";
 import { Colors } from "@/utils/enum";
+import { useRouter } from "next/navigation";
 
 const getStatusColor = (status: string) => {
   const s = status?.toUpperCase();
@@ -60,6 +62,7 @@ const formatStatus = (status: string) => {
 };
 
 export const StartupTable = () => {
+  const router = useRouter();
   const [startups, setStartups] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -279,6 +282,7 @@ export const StartupTable = () => {
                   return (
                     <TableRow
                       key={startup.id}
+                      onClick={() => router.push(`/student-startups/${startup.id}`)}
                       sx={{
                         cursor: "pointer",
                         transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",

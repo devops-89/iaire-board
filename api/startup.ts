@@ -20,4 +20,13 @@ export const startupControllers = {
       throw error;
     }
   },
+
+  getStartupDetails: async (id: string | number): Promise<AxiosResponse> => {
+    try {
+      const result = await secureApi.get(`/startup/${id}`);
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  },
 };

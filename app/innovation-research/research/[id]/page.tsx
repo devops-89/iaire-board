@@ -1047,11 +1047,24 @@ export default function ResearchDetailsPage() {
                         color: Colors.PRIMARY_DARK,
                       }}
                     >
-                      {research.team?.name ||
+                      {research.team?.title ||
+                        research.team?.name ||
                         (research.teamId
                           ? `Team #${research.teamId}`
                           : "No Team Assigned")}
                     </Typography>
+                    {research.team?.teamCode && (
+                      <Typography
+                        sx={{
+                          fontSize: "12px",
+                          fontWeight: 600,
+                          color: "rgba(18, 35, 51, 0.5)",
+                          mt: 0.5,
+                        }}
+                      >
+                        Code: {research.team.teamCode}
+                      </Typography>
+                    )}
                   </Box>
 
                   {research.attorneyTemplateDownloadUrl && (
