@@ -1,14 +1,13 @@
 "use client";
 import React from "react";
 import Grid from "@mui/material/Grid";
-import { 
-  Lightbulb as PatentIcon, 
+import {
+  Lightbulb as PatentIcon,
   MenuBook as ResearchIcon,
 } from "@mui/icons-material";
 import { IndividualDistributionCard } from "@/components/layouts/TeacherCertificationLayouts/IndividualDistributionCard";
 import { DashboardData } from "@/assets/generic-data";
 
-// Icon mapping for Innovation Metrics
 const IconMap: any = {
   patent: PatentIcon,
   research: ResearchIcon,
@@ -21,10 +20,10 @@ export const InnovationMetrics = () => {
     <Grid container spacing={3}>
       {metrics.map((item: any, index: number) => {
         const IconComponent = IconMap[item.iconKey] || PatentIcon;
-        
+
         return (
           <Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
-            <IndividualDistributionCard 
+            <IndividualDistributionCard
               label={item.label}
               value={item.value}
               schools={item.schools}

@@ -3,20 +3,10 @@ import React from "react";
 import { Box } from "@mui/material";
 import { Sidebar } from "@/components/widgets/Sidebar";
 import { Navbar } from "@/components/widgets/Navbar";
+import { InnovationTable } from "./InnovationTable";
 import { Poppins } from "@/utils/font";
 
-import { useAuth } from "@/hooks/auth/useAuth";
-import { AdminProfile } from "./AdminProfile";
-
-export default function AdminLayout() {
-  const { fetchUserDetails, user } = useAuth();
-
-  React.useEffect(() => {
-    if (!user) {
-      fetchUserDetails();
-    }
-  }, []);
-
+export const InnovationLayout = () => {
   return (
     <Box
       sx={{
@@ -35,15 +25,14 @@ export default function AdminLayout() {
           overflowY: "auto",
           px: 2,
           pb: 2,
-          position: "relative",
         }}
       >
         <Navbar />
 
-        <Box sx={{ mt: 3, maxWidth: "1200px" }}>
-          <AdminProfile />
+        <Box sx={{ mt: 3 }}>
+          <InnovationTable />
         </Box>
       </Box>
     </Box>
   );
-}
+};

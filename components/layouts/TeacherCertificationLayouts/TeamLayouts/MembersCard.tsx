@@ -32,7 +32,8 @@ export const MembersCard = ({
         bgcolor: "#fff",
         border: "1px solid rgba(18, 35, 51, 0.05)",
         boxShadow: "0 10px 30px rgba(18, 35, 51, 0.03)",
-        height: "100%",
+        maxHeight: "calc(100vh - 160px)",
+        height: "auto",
         display: "flex",
         flexDirection: "column",
       }}
@@ -64,7 +65,29 @@ export const MembersCard = ({
           </Typography>
         </Box>
       ) : (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 2.5,
+            flexGrow: 1,
+            overflowY: "auto",
+            pr: 1,
+            "&::-webkit-scrollbar": {
+              width: "6px",
+            },
+            "&::-webkit-scrollbar-track": {
+              bgcolor: "transparent",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              bgcolor: "rgba(18, 35, 51, 0.1)",
+              borderRadius: "4px",
+            },
+            "&::-webkit-scrollbar-thumb:hover": {
+              bgcolor: "rgba(18, 35, 51, 0.2)",
+            },
+          }}
+        >
           {members.map((member: any) => {
             const student = member.student;
             if (!student) return null;

@@ -16,11 +16,17 @@ import {
   Button,
   InputBase,
   Avatar,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  ListItemText,
 } from "@mui/material";
 import {
   KeyboardArrowLeft as PrevIcon,
   KeyboardArrowRight as NextIcon,
   Search as SearchIcon,
+  MoreVert as MoreIcon,
+  Visibility as ViewIcon,
 } from "@mui/icons-material";
 import { startupControllers } from "@/api/startup";
 import { Colors } from "@/utils/enum";
@@ -70,6 +76,27 @@ export const StartupTable = () => {
   const [totalStartups, setTotalStartups] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const itemsPerPage = 10;
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [selectedStartup, setSelectedStartup] = useState<any>(null);
+
+  const handleOpenMenu = (event: React.MouseEvent<HTMLElement>, startup: any) => {
+    event.stopPropagation();
+    setAnchorEl(event.currentTarget);
+    setSelectedStartup(startup);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+    setSelectedStartup(null);
+  };
+
+  const handleViewDetails = () => {
+    if (selectedStartup) {
+      router.push(`/student-startups/${selectedStartup.id}`);
+    }
+    handleCloseMenu();
+  };
 
   useEffect(() => {
     const fetchStartups = async () => {
@@ -244,6 +271,7 @@ export const StartupTable = () => {
                       textTransform: "uppercase",
                       py: 2,
                       px: 3,
+                      width: 220,
                     }}
                   >
                     Startup Name
@@ -257,6 +285,7 @@ export const StartupTable = () => {
                       textTransform: "uppercase",
                       py: 2,
                       px: 3,
+                      width: 200,
                     }}
                   >
                     Sector
@@ -270,9 +299,67 @@ export const StartupTable = () => {
                       textTransform: "uppercase",
                       py: 2,
                       px: 3,
+                      width: 120,
+                    }}
+                  >
+                    Stage
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      fontWeight: 800,
+                      fontSize: "11px",
+                      color: Colors.PRIMARY_DARK,
+                      letterSpacing: "0.5px",
+                      textTransform: "uppercase",
+                      py: 2,
+                      px: 3,
+                      width: 220,
+                    }}
+                  >
+                    School
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      fontWeight: 800,
+                      fontSize: "11px",
+                      color: Colors.PRIMARY_DARK,
+                      letterSpacing: "0.5px",
+                      textTransform: "uppercase",
+                      py: 2,
+                      px: 3,
+                      width: 200,
+                    }}
+                  >
+                    Founder
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      fontWeight: 800,
+                      fontSize: "11px",
+                      color: Colors.PRIMARY_DARK,
+                      letterSpacing: "0.5px",
+                      textTransform: "uppercase",
+                      py: 2,
+                      px: 3,
+                      width: 120,
                     }}
                   >
                     Status
+                  </TableCell>
+                  <TableCell
+                    align="right"
+                    sx={{
+                      fontWeight: 800,
+                      fontSize: "11px",
+                      color: Colors.PRIMARY_DARK,
+                      letterSpacing: "0.5px",
+                      textTransform: "uppercase",
+                      py: 2,
+                      px: 3,
+                      width: 80,
+                    }}
+                  >
+                    Actions
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -295,19 +382,94 @@ export const StartupTable = () => {
                         },
                       }}
                     >
-                      <TableCell sx={{ py: 2, px: 3 }}>
-                        <Typography sx={{ fontWeight: 700, color: Colors.PRIMARY_DARK, fontSize: "14px", lineHeight: 1.3 }}>
+                      <TableCell sx={{ py: 2, px: 3, width: 220 }}>
+                        <Typography
+                          noWrap
+                          title={formatText(startup.startupName)}
+                          sx={{
+                            fontWeight: 700,
+                            color: Colors.PRIMARY_DARK,
+                            fontSize: "14px",
+                            lineHeight: 1.3,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                            maxWidth: 200,
+                          }}
+                        >
                           {formatText(startup.startupName)}
                         </Typography>
                       </TableCell>
 
-                      <TableCell sx={{ py: 2, px: 3 }}>
-                        <Typography sx={{ fontSize: "13px", color: "rgba(18, 35, 51, 0.7)", fontWeight: 500 }}>
+                      <TableCell sx={{ py: 2, px: 3, width: 200 }}>
+                        <Typography
+                          noWrap
+                          title={formatText(startup.sector)}
+                          sx={{
+                            fontSize: "13px",
+                            color: "rgba(18, 35, 51, 0.7)",
+                            fontWeight: 500,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                            maxWidth: 180,
+                          }}
+                        >
                           {formatText(startup.sector) || "--"}
                         </Typography>
                       </TableCell>
 
-                      <TableCell sx={{ py: 2, px: 3 }}>
+                      <TableCell sx={{ py: 2, px: 3, width: 120 }}>
+                        <Chip
+                          label={formatText(startup.stage || "IDEA")}
+                          size="small"
+                          sx={{
+                            bgcolor: "rgba(33, 150, 243, 0.08)",
+                            color: "#2196F3",
+                            fontWeight: 700,
+                            fontSize: "10px",
+                            borderRadius: "6px",
+                          }}
+                        />
+                      </TableCell>
+
+                      <TableCell sx={{ py: 2, px: 3, width: 220 }}>
+                        <Typography
+                          noWrap
+                          title={startup.school?.name || ""}
+                          sx={{
+                            fontSize: "13px",
+                            color: "rgba(18, 35, 51, 0.7)",
+                            fontWeight: 500,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                            maxWidth: 200,
+                          }}
+                        >
+                          {startup.school?.name || "--"}
+                        </Typography>
+                      </TableCell>
+
+                      <TableCell sx={{ py: 2, px: 3, width: 200 }}>
+                        <Typography
+                          noWrap
+                          title={startup.creator?.fullName || ""}
+                          sx={{
+                            fontSize: "13px",
+                            color: "rgba(18, 35, 51, 0.7)",
+                            fontWeight: 500,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                            maxWidth: 180,
+                          }}
+                        >
+                          {startup.creator?.fullName || "--"}
+                        </Typography>
+                      </TableCell>
+
+                      <TableCell sx={{ py: 2, px: 3, width: 120 }}>
                         <Chip
                           label={formatStatus(startup.status || "PENDING")}
                           size="small"
@@ -319,6 +481,25 @@ export const StartupTable = () => {
                             borderRadius: "6px",
                           }}
                         />
+                      </TableCell>
+
+                      <TableCell align="right" sx={{ py: 2, px: 3, width: 80 }}>
+                        <IconButton
+                          size="small"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleOpenMenu(e, startup);
+                          }}
+                          sx={{
+                            color: "rgba(18, 35, 51, 0.4)",
+                            "&:hover": {
+                              bgcolor: "rgba(18, 35, 51, 0.06)",
+                              color: Colors.PRIMARY_DARK,
+                            },
+                          }}
+                        >
+                          <MoreIcon sx={{ fontSize: "20px" }} />
+                        </IconButton>
                       </TableCell>
                     </TableRow>
                   );
@@ -399,6 +580,68 @@ export const StartupTable = () => {
           </>
         )}
       </TableContainer>
+
+      {/* Action Menu */}
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleCloseMenu}
+        elevation={0}
+        slotProps={{
+          paper: {
+            sx: {
+              borderRadius: "10px",
+              boxShadow: "0 6px 20px rgba(18, 35, 51, 0.06)",
+              border: "1px solid rgba(18, 35, 51, 0.06)",
+              bgcolor: "#fff",
+              minWidth: "120px",
+              py: 0.3,
+              mt: 0.5,
+              "& .MuiList-root": {
+                py: 0,
+              },
+              "& .MuiMenuItem-root": {
+                px: 1.5,
+                py: 0.8,
+                fontSize: "11px",
+                fontWeight: 700,
+                color: Colors.PRIMARY_DARK,
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                transition: "all 0.2s ease",
+                "&:hover": {
+                  bgcolor: "rgba(18, 35, 51, 0.04)",
+                  "& .MuiListItemIcon-root": {
+                    color: Colors.PRIMARY_DARK,
+                  },
+                },
+              },
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+      >
+        <MenuItem onClick={handleViewDetails}>
+          <ListItemIcon
+            sx={{
+              color: "#00D1C1",
+              minWidth: "auto !important",
+              transition: "color 0.2s ease",
+            }}
+          >
+            <ViewIcon sx={{ fontSize: 18 }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography sx={{ fontSize: "14px", fontWeight: 500 }}>
+                View Details
+              </Typography>
+            }
+          />
+        </MenuItem>
+      </Menu>
     </Box>
   );
 };

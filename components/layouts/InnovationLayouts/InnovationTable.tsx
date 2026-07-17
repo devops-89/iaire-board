@@ -15,10 +15,16 @@ import {
   Chip,
   IconButton,
   Button,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  ListItemText,
 } from "@mui/material";
 import {
   KeyboardArrowLeft as PrevIcon,
   KeyboardArrowRight as NextIcon,
+  MoreVert as MoreIcon,
+  Visibility as ViewIcon,
 } from "@mui/icons-material";
 import { innovationControllers } from "@/api/innovation";
 import { Colors } from "@/utils/enum";
@@ -59,10 +65,12 @@ const formatStatus = (status: string) => {
 };
 
 interface InnovationTableProps {
-  searchQuery: string;
+  searchQuery?: string;
 }
 
-export const InnovationTable: React.FC<InnovationTableProps> = ({ searchQuery }) => {
+export const InnovationTable: React.FC<InnovationTableProps> = ({
+  searchQuery = "",
+}) => {
   const router = useRouter();
   const [innovations, setInnovations] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -71,6 +79,30 @@ export const InnovationTable: React.FC<InnovationTableProps> = ({ searchQuery })
   const [totalPages, setTotalPages] = useState(1);
   const itemsPerPage = 10;
 
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [selectedInnovation, setSelectedInnovation] = useState<any>(null);
+
+  const handleOpenMenu = (
+    event: React.MouseEvent<HTMLElement>,
+    innovation: any,
+  ) => {
+    event.stopPropagation();
+    setAnchorEl(event.currentTarget);
+    setSelectedInnovation(innovation);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+    setSelectedInnovation(null);
+  };
+
+  const handleViewDetails = () => {
+    if (selectedInnovation) {
+      router.push(`/innovation-research/innovation/${selectedInnovation.id}`);
+    }
+    handleCloseMenu();
+  };
+
   useEffect(() => {
     const fetchInnovations = async () => {
       try {
@@ -78,7 +110,7 @@ export const InnovationTable: React.FC<InnovationTableProps> = ({ searchQuery })
         const res = await innovationControllers.getInnovations(
           currentPage,
           itemsPerPage,
-          searchQuery
+          searchQuery,
         );
         if (res?.data && res.data.success) {
           const payload = res.data.data;
@@ -160,7 +192,13 @@ export const InnovationTable: React.FC<InnovationTableProps> = ({ searchQuery })
           </Box>
         ) : innovations.length === 0 ? (
           <Box sx={{ py: 8, textAlign: "center" }}>
-            <Typography sx={{ color: "rgba(18, 35, 51, 0.4)", fontSize: "14px", fontWeight: 500 }}>
+            <Typography
+              sx={{
+                color: "rgba(18, 35, 51, 0.4)",
+                fontSize: "14px",
+                fontWeight: 500,
+              }}
+            >
               No innovations found
             </Typography>
           </Box>
@@ -183,10 +221,12 @@ export const InnovationTable: React.FC<InnovationTableProps> = ({ searchQuery })
                       textTransform: "uppercase",
                       py: 2,
                       px: 3,
+                      width: 320,
                     }}
                   >
                     Innovation Title
                   </TableCell>
+
                   <TableCell
                     sx={{
                       fontWeight: 800,
@@ -195,11 +235,14 @@ export const InnovationTable: React.FC<InnovationTableProps> = ({ searchQuery })
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
+                      pl: 8,
+                      pr: 2,
+                      width: 320,
                     }}
                   >
                     Problem Statement
                   </TableCell>
+
                   <TableCell
                     sx={{
                       fontWeight: 800,
@@ -208,7 +251,9 @@ export const InnovationTable: React.FC<InnovationTableProps> = ({ searchQuery })
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
+                      pl: 8,
+                      pr: 2,
+                      width: 320,
                     }}
                   >
                     Proposed Solution
@@ -221,10 +266,25 @@ export const InnovationTable: React.FC<InnovationTableProps> = ({ searchQuery })
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
+                      pl: 8,
+                      pr: 2,
                     }}
                   >
                     Status
+                  </TableCell>
+                  <TableCell
+                    align="right"
+                    sx={{
+                      fontWeight: 800,
+                      fontSize: "11px",
+                      color: Colors.PRIMARY_DARK,
+                      letterSpacing: "0.5px",
+                      textTransform: "uppercase",
+                      py: 2,
+                      px: 3,
+                    }}
+                  >
+                    Actions
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -234,7 +294,11 @@ export const InnovationTable: React.FC<InnovationTableProps> = ({ searchQuery })
                   return (
                     <TableRow
                       key={innovation.id}
-                      onClick={() => router.push(`/innovation-research/innovation/${innovation.id}`)}
+                      onClick={() =>
+                        router.push(
+                          `/innovation-research/innovation/${innovation.id}`,
+                        )
+                      }
                       sx={{
                         cursor: "pointer",
                         transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
@@ -247,25 +311,70 @@ export const InnovationTable: React.FC<InnovationTableProps> = ({ searchQuery })
                         },
                       }}
                     >
-                      <TableCell sx={{ py: 2, px: 3 }}>
-                        <Typography sx={{ fontWeight: 700, color: Colors.PRIMARY_DARK, fontSize: "14px", lineHeight: 1.3 }}>
+                      <TableCell sx={{ py: 2, px: 3, width: 320 }}>
+                        <Typography
+                          noWrap
+                          title={formatTitle(innovation.title)}
+                          sx={{
+                            fontWeight: 700,
+                            color: Colors.PRIMARY_DARK,
+                            fontSize: "14px",
+                            lineHeight: 1.3,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                            maxWidth: 290,
+                          }}
+                        >
                           {formatTitle(innovation.title)}
                         </Typography>
                       </TableCell>
 
-                      <TableCell sx={{ py: 2, px: 3, maxWidth: 300 }}>
-                        <Typography sx={{ fontSize: "13px", color: "rgba(18, 35, 51, 0.7)", fontWeight: 500, lineHeight: 1.4 }}>
+                      <TableCell sx={{ py: 2, pl: 8, pr: 2, width: 320 }}>
+                        <Typography
+                          noWrap
+                          title={innovation.problemDescription || ""}
+                          sx={{
+                            fontSize: "13px",
+                            color: "rgba(18, 35, 51, 0.7)",
+                            fontWeight: 500,
+                            lineHeight: 1.4,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                            maxWidth: 290,
+                          }}
+                        >
                           {innovation.problemDescription || "--"}
                         </Typography>
                       </TableCell>
 
-                      <TableCell sx={{ py: 2, px: 3, maxWidth: 300 }}>
-                        <Typography sx={{ fontSize: "13px", color: "rgba(18, 35, 51, 0.7)", fontWeight: 500, lineHeight: 1.4 }}>
-                          {innovation.solutionDescription || innovation.solution || "--"}
+                      <TableCell sx={{ py: 2, pl: 8, pr: 2, width: 320 }}>
+                        <Typography
+                          noWrap
+                          title={
+                            innovation.solutionDescription ||
+                            innovation.solution ||
+                            ""
+                          }
+                          sx={{
+                            fontSize: "13px",
+                            color: "rgba(18, 35, 51, 0.7)",
+                            fontWeight: 500,
+                            lineHeight: 1.4,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                            maxWidth: 290,
+                          }}
+                        >
+                          {innovation.solutionDescription ||
+                            innovation.solution ||
+                            "--"}
                         </Typography>
                       </TableCell>
 
-                      <TableCell sx={{ py: 2, px: 3 }}>
+                      <TableCell sx={{ py: 2, pl: 8, pr: 2 }}>
                         <Chip
                           label={formatStatus(innovation.status || "PENDING")}
                           size="small"
@@ -277,6 +386,25 @@ export const InnovationTable: React.FC<InnovationTableProps> = ({ searchQuery })
                             borderRadius: "6px",
                           }}
                         />
+                      </TableCell>
+
+                      <TableCell align="right" sx={{ py: 2, px: 3 }}>
+                        <IconButton
+                          size="small"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleOpenMenu(e, innovation);
+                          }}
+                          sx={{
+                            color: "rgba(18, 35, 51, 0.4)",
+                            "&:hover": {
+                              bgcolor: "rgba(18, 35, 51, 0.06)",
+                              color: Colors.PRIMARY_DARK,
+                            },
+                          }}
+                        >
+                          <MoreIcon sx={{ fontSize: "20px" }} />
+                        </IconButton>
                       </TableCell>
                     </TableRow>
                   );
@@ -296,9 +424,16 @@ export const InnovationTable: React.FC<InnovationTableProps> = ({ searchQuery })
                 bgcolor: "#FBF9F6",
               }}
             >
-              <Typography sx={{ fontSize: "13px", fontWeight: 600, color: "rgba(18, 35, 51, 0.5)" }}>
+              <Typography
+                sx={{
+                  fontSize: "13px",
+                  fontWeight: 600,
+                  color: "rgba(18, 35, 51, 0.5)",
+                }}
+              >
                 Showing {totalInnovations === 0 ? 0 : indexOfFirst + 1} to{" "}
-                {Math.min(indexOfLast, totalInnovations)} of {totalInnovations} innovations
+                {Math.min(indexOfLast, totalInnovations)} of {totalInnovations}{" "}
+                innovations
               </Typography>
 
               <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -357,6 +492,68 @@ export const InnovationTable: React.FC<InnovationTableProps> = ({ searchQuery })
           </>
         )}
       </TableContainer>
+
+      {/* Action Menu */}
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleCloseMenu}
+        elevation={0}
+        slotProps={{
+          paper: {
+            sx: {
+              borderRadius: "10px",
+              boxShadow: "0 6px 20px rgba(18, 35, 51, 0.06)",
+              border: "1px solid rgba(18, 35, 51, 0.06)",
+              bgcolor: "#fff",
+              minWidth: "120px",
+              py: 0.3,
+              mt: 0.5,
+              "& .MuiList-root": {
+                py: 0,
+              },
+              "& .MuiMenuItem-root": {
+                px: 1.5,
+                py: 0.8,
+                fontSize: "11px",
+                fontWeight: 700,
+                color: Colors.PRIMARY_DARK,
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                transition: "all 0.2s ease",
+                "&:hover": {
+                  bgcolor: "rgba(18, 35, 51, 0.04)",
+                  "& .MuiListItemIcon-root": {
+                    color: Colors.PRIMARY_DARK,
+                  },
+                },
+              },
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+      >
+        <MenuItem onClick={handleViewDetails}>
+          <ListItemIcon
+            sx={{
+              color: "#00D1C1",
+              minWidth: "auto !important",
+              transition: "color 0.2s ease",
+            }}
+          >
+            <ViewIcon sx={{ fontSize: 18 }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography sx={{ fontSize: "14px", fontWeight: 500 }}>
+                View Details
+              </Typography>
+            }
+          />
+        </MenuItem>
+      </Menu>
     </Box>
   );
 };

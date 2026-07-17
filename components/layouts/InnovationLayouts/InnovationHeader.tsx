@@ -22,7 +22,8 @@ export const InnovationHeader = () => {
           fontWeight: 500,
         }}
       >
-        Tracking intellectual property, patents, and academic research contributions across global institutions.
+        Tracking intellectual property, patents, and academic research
+        contributions across global institutions.
       </Typography>
     </Box>
   );

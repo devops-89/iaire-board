@@ -81,4 +81,12 @@ export const authControllers: any = {
       throw error;
     }
   },
+  getUserDetails: async (): Promise<AxiosResponse> => {
+    try {
+      const result = await secureApi.get("/users/details");
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  },
 };

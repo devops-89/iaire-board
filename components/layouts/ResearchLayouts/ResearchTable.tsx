@@ -14,10 +14,16 @@ import {
   Chip,
   IconButton,
   Button,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  ListItemText,
 } from "@mui/material";
 import {
   KeyboardArrowLeft as PrevIcon,
   KeyboardArrowRight as NextIcon,
+  MoreVert as MoreIcon,
+  Visibility as ViewIcon,
 } from "@mui/icons-material";
 import { researchControllers } from "@/api/research";
 import { Colors } from "@/utils/enum";
@@ -25,7 +31,12 @@ import { useRouter } from "next/navigation";
 
 const getStatusColor = (status: string) => {
   const s = status?.toUpperCase();
-  if (s === "APPROVED" || s === "ACTIVE" || s === "PUBLISHED" || s === "PATENT_GRANTED") {
+  if (
+    s === "APPROVED" ||
+    s === "ACTIVE" ||
+    s === "PUBLISHED" ||
+    s === "PATENT_GRANTED"
+  ) {
     return { bg: "rgba(15, 157, 88, 0.08)", text: "#0F9D58" };
   }
   if (s === "REJECTED" || s === "INACTIVE") {
@@ -59,10 +70,12 @@ const formatStatus = (status: string) => {
 };
 
 interface ResearchTableProps {
-  searchQuery: string;
+  searchQuery?: string;
 }
 
-export const ResearchTable: React.FC<ResearchTableProps> = ({ searchQuery }) => {
+export const ResearchTable: React.FC<ResearchTableProps> = ({
+  searchQuery = "",
+}) => {
   const router = useRouter();
   const [researchList, setResearchList] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -71,6 +84,30 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({ searchQuery }) => 
   const [totalPages, setTotalPages] = useState(1);
   const itemsPerPage = 10;
 
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [selectedResearch, setSelectedResearch] = useState<any>(null);
+
+  const handleOpenMenu = (
+    event: React.MouseEvent<HTMLElement>,
+    research: any,
+  ) => {
+    event.stopPropagation();
+    setAnchorEl(event.currentTarget);
+    setSelectedResearch(research);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+    setSelectedResearch(null);
+  };
+
+  const handleViewDetails = () => {
+    if (selectedResearch) {
+      router.push(`/innovation-research/research/${selectedResearch.id}`);
+    }
+    handleCloseMenu();
+  };
+
   useEffect(() => {
     const fetchResearch = async () => {
       try {
@@ -78,7 +115,7 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({ searchQuery }) => 
         const res = await researchControllers.getResearchSubmissions(
           currentPage,
           itemsPerPage,
-          searchQuery
+          searchQuery,
         );
         if (res?.data && res.data.success) {
           const payload = res.data.data;
@@ -160,7 +197,13 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({ searchQuery }) => 
           </Box>
         ) : researchList.length === 0 ? (
           <Box sx={{ py: 8, textAlign: "center" }}>
-            <Typography sx={{ color: "rgba(18, 35, 51, 0.4)", fontSize: "14px", fontWeight: 500 }}>
+            <Typography
+              sx={{
+                color: "rgba(18, 35, 51, 0.4)",
+                fontSize: "14px",
+                fontWeight: 500,
+              }}
+            >
               No research submissions found
             </Typography>
           </Box>
@@ -183,6 +226,7 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({ searchQuery }) => 
                       textTransform: "uppercase",
                       py: 2,
                       px: 3,
+                      width: 320,
                     }}
                   >
                     Research Title
@@ -195,10 +239,12 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({ searchQuery }) => 
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
+                      pl: 8,
+                      pr: 2,
+                      width: 250,
                     }}
                   >
-                    Topic
+                    School
                   </TableCell>
                   <TableCell
                     sx={{
@@ -208,7 +254,24 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({ searchQuery }) => 
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
+                      pl: 8,
+                      pr: 2,
+                      width: 120,
+                    }}
+                  >
+                    Role
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      fontWeight: 800,
+                      fontSize: "11px",
+                      color: Colors.PRIMARY_DARK,
+                      letterSpacing: "0.5px",
+                      textTransform: "uppercase",
+                      py: 2,
+                      pl: 8,
+                      pr: 2,
+                      width: 320,
                     }}
                   >
                     Description
@@ -221,10 +284,25 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({ searchQuery }) => 
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
+                      pl: 8,
+                      pr: 2,
                     }}
                   >
                     Status
+                  </TableCell>
+                  <TableCell
+                    align="right"
+                    sx={{
+                      fontWeight: 800,
+                      fontSize: "11px",
+                      color: Colors.PRIMARY_DARK,
+                      letterSpacing: "0.5px",
+                      textTransform: "uppercase",
+                      py: 2,
+                      px: 3,
+                    }}
+                  >
+                    Actions
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -234,7 +312,11 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({ searchQuery }) => 
                   return (
                     <TableRow
                       key={submission.id}
-                      onClick={() => router.push(`/innovation-research/research/${submission.id}`)}
+                      onClick={() =>
+                        router.push(
+                          `/innovation-research/research/${submission.id}`,
+                        )
+                      }
                       sx={{
                         cursor: "pointer",
                         transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
@@ -247,25 +329,91 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({ searchQuery }) => 
                         },
                       }}
                     >
-                      <TableCell sx={{ py: 2, px: 3 }}>
-                        <Typography sx={{ fontWeight: 700, color: Colors.PRIMARY_DARK, fontSize: "14px", lineHeight: 1.3 }}>
+                      <TableCell sx={{ py: 2, px: 3, width: 320 }}>
+                        <Typography
+                          noWrap
+                          title={formatTitle(submission.title)}
+                          sx={{
+                            fontWeight: 700,
+                            color: Colors.PRIMARY_DARK,
+                            fontSize: "14px",
+                            lineHeight: 1.3,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                            maxWidth: 290,
+                          }}
+                        >
                           {formatTitle(submission.title)}
                         </Typography>
                       </TableCell>
 
-                      <TableCell sx={{ py: 2, px: 3 }}>
-                        <Typography sx={{ fontSize: "13px", color: "rgba(18, 35, 51, 0.7)", fontWeight: 500 }}>
-                          {submission.topic || "--"}
+                      <TableCell sx={{ py: 2, pl: 8, pr: 2, width: 250 }}>
+                        <Typography
+                          noWrap
+                          title={submission.school?.name || ""}
+                          sx={{
+                            fontSize: "13px",
+                            color: "rgba(18, 35, 51, 0.7)",
+                            fontWeight: 500,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                            maxWidth: 220,
+                          }}
+                        >
+                          {submission.school?.name || "--"}
                         </Typography>
                       </TableCell>
 
-                      <TableCell sx={{ py: 2, px: 3, maxWidth: 300 }}>
-                        <Typography sx={{ fontSize: "13px", color: "rgba(18, 35, 51, 0.7)", fontWeight: 500, lineHeight: 1.4 }}>
+                      <TableCell sx={{ py: 2, pl: 8, pr: 2, width: 120 }}>
+                        {submission.creator?.role === "TEACHER" ? (
+                          <Chip
+                            label="Teacher"
+                            size="small"
+                            sx={{
+                              bgcolor: "rgba(103, 58, 183, 0.08)",
+                              color: "#673AB7",
+                              fontWeight: 700,
+                              fontSize: "10px",
+                              borderRadius: "6px",
+                            }}
+                          />
+                        ) : (
+                          <Chip
+                            label="Student"
+                            size="small"
+                            sx={{
+                              bgcolor: "rgba(0, 150, 136, 0.08)",
+                              color: "#009688",
+                              fontWeight: 700,
+                              fontSize: "10px",
+                              borderRadius: "6px",
+                            }}
+                          />
+                        )}
+                      </TableCell>
+
+                      <TableCell sx={{ py: 2, pl: 8, pr: 2, width: 320 }}>
+                        <Typography
+                          noWrap
+                          title={submission.description || ""}
+                          sx={{
+                            fontSize: "13px",
+                            color: "rgba(18, 35, 51, 0.7)",
+                            fontWeight: 500,
+                            lineHeight: 1.4,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                            maxWidth: 290,
+                          }}
+                        >
                           {submission.description || "--"}
                         </Typography>
                       </TableCell>
 
-                      <TableCell sx={{ py: 2, px: 3 }}>
+                      <TableCell sx={{ py: 2, pl: 8, pr: 2 }}>
                         <Chip
                           label={formatStatus(submission.status || "PENDING")}
                           size="small"
@@ -277,6 +425,25 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({ searchQuery }) => 
                             borderRadius: "6px",
                           }}
                         />
+                      </TableCell>
+
+                      <TableCell align="right" sx={{ py: 2, px: 3 }}>
+                        <IconButton
+                          size="small"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleOpenMenu(e, submission);
+                          }}
+                          sx={{
+                            color: "rgba(18, 35, 51, 0.4)",
+                            "&:hover": {
+                              bgcolor: "rgba(18, 35, 51, 0.06)",
+                              color: Colors.PRIMARY_DARK,
+                            },
+                          }}
+                        >
+                          <MoreIcon sx={{ fontSize: "20px" }} />
+                        </IconButton>
                       </TableCell>
                     </TableRow>
                   );
@@ -296,9 +463,16 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({ searchQuery }) => 
                 bgcolor: "#FBF9F6",
               }}
             >
-              <Typography sx={{ fontSize: "13px", fontWeight: 600, color: "rgba(18, 35, 51, 0.5)" }}>
+              <Typography
+                sx={{
+                  fontSize: "13px",
+                  fontWeight: 600,
+                  color: "rgba(18, 35, 51, 0.5)",
+                }}
+              >
                 Showing {totalResearch === 0 ? 0 : indexOfFirst + 1} to{" "}
-                {Math.min(indexOfLast, totalResearch)} of {totalResearch} research submissions
+                {Math.min(indexOfLast, totalResearch)} of {totalResearch}{" "}
+                research submissions
               </Typography>
 
               <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -357,6 +531,68 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({ searchQuery }) => 
           </>
         )}
       </TableContainer>
+
+      {/* Action Menu */}
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleCloseMenu}
+        elevation={0}
+        slotProps={{
+          paper: {
+            sx: {
+              borderRadius: "10px",
+              boxShadow: "0 6px 20px rgba(18, 35, 51, 0.06)",
+              border: "1px solid rgba(18, 35, 51, 0.06)",
+              bgcolor: "#fff",
+              minWidth: "120px",
+              py: 0.3,
+              mt: 0.5,
+              "& .MuiList-root": {
+                py: 0,
+              },
+              "& .MuiMenuItem-root": {
+                px: 1.5,
+                py: 0.8,
+                fontSize: "11px",
+                fontWeight: 700,
+                color: Colors.PRIMARY_DARK,
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                transition: "all 0.2s ease",
+                "&:hover": {
+                  bgcolor: "rgba(18, 35, 51, 0.04)",
+                  "& .MuiListItemIcon-root": {
+                    color: Colors.PRIMARY_DARK,
+                  },
+                },
+              },
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+      >
+        <MenuItem onClick={handleViewDetails}>
+          <ListItemIcon
+            sx={{
+              color: "#00D1C1",
+              minWidth: "auto !important",
+              transition: "color 0.2s ease",
+            }}
+          >
+            <ViewIcon sx={{ fontSize: 18 }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography sx={{ fontSize: "14px", fontWeight: 500 }}>
+                View Details
+              </Typography>
+            }
+          />
+        </MenuItem>
+      </Menu>
     </Box>
   );
 };

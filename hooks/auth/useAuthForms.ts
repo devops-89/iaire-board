@@ -12,7 +12,11 @@ import {
   resetPasswordValidationSchema,
 } from "@/utils/validation";
 
-export type AuthView = "LOGIN" | "FORGOT_EMAIL" | "FORGOT_OTP" | "FORGOT_NEW_PASSWORD";
+export type AuthView =
+  | "LOGIN"
+  | "FORGOT_EMAIL"
+  | "FORGOT_OTP"
+  | "FORGOT_NEW_PASSWORD";
 
 export const useAuthForms = () => {
   const [view, setView] = useState<AuthView>("LOGIN");
@@ -111,7 +115,8 @@ export const useAuthForms = () => {
     const message = data?.message || "";
     const errors = data?.errors || [];
     const allErrorsStr = [message, ...errors].join(" ").toLowerCase();
-    const hasEmailError = allErrorsStr.includes("email") || allErrorsStr.includes("identifier");
+    const hasEmailError =
+      allErrorsStr.includes("email") || allErrorsStr.includes("identifier");
     const hasPasswordError = allErrorsStr.includes("password");
     if (hasEmailError && hasPasswordError) return "Incorrect email or password";
     if (hasEmailError) return "Incorrect email";
@@ -138,7 +143,9 @@ export const useAuthForms = () => {
         } else {
           setSnackbar({
             open: true,
-            message: getErrorMessage({ response: { data: { message: result.message, errors: [] } } }),
+            message: getErrorMessage({
+              response: { data: { message: result.message, errors: [] } },
+            }),
             severity: "error",
           });
         }
@@ -234,7 +241,7 @@ export const useAuthForms = () => {
           await authControllers.resetPassword(
             forgotEmail,
             values.otp,
-            values.password
+            values.password,
           );
         }
         setSnackbar({
@@ -271,9 +278,7 @@ export const useAuthForms = () => {
       text: "One Lowercase Character",
     },
     {
-      met: /[!@#$%^&*(),.?":{}|<> ]/.test(
-        resetPasswordFormik.values.password
-      ),
+      met: /[!@#$%^&*(),.?":{}|<> ]/.test(resetPasswordFormik.values.password),
       text: "One Special Character",
     },
     {

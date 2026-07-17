@@ -8,6 +8,11 @@ import {
 import { usePathname } from "next/navigation";
 
 const PAGE_CONFIG: any = {
+  "/admin": {
+    title: "Board Admin Profile",
+    description: "",
+    showActions: false,
+  },
   "/dashboard": {
     title: "Dashboard",
     description: "",

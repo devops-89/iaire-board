@@ -2,10 +2,10 @@
 
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import { 
-  login as loginAction, 
-  logout as logoutAction, 
-  updateUser as updateUserAction 
+import {
+  login as loginAction,
+  logout as logoutAction,
+  updateUser as updateUserAction,
 } from "@/redux/slices/authSlice";
 import { authControllers } from "@/api/auth";
 import { jwtDecode } from "jwt-decode";
@@ -13,7 +13,10 @@ import { jwtDecode } from "jwt-decode";
 export const useAuth = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { user, isAuthenticated, token } = useSelector((state: any) => state.auth || { user: null, isAuthenticated: false, token: null });
+  const { user, isAuthenticated, token } = useSelector(
+    (state: any) =>
+      state.auth || { user: null, isAuthenticated: false, token: null },
+  );
 
   const login = async (values: any) => {
     const response = await authControllers.login({
@@ -28,11 +31,10 @@ export const useAuth = () => {
       response.data?.data?.token ||
       response.data?.result?.token;
 
-
     if (accessToken) {
       localStorage.setItem("token", accessToken);
       let userData = response.data?.data?.user || response.data?.user || null;
-      
+
       if (!userData && accessToken) {
         try {
           const decoded: any = jwtDecode(accessToken);
@@ -53,7 +55,10 @@ export const useAuth = () => {
         return { success: true, user: userData };
       }
     }
-    return { success: false, message: "Invalid credentials or missing user data" };
+    return {
+      success: false,
+      message: "Invalid credentials or missing user data",
+    };
   };
 
   const logout = () => {
@@ -66,6 +71,27 @@ export const useAuth = () => {
     dispatch(updateUserAction(data));
   };
 
+  const fetchUserDetails = async () => {
+    try {
+      const response = await authControllers.getUserDetails();
+      if (response?.data && response.data.success) {
+        const userData = response.data.data;
+        const name = userData.fullName || `${userData.firstName || ""} ${userData.lastName || ""}`.trim() || "User";
+        const mappedUser = {
+          ...userData,
+          id: String(userData.id),
+          name: name,
+          avatar: userData.profileImageDownloadUrl || userData.profileImage || "",
+        };
+        dispatch(loginAction({ user: mappedUser, token: localStorage.getItem("token") || "" }));
+        return { success: true, user: mappedUser };
+      }
+    } catch (error) {
+      console.error("Failed to fetch user details", error);
+    }
+    return { success: false };
+  };
+
   return {
     user,
     isAuthenticated,
@@ -73,5 +99,6 @@ export const useAuth = () => {
     login,
     logout,
     updateUser,
+    fetchUserDetails,
   };
 };

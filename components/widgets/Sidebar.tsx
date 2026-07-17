@@ -28,6 +28,7 @@ import { FontSizes, FontWeights } from "@/utils/style";
 import { Poppins } from "@/utils/font";
 import { useRouter, usePathname } from "next/navigation";
 import { Logout } from "./Logout";
+import { useAuth } from "@/hooks/auth/useAuth";
 
 const drawerWidth = "17%";
 
@@ -66,6 +67,32 @@ const menuGroups = [
 export const Sidebar = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const { user } = useAuth();
+
+  const userName = user?.fullName || user?.name || "CISCE Admin";
+  const userRole = user?.role || "SUPER_ADMIN";
+  const userAvatar = user?.profileImageDownloadUrl || user?.profileImage || user?.avatar || "";
+
+  const getInitials = (name: string) => {
+    if (!name) return "AD";
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
+  const formatRoleName = (role: string) => {
+    if (!role) return "Administrator";
+    return role
+      .replace(/_/g, " ")
+      .toLowerCase()
+      .split(" ")
+      .filter(Boolean)
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
 
   return (
     <Drawer
@@ -188,6 +215,7 @@ export const Sidebar = () => {
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, flex: 1, minWidth: 0 }}>
             <Avatar
+              src={userAvatar}
               sx={{
                 bgcolor: Colors.PRIMARY,
                 width: 32,
@@ -197,7 +225,7 @@ export const Sidebar = () => {
                 flexShrink: 0,
               }}
             >
-              CI
+              {getInitials(userName)}
             </Avatar>
             <Box sx={{ minWidth: 0 }}>
               <Typography
@@ -208,13 +236,13 @@ export const Sidebar = () => {
                   color: Colors.WHITE,
                 }}
               >
-                CISCE Admin
+                {userName}
               </Typography>
               <Typography
                 noWrap
                 sx={{ fontSize: "11px", color: "rgba(255,255,255,0.5)" }}
               >
-                Super Administrator
+                {formatRoleName(userRole)}
               </Typography>
             </Box>
           </Box>

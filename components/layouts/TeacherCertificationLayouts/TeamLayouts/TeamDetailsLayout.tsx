@@ -347,11 +347,18 @@ export const TeamDetailsLayout = () => {
 
           {/* Right Column: Student Members */}
           <Grid size={{ xs: 12, md: 7 }}>
-            <MembersCard
-              members={members}
-              capitalizeWord={capitalizeWord}
-              getStatusColor={getStatusColor}
-            />
+            <Box
+              sx={{
+                position: "sticky",
+                top: 24,
+              }}
+            >
+              <MembersCard
+                members={members}
+                capitalizeWord={capitalizeWord}
+                getStatusColor={getStatusColor}
+              />
+            </Box>
           </Grid>
         </Grid>
 
