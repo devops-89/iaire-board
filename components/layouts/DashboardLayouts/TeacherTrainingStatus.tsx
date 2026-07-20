@@ -65,17 +65,7 @@ const MiniStat = ({ label, value, pct, iconKey, color }: any) => {
         >
           {label}
         </Typography>
-        <Typography
-          sx={{
-            fontSize: "20px",
-            fontWeight: 800,
-            color: color,
-            lineHeight: 1.1,
-            my: 0.3,
-          }}
-        >
-          {value}
-        </Typography>
+
         <Typography
           sx={{ fontSize: "10px", fontWeight: 500, color: "rgba(0,0,0,0.5)" }}
         >
@@ -98,9 +88,6 @@ const ProgressBar = ({ label, value, color, max }: any) => (
     >
       <Typography sx={{ fontSize: "12px", fontWeight: 700, color: "#122333" }}>
         {label}
-      </Typography>
-      <Typography sx={{ fontSize: "12px", fontWeight: 800, color: "#122333" }}>
-        {value.toLocaleString()}
       </Typography>
     </Box>
     <LinearProgress

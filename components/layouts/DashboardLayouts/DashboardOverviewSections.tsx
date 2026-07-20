@@ -194,18 +194,6 @@ export const StartupOverview = () => {
                 Student Startups <br /> {titleSuffix}
               </Typography>
               <Box>
-                <Typography
-                  sx={{
-                    fontSize: "32px",
-                    fontWeight: 800,
-                    color: item.color,
-                    letterSpacing: "-1px",
-                    lineHeight: 1,
-                    mb: 2,
-                  }}
-                >
-                  {item.count}
-                </Typography>
                 <Box
                   sx={{
                     display: "inline-block",

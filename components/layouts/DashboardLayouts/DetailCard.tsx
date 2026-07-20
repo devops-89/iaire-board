@@ -86,18 +86,7 @@ export const DetailCard = ({ title, value, subtext, iconKey, color }: any) => {
           </Box>
         </Box>
         
-        <Typography
-          sx={{
-            fontSize: "32px",
-            fontWeight: 800,
-            color: "#122333",
-            letterSpacing: "-1px",
-            lineHeight: 1,
-            mb: 1,
-          }}
-        >
-          {value}
-        </Typography>
+
       </Box>
 
       <Typography

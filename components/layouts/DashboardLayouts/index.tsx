@@ -5,15 +5,6 @@ import { Sidebar } from "@/components/widgets/Sidebar";
 import { Navbar } from "@/components/widgets/Navbar";
 import { Poppins } from "@/utils/font";
 import { TopMetricsBar } from "./TopMetricsBar";
-import { SectionHeader } from "./SectionHeader";
-import {
-  MembershipOverview,
-  TeacherCountOverview,
-  IPResearchOverview,
-  StartupOverview,
-} from "./DashboardOverviewSections";
-import { TeacherTrainingStatus } from "./TeacherTrainingStatus";
-import { StudentSuccess } from "./StudentSuccess";
 
 export default function DashboardLayouts() {
   return (
@@ -32,6 +23,7 @@ export default function DashboardLayouts() {
           flexGrow: 1,
           height: "100vh",
           overflowY: "auto",
+          overflowX: "hidden",
           px: 2,
           pb: 2,
           position: "relative",
@@ -40,18 +32,6 @@ export default function DashboardLayouts() {
       >
         <Navbar />
         <TopMetricsBar />
-        <MembershipOverview />
-        <TeacherCountOverview />
-        <IPResearchOverview />
-        <StartupOverview />
-        <Box sx={{ mb: 8 }}>
-          <SectionHeader title="Teachers Training Overview" color="#122333" />
-          <TeacherTrainingStatus />
-        </Box>
-        <Box sx={{ mb: 8 }}>
-          <SectionHeader title="Student Engagement Overview" color="#D0021B" />
-          <StudentSuccess />
-        </Box>
       </Box>
     </Box>
   );

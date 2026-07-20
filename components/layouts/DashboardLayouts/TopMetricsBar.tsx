@@ -1,50 +1,58 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Box, Typography, Paper, Grid, Skeleton, Divider, alpha } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Paper,
+  Grid,
+  Skeleton,
+  alpha,
+} from "@mui/material";
 import {
   School as SchoolIcon,
-  CheckCircle as ActiveIcon,
-  Cancel as InactiveIcon,
   People as TeachersIcon,
   Groups as StudentsIcon,
   HourglassEmpty as PendingIcon,
   WorkspacePremium as PatentsIcon,
   Description as ResearchIcon,
   RocketLaunch as StartupsIcon,
-  FiberManualRecord as DotIcon,
 } from "@mui/icons-material";
 import { schoolControllers } from "@/api/school";
 import { Colors } from "@/utils/enum";
+import { DashboardVisualCharts } from "./DashboardVisualCharts";
 
 const defaultStats = {
-  totalSchools: 24,
-  activeSchools: 23,
-  inactiveSchools: 1,
-  totalTeachers: 11,
-  activeTeachers: 11,
+  totalSchools: 0,
+  activeSchools: 0,
+  inactiveSchools: 0,
+  totalTeachers: 0,
+  activeTeachers: 0,
   inactiveTeachers: 0,
-  totalStudents: 25,
-  activeStudents: 11,
-  inactiveStudents: 14,
-  innovationsPendingCount: 1,
+  totalStudents: 0,
+  activeStudents: 0,
+  inactiveStudents: 0,
+  innovationsPendingCount: 0,
   patentGrantedCount: 0,
-  researchCount: 4,
-  startupCount: 2,
+  researchCount: 0,
+  startupCount: 0,
 };
 
+const formatValue = (val: number | null | undefined) => (val ?? 0);
+
+// Grouped Metric Card (Schools, Teachers, Students)
 const GroupedMetricCard = ({
   title,
   value,
   icon,
-  color,
-  substats,
+  activeValue,
+  inactiveValue,
   loading,
 }: {
   title: string;
   value: number;
   icon: React.ReactNode;
-  color: string;
-  substats: Array<{ label: string; value: number; color: string }>;
+  activeValue: number;
+  inactiveValue: number;
   loading: boolean;
 }) => {
   return (
@@ -52,24 +60,22 @@ const GroupedMetricCard = ({
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: 2.8,
           borderRadius: "20px",
-          bgcolor: "#fff",
-          border: "1px solid rgba(0, 0, 0, 0.05)",
-          borderTop: `5px solid ${Colors.PRIMARY}`,
-          boxShadow: "0 8px 24px rgba(18, 35, 51, 0.06)",
-          position: "relative",
-          overflow: "hidden",
-          transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+          bgcolor: "#FFFFFF",
+          border: "1px solid rgba(32, 103, 106, 0.12)",
+          borderTop: `4px solid ${Colors.PRIMARY}`,
+          boxShadow: "0 6px 20px rgba(18, 35, 51, 0.03)",
+          transition: "all 0.25s ease-in-out",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
           height: "100%",
-          minHeight: "200px",
+          minHeight: "170px",
           "&:hover": {
-            transform: "translateY(-6px)",
-            boxShadow: `0 16px 40px ${alpha(Colors.PRIMARY, 0.15)}`,
-            borderColor: alpha(Colors.PRIMARY, 0.4),
+            transform: "translateY(-4px)",
+            boxShadow: `0 14px 32px ${alpha(Colors.PRIMARY, 0.12)}`,
+            borderColor: alpha(Colors.PRIMARY, 0.3),
           },
         }}
       >
@@ -78,26 +84,26 @@ const GroupedMetricCard = ({
             sx={{
               display: "flex",
               justifyContent: "space-between",
-              alignItems: "center",
-              mb: 2,
+              alignItems: "flex-start",
+              mb: 1.5,
             }}
           >
             <Typography
               sx={{
-                fontSize: "13px",
+                fontSize: "12px",
                 fontWeight: 700,
-                color: "rgba(18, 35, 51, 0.5)",
+                color: "rgba(18, 35, 51, 0.55)",
                 textTransform: "uppercase",
-                letterSpacing: "0.5px",
+                letterSpacing: "0.6px",
               }}
             >
               {title}
             </Typography>
             <Box
               sx={{
-                bgcolor: alpha(Colors.PRIMARY, 0.08),
+                bgcolor: `${Colors.PRIMARY}10`,
                 color: Colors.PRIMARY,
-                p: 1,
+                p: 1.1,
                 borderRadius: "12px",
                 display: "flex",
                 alignItems: "center",
@@ -109,49 +115,91 @@ const GroupedMetricCard = ({
           </Box>
 
           {loading ? (
-            <Skeleton width="50%" height={48} sx={{ my: 0.5 }} />
+            <Skeleton width="45%" height={44} sx={{ my: 0.5 }} />
           ) : (
             <Typography
               sx={{
                 fontSize: "36px",
                 fontWeight: 800,
                 color: "#122333",
-                lineHeight: 1.1,
-                mb: 1.5,
+                lineHeight: 1,
+                letterSpacing: "-1px",
+                mb: 2,
               }}
             >
-              {value}
+              {formatValue(value)}
             </Typography>
           )}
         </Box>
 
-        <Box>
-          <Divider sx={{ my: 1.5, borderColor: "rgba(0,0,0,0.06)" }} />
+        {/* Bottom Active / Inactive Row */}
+        <Box
+          sx={{
+            pt: 1.5,
+            borderTop: "1px solid rgba(18, 35, 51, 0.06)",
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+          }}
+        >
           {loading ? (
-            <Skeleton width="80%" height={24} />
+            <Skeleton width="80%" height={20} />
           ) : (
-            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
-              {substats.map((sub: any, idx: number) => (
+            <>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 0.8 }}>
                 <Box
-                  key={idx}
-                  sx={{ display: "flex", alignItems: "center", gap: 0.5 }}
+                  sx={{
+                    width: 7,
+                    height: 7,
+                    borderRadius: "50%",
+                    bgcolor: "#10B981",
+                  }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: "12px",
+                    color: "rgba(18, 35, 51, 0.65)",
+                    fontWeight: 600,
+                  }}
                 >
-                  <DotIcon sx={{ fontSize: 8, color: sub.color }} />
-                  <Typography
-                    sx={{
-                      fontSize: "12px",
-                      color: "rgba(18, 35, 51, 0.6)",
-                      fontWeight: 600,
-                    }}
-                  >
-                    {sub.label}:{" "}
-                    <span style={{ color: "#122333", fontWeight: 700 }}>
-                      {sub.value}
-                    </span>
-                  </Typography>
-                </Box>
-              ))}
-            </Box>
+                  Active:{" "}
+                  <span style={{ color: "#122333", fontWeight: 700 }}>
+                    {formatValue(activeValue)}
+                  </span>
+                </Typography>
+              </Box>
+
+              <Box
+                sx={{
+                  width: "1px",
+                  height: 12,
+                  bgcolor: "rgba(18, 35, 51, 0.12)",
+                }}
+              />
+
+              <Box sx={{ display: "flex", alignItems: "center", gap: 0.8 }}>
+                <Box
+                  sx={{
+                    width: 7,
+                    height: 7,
+                    borderRadius: "50%",
+                    bgcolor: "#EF4444",
+                  }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: "12px",
+                    color: "rgba(18, 35, 51, 0.65)",
+                    fontWeight: 600,
+                  }}
+                >
+                  Inactive:{" "}
+                  <span style={{ color: "#122333", fontWeight: 700 }}>
+                    {formatValue(inactiveValue)}
+                  </span>
+                </Typography>
+              </Box>
+            </>
           )}
         </Box>
       </Paper>
@@ -159,17 +207,16 @@ const GroupedMetricCard = ({
   );
 };
 
+// Single Metric Card (Pending Innovations, Patents, Research, Startups)
 const SingleMetricCard = ({
   title,
   value,
   icon,
-  color,
   loading,
 }: {
   title: string;
   value: number;
   icon: React.ReactNode;
-  color: string;
   loading: boolean;
 }) => {
   return (
@@ -178,23 +225,21 @@ const SingleMetricCard = ({
         elevation={0}
         sx={{
           p: 2.5,
-          borderRadius: "16px",
-          bgcolor: "#fff",
-          border: "1px solid rgba(0, 0, 0, 0.05)",
+          borderRadius: "20px",
+          bgcolor: "#FFFFFF",
+          border: "1px solid rgba(32, 103, 106, 0.12)",
           borderTop: `4px solid ${Colors.PRIMARY}`,
-          boxShadow: "0 8px 24px rgba(18, 35, 51, 0.06)",
-          position: "relative",
-          overflow: "hidden",
-          transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+          boxShadow: "0 6px 20px rgba(18, 35, 51, 0.03)",
+          transition: "all 0.25s ease-in-out",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
           height: "100%",
-          minHeight: "120px",
+          minHeight: "125px",
           "&:hover": {
             transform: "translateY(-4px)",
-            boxShadow: `0 16px 36px ${alpha(Colors.PRIMARY, 0.15)}`,
-            borderColor: alpha(Colors.PRIMARY, 0.4),
+            boxShadow: `0 14px 32px ${alpha(Colors.PRIMARY, 0.12)}`,
+            borderColor: alpha(Colors.PRIMARY, 0.3),
           },
         }}
       >
@@ -210,7 +255,7 @@ const SingleMetricCard = ({
             sx={{
               fontSize: "12px",
               fontWeight: 700,
-              color: "rgba(18, 35, 51, 0.5)",
+              color: "rgba(18, 35, 51, 0.55)",
               textTransform: "uppercase",
               letterSpacing: "0.5px",
               maxWidth: "75%",
@@ -221,9 +266,9 @@ const SingleMetricCard = ({
           </Typography>
           <Box
             sx={{
-              bgcolor: alpha(Colors.PRIMARY, 0.08),
+              bgcolor: `${Colors.PRIMARY}10`,
               color: Colors.PRIMARY,
-              p: 0.8,
+              p: 1,
               borderRadius: "10px",
               display: "flex",
               alignItems: "center",
@@ -239,14 +284,14 @@ const SingleMetricCard = ({
         ) : (
           <Typography
             sx={{
-              fontSize: "30px",
+              fontSize: "32px",
               fontWeight: 800,
               color: "#122333",
               lineHeight: 1.1,
-              letterSpacing: "-0.5px",
+              letterSpacing: "-1px",
             }}
           >
-            {value}
+            {formatValue(value)}
           </Typography>
         )}
       </Paper>
@@ -266,12 +311,10 @@ export const TopMetricsBar = () => {
         if (res?.data?.success && res?.data?.data?.data) {
           setStats(res.data.data.data);
         } else {
-          // Fallback if data format is slightly different
           const body = res?.data?.data || res?.data;
           if (body && typeof body.totalSchools === "number") {
             setStats(body);
           } else {
-            console.warn("Unexpected API response structure, using fallbacks:", res);
             setStats(defaultStats);
           }
         }
@@ -292,43 +335,31 @@ export const TopMetricsBar = () => {
     <Box sx={{ mb: 6 }}>
       {/* Row 1: 3 Grouped Cards */}
       <Grid container spacing={3} sx={{ mb: 3 }}>
-        {/* Card 1: Schools */}
         <GroupedMetricCard
           title="Schools Overview"
           value={data.totalSchools}
+          activeValue={data.activeSchools}
+          inactiveValue={data.inactiveSchools}
           icon={<SchoolIcon sx={{ fontSize: 22 }} />}
-          color="#4A90E2"
           loading={loading}
-          substats={[
-            { label: "Active", value: data.activeSchools, color: "#10B981" },
-            { label: "Inactive", value: data.inactiveSchools, color: "#EF4444" },
-          ]}
         />
 
-        {/* Card 2: Teachers */}
         <GroupedMetricCard
           title="Teachers Engagement"
           value={data.totalTeachers}
+          activeValue={data.activeTeachers}
+          inactiveValue={data.inactiveTeachers}
           icon={<TeachersIcon sx={{ fontSize: 22 }} />}
-          color="#F5A623"
           loading={loading}
-          substats={[
-            { label: "Active", value: data.activeTeachers, color: "#10B981" },
-            { label: "Inactive", value: data.inactiveTeachers, color: "#EF4444" },
-          ]}
         />
 
-        {/* Card 3: Students */}
         <GroupedMetricCard
           title="Students Development"
           value={data.totalStudents}
+          activeValue={data.activeStudents}
+          inactiveValue={data.inactiveStudents}
           icon={<StudentsIcon sx={{ fontSize: 22 }} />}
-          color="#10B981"
           loading={loading}
-          substats={[
-            { label: "Active", value: data.activeStudents, color: "#10B981" },
-            { label: "Inactive", value: data.inactiveStudents, color: "#EF4444" },
-          ]}
         />
       </Grid>
 
@@ -338,31 +369,32 @@ export const TopMetricsBar = () => {
           title="Pending Innovations"
           value={data.innovationsPendingCount}
           icon={<PendingIcon sx={{ fontSize: 20 }} />}
-          color="#F5A623"
           loading={loading}
         />
         <SingleMetricCard
           title="Patents Granted"
           value={data.patentGrantedCount}
           icon={<PatentsIcon sx={{ fontSize: 20 }} />}
-          color="#8B5CF6"
           loading={loading}
         />
         <SingleMetricCard
           title="Research Papers"
           value={data.researchCount}
           icon={<ResearchIcon sx={{ fontSize: 20 }} />}
-          color="#3B82F6"
           loading={loading}
         />
         <SingleMetricCard
           title="Student Startups"
           value={data.startupCount}
           icon={<StartupsIcon sx={{ fontSize: 20 }} />}
-          color="#EC4899"
           loading={loading}
         />
       </Grid>
+
+      {/* Visual Analytics Charts */}
+      <Box sx={{ mt: 5 }}>
+        <DashboardVisualCharts data={data} />
+      </Box>
     </Box>
   );
 };
