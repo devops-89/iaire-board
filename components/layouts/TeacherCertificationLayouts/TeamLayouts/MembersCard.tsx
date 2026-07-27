@@ -260,60 +260,7 @@ export const MembersCard = ({
                     gap: 1.5,
                   }}
                 >
-                  {/* Tier Progress */}
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        fontSize: "11px",
-                        fontWeight: 700,
-                        color: "rgba(18, 35, 51, 0.5)",
-                        textTransform: "uppercase",
-                      }}
-                    >
-                      Tier Progress:
-                    </Typography>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 1,
-                        flexGrow: 1,
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          width: "100px",
-                          bgcolor: "rgba(18, 35, 51, 0.06)",
-                          height: 6,
-                          borderRadius: 3,
-                          overflow: "hidden",
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            width: `${student.tierProgress || member.tierProgress || 0}%`,
-                            bgcolor: Colors.PRIMARY,
-                            height: "100%",
-                          }}
-                        />
-                      </Box>
-                      <Typography
-                        sx={{
-                          fontSize: "12px",
-                          fontWeight: 700,
-                          color: Colors.PRIMARY,
-                        }}
-                      >
-                        {student.tierProgress || member.tierProgress || 0}%
-                      </Typography>
-                    </Box>
-                  </Box>
+
 
                   {/* Parents Grid */}
                   <Grid container spacing={1.5}>

@@ -89,4 +89,16 @@ export const authControllers: any = {
       throw error;
     }
   },
+  updateUserDetails: async (userId: string | number, formData: FormData): Promise<AxiosResponse> => {
+    try {
+      const result = await secureApi.patch(`/users/details/${userId}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  },
 };

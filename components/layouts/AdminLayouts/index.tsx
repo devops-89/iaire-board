@@ -40,7 +40,7 @@ export default function AdminLayout() {
       >
         <Navbar />
 
-        <Box sx={{ mt: 3, maxWidth: "1200px" }}>
+        <Box sx={{ mt: 3, width: "100%" }}>
           <AdminProfile />
         </Box>
       </Box>

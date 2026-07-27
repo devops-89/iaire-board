@@ -41,22 +41,22 @@ const menuGroups = [
     title: "ANALYTICS",
     items: [
       {
-        text: "School Membership Overview",
+        text: "School Membership",
         icon: <InstitutionIcon />,
         path: "/membership-overview",
       },
       {
-        text: "Teacher Certification Distribution",
+        text: "Teacher Certification",
         icon: <PeopleIcon />,
         path: "/teacher-certification",
       },
       {
-        text: "Innovation & Research Status",
+        text: "Innovation & Research",
         icon: <PatentIcon />,
         path: "/innovation-research",
       },
       {
-        text: "Student Startup Status",
+        text: "Student Startups",
         icon: <StartupIcon />,
         path: "/student-startups",
       },
