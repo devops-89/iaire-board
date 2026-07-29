@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Box } from "@mui/material";
 import { Sidebar } from "@/components/widgets/Sidebar";
 import { Navbar } from "@/components/widgets/Navbar";
@@ -7,6 +7,12 @@ import { Poppins } from "@/utils/font";
 import { TopMetricsBar } from "./TopMetricsBar";
 
 export default function DashboardLayouts() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen((prev) => !prev);
+  };
+
   return (
     <Box
       sx={{
@@ -16,7 +22,7 @@ export default function DashboardLayouts() {
         fontFamily: Poppins.style.fontFamily,
       }}
     >
-      <Sidebar />
+      <Sidebar mobileOpen={mobileOpen} onMobileClose={handleDrawerToggle} />
       <Box
         component="main"
         sx={{
@@ -24,13 +30,14 @@ export default function DashboardLayouts() {
           height: "100vh",
           overflowY: "auto",
           overflowX: "hidden",
-          px: 2,
-          pb: 2,
+          px: { xs: 1.5, sm: 2, md: 3 },
+          pb: 3,
           position: "relative",
           bgcolor: "#FAF7F0",
+          width: { xs: "100%", lg: "calc(100% - 250px)" },
         }}
       >
-        <Navbar />
+        <Navbar onMenuClick={handleDrawerToggle} />
         <TopMetricsBar />
       </Box>
     </Box>

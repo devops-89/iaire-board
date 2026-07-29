@@ -56,11 +56,11 @@ const GroupedMetricCard = ({
   loading: boolean;
 }) => {
   return (
-    <Grid size={{ xs: 12, md: 4 }}>
+    <Grid size={{ xs: 12, sm: 6, md: 4 }}>
       <Paper
         elevation={0}
         sx={{
-          p: 2.8,
+          p: { xs: 2, sm: 2.8 },
           borderRadius: "20px",
           bgcolor: "#FFFFFF",
           border: "1px solid rgba(32, 103, 106, 0.12)",
@@ -71,7 +71,7 @@ const GroupedMetricCard = ({
           flexDirection: "column",
           justifyContent: "space-between",
           height: "100%",
-          minHeight: "170px",
+          minHeight: { xs: "150px", sm: "170px" },
           "&:hover": {
             transform: "translateY(-4px)",
             boxShadow: `0 14px 32px ${alpha(Colors.PRIMARY, 0.12)}`,
@@ -90,7 +90,7 @@ const GroupedMetricCard = ({
           >
             <Typography
               sx={{
-                fontSize: "12px",
+                fontSize: { xs: "11px", sm: "12px" },
                 fontWeight: 700,
                 color: "rgba(18, 35, 51, 0.55)",
                 textTransform: "uppercase",
@@ -103,7 +103,7 @@ const GroupedMetricCard = ({
               sx={{
                 bgcolor: `${Colors.PRIMARY}10`,
                 color: Colors.PRIMARY,
-                p: 1.1,
+                p: { xs: 0.9, sm: 1.1 },
                 borderRadius: "12px",
                 display: "flex",
                 alignItems: "center",
@@ -119,7 +119,7 @@ const GroupedMetricCard = ({
           ) : (
             <Typography
               sx={{
-                fontSize: "36px",
+                fontSize: { xs: "28px", sm: "36px" },
                 fontWeight: 800,
                 color: "#122333",
                 lineHeight: 1,
@@ -139,7 +139,8 @@ const GroupedMetricCard = ({
             borderTop: "1px solid rgba(18, 35, 51, 0.06)",
             display: "flex",
             alignItems: "center",
-            gap: 2,
+            flexWrap: "wrap",
+            gap: { xs: 1, sm: 2 },
           }}
         >
           {loading ? (
@@ -174,6 +175,7 @@ const GroupedMetricCard = ({
                   width: "1px",
                   height: 12,
                   bgcolor: "rgba(18, 35, 51, 0.12)",
+                  display: { xs: "none", sm: "block" },
                 }}
               />
 
@@ -224,7 +226,7 @@ const SingleMetricCard = ({
       <Paper
         elevation={0}
         sx={{
-          p: 2.5,
+          p: { xs: 2, sm: 2.5 },
           borderRadius: "20px",
           bgcolor: "#FFFFFF",
           border: "1px solid rgba(32, 103, 106, 0.12)",
@@ -235,7 +237,7 @@ const SingleMetricCard = ({
           flexDirection: "column",
           justifyContent: "space-between",
           height: "100%",
-          minHeight: "125px",
+          minHeight: { xs: "110px", sm: "125px" },
           "&:hover": {
             transform: "translateY(-4px)",
             boxShadow: `0 14px 32px ${alpha(Colors.PRIMARY, 0.12)}`,
@@ -253,7 +255,7 @@ const SingleMetricCard = ({
         >
           <Typography
             sx={{
-              fontSize: "12px",
+              fontSize: { xs: "11px", sm: "12px" },
               fontWeight: 700,
               color: "rgba(18, 35, 51, 0.55)",
               textTransform: "uppercase",
@@ -268,7 +270,7 @@ const SingleMetricCard = ({
             sx={{
               bgcolor: `${Colors.PRIMARY}10`,
               color: Colors.PRIMARY,
-              p: 1,
+              p: { xs: 0.8, sm: 1 },
               borderRadius: "10px",
               display: "flex",
               alignItems: "center",
@@ -284,7 +286,7 @@ const SingleMetricCard = ({
         ) : (
           <Typography
             sx={{
-              fontSize: "32px",
+              fontSize: { xs: "26px", sm: "32px" },
               fontWeight: 800,
               color: "#122333",
               lineHeight: 1.1,

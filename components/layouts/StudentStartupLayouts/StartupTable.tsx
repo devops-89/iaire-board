@@ -228,7 +228,7 @@ export const StartupTable = () => {
           borderRadius: "24px",
           boxShadow: "0 10px 40px rgba(18, 35, 51, 0.03)",
           border: "1px solid rgba(18, 35, 51, 0.05)",
-          overflow: "hidden",
+          overflowX: "auto",
           position: "relative",
           bgcolor: "#fff",
           minHeight: loading ? "240px" : "auto",
@@ -254,7 +254,7 @@ export const StartupTable = () => {
           </Box>
         ) : (
           <>
-            <Table>
+            <Table sx={{ minWidth: 700 }}>
               <TableHead
                 sx={{
                   bgcolor: "rgba(18, 35, 51, 0.015)",

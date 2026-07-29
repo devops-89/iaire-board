@@ -86,8 +86,8 @@ export const SchoolTeachersTab = ({
 
       {totalTeachers > 0 ? (
         <>
-          <TableContainer>
-            <Table>
+          <TableContainer sx={{ overflowX: "auto" }}>
+            <Table sx={{ minWidth: 600 }}>
               <TableHead sx={{ bgcolor: "rgba(18, 35, 51, 0.03)" }}>
                 <TableRow>
                   <TableCell

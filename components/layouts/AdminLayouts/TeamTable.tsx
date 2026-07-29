@@ -78,10 +78,10 @@ export const TeamTable = () => {
           borderRadius: "24px",
           boxShadow: "0 4px 20px rgba(0,0,0,0.03)",
           border: "1px solid rgba(0,0,0,0.04)",
-          overflow: "hidden",
+          overflowX: "auto",
         }}
       >
-        <Table>
+        <Table sx={{ minWidth: 650 }}>
           <TableHead sx={{ bgcolor: "#F8F9FA" }}>
             <TableRow>
               <TableCell sx={{ fontWeight: 700, color: "#122333" }}>

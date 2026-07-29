@@ -247,11 +247,11 @@ export const DashboardVisualCharts: React.FC<DashboardVisualChartsProps> = ({
       {/* ROW 1: 100% Segmented Progress Meters + Innovation Meters */}
       <Grid container spacing={3} sx={{ mb: 3.5 }}>
         {/* CHART 1: Innovation & IP Distribution Bar Chart (Left) */}
-        <Grid size={{ xs: 12, md: 6 }}>
+        <Grid size={{ xs: 12, lg: 6 }}>
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               borderRadius: "20px",
               bgcolor: "#FFFFFF",
               border: "1px solid rgba(18, 35, 51, 0.08)",
@@ -265,7 +265,7 @@ export const DashboardVisualCharts: React.FC<DashboardVisualChartsProps> = ({
             <Box>
               <Typography
                 sx={{
-                  fontSize: "15px",
+                  fontSize: { xs: "14px", sm: "15px" },
                   fontWeight: 800,
                   color: "#122333",
                   mb: 2,
@@ -279,7 +279,7 @@ export const DashboardVisualCharts: React.FC<DashboardVisualChartsProps> = ({
               <BarChart
                 layout="vertical"
                 data={ipMetricsData}
-                margin={{ top: 5, right: 30, left: 15, bottom: 5 }}
+                margin={{ top: 5, right: 15, left: -10, bottom: 5 }}
               >
                 <CartesianGrid
                   strokeDasharray="3 3"
@@ -297,8 +297,8 @@ export const DashboardVisualCharts: React.FC<DashboardVisualChartsProps> = ({
                   type="category"
                   tickLine={false}
                   axisLine={{ stroke: "rgba(0,0,0,0.1)" }}
-                  tick={{ fill: "#122333", fontSize: 11, fontWeight: 700 }}
-                  width={120}
+                  tick={{ fill: "#122333", fontSize: 10, fontWeight: 700 }}
+                  width={110}
                 />
                 <Tooltip content={<CustomTooltip />} />
                 <Bar dataKey="count" radius={[0, 8, 8, 0]} maxBarSize={24}>
@@ -312,11 +312,11 @@ export const DashboardVisualCharts: React.FC<DashboardVisualChartsProps> = ({
         </Grid>
 
         {/* CHART 2: Active vs Inactive Segmented Meters (Right) */}
-        <Grid size={{ xs: 12, md: 6 }}>
+        <Grid size={{ xs: 12, lg: 6 }}>
           <Paper
             elevation={0}
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               borderRadius: "20px",
               bgcolor: "#FFFFFF",
               border: "1px solid rgba(18, 35, 51, 0.08)",
@@ -330,7 +330,7 @@ export const DashboardVisualCharts: React.FC<DashboardVisualChartsProps> = ({
             <Box>
               <Typography
                 sx={{
-                  fontSize: "15px",
+                  fontSize: { xs: "14px", sm: "15px" },
                   fontWeight: 800,
                   color: "#122333",
                   mb: 2,
@@ -347,9 +347,11 @@ export const DashboardVisualCharts: React.FC<DashboardVisualChartsProps> = ({
                   <Box
                     sx={{
                       display: "flex",
+                      flexDirection: { xs: "column", sm: "row" },
                       justifyContent: "space-between",
-                      alignItems: "center",
+                      alignItems: { xs: "flex-start", sm: "center" },
                       mb: 0.8,
+                      gap: { xs: 0.5, sm: 0 },
                     }}
                   >
                     <Typography
@@ -362,7 +364,12 @@ export const DashboardVisualCharts: React.FC<DashboardVisualChartsProps> = ({
                       {item.label}
                     </Typography>
                     <Box
-                      sx={{ display: "flex", alignItems: "center", gap: 1.5 }}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        flexWrap: "wrap",
+                        gap: { xs: 1, sm: 1.5 },
+                      }}
                     >
                       <Typography
                         sx={{
@@ -427,7 +434,8 @@ export const DashboardVisualCharts: React.FC<DashboardVisualChartsProps> = ({
                 pt: 2,
                 borderTop: "1px solid rgba(18, 35, 51, 0.06)",
                 display: "flex",
-                gap: 3,
+                flexWrap: "wrap",
+                gap: { xs: 2, sm: 3 },
               }}
             >
               <Box sx={{ display: "flex", alignItems: "center", gap: 0.8 }}>
@@ -479,7 +487,7 @@ export const DashboardVisualCharts: React.FC<DashboardVisualChartsProps> = ({
           <Paper
             elevation={0}
             sx={{
-              p: 3.5,
+              p: { xs: 2, sm: 3, md: 3.5 },
               borderRadius: "20px",
               bgcolor: "#FFFFFF",
               border: "1px solid rgba(18, 35, 51, 0.08)",

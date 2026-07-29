@@ -22,7 +22,7 @@ export const SchoolProfileBanner = ({
     <Paper
       elevation={0}
       sx={{
-        p: 4,
+        p: { xs: 2.5, sm: 4 },
         borderRadius: "24px",
         background: "linear-gradient(135deg, #111E2E 0%, #0A1420 100%)",
         boxShadow: "0 20px 40px rgba(18, 35, 51, 0.08)",
@@ -48,12 +48,12 @@ export const SchoolProfileBanner = ({
           <Avatar
             src={school.schoolLogoDownloadUrl || school.logo || undefined}
             sx={{
-              width: 90,
-              height: 90,
-              borderRadius: "24px",
+              width: { xs: 64, sm: 90 },
+              height: { xs: 64, sm: 90 },
+              borderRadius: "20px",
               bgcolor: "rgba(255, 255, 255, 0.08)",
               color: "#00D1C1",
-              fontSize: "32px",
+              fontSize: { xs: "24px", sm: "32px" },
               fontWeight: 800,
               border: "2px solid rgba(0, 209, 193, 0.3)",
               boxShadow: "0 8px 24px rgba(0, 0, 0, 0.2)",
@@ -68,7 +68,7 @@ export const SchoolProfileBanner = ({
           <Box>
             <Typography
               sx={{
-                fontSize: "26px",
+                fontSize: { xs: "20px", sm: "26px" },
                 fontWeight: 800,
                 color: "#fff",
                 letterSpacing: "-0.5px",

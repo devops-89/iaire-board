@@ -5,7 +5,6 @@ import {
   Drawer,
   List,
   Typography,
-  Divider,
   ListItem,
   ListItemButton,
   ListItemIcon,
@@ -16,12 +15,10 @@ import {
 import {
   GridView as DashboardIcon,
   Business as InstitutionIcon,
-  WorkspacePremium as MembershipIcon,
   PeopleAlt as PeopleIcon,
-  AccountCircle as StudentIcon,
   Lightbulb as PatentIcon,
-  Description as ResearchIcon,
   RocketLaunch as StartupIcon,
+  Close as CloseIcon,
 } from "@mui/icons-material";
 import { Colors } from "@/utils/enum";
 import { FontSizes, FontWeights } from "@/utils/style";
@@ -30,7 +27,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { Logout } from "./Logout";
 import { useAuth } from "@/hooks/auth/useAuth";
 
-const drawerWidth = "17%";
+const drawerWidth = 250;
 
 const menuGroups = [
   {
@@ -64,7 +61,12 @@ const menuGroups = [
   },
 ];
 
-export const Sidebar = () => {
+interface SidebarProps {
+  mobileOpen?: boolean;
+  onMobileClose?: () => void;
+}
+
+export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, onMobileClose }) => {
   const router = useRouter();
   const pathname = usePathname();
   const { user } = useAuth();
@@ -94,19 +96,14 @@ export const Sidebar = () => {
       .join(" ");
   };
 
-  return (
-    <Drawer
-      variant="permanent"
+  const drawerContent = (
+    <Box
       sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        "& .MuiDrawer-paper": {
-          width: drawerWidth,
-          boxSizing: "border-box",
-          border: "none",
-          background: Colors.PRIMARY_DARK,
-          color: Colors.WHITE,
-        },
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        bgcolor: Colors.PRIMARY_DARK,
+        color: Colors.WHITE,
       }}
     >
       {/* Logo Section */}
@@ -116,6 +113,7 @@ export const Sidebar = () => {
           px: 3,
           display: "flex",
           alignItems: "center",
+          justifyContent: "space-between",
           mb: 2,
         }}
       >
@@ -124,15 +122,27 @@ export const Sidebar = () => {
           src="/IAIRE_logo.png"
           alt="IAIRE Logo"
           sx={{
-            height: 46,
+            height: 44,
             width: "auto",
             objectFit: "contain",
             maxWidth: "100%",
           }}
         />
+        {onMobileClose && (
+          <IconButton
+            onClick={onMobileClose}
+            sx={{
+              color: "rgba(255,255,255,0.7)",
+              display: { lg: "none" },
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        )}
       </Box>
 
-      <Box sx={{ overflowY: "auto", px: 1.5 }}>
+      {/* Menu Groups */}
+      <Box sx={{ overflowY: "auto", px: 1.5, flex: 1 }}>
         {menuGroups.map((group) => (
           <Box key={group.title} sx={{ mb: 3 }}>
             <Typography
@@ -153,7 +163,10 @@ export const Sidebar = () => {
                 return (
                   <ListItem key={item.text} disablePadding sx={{ mb: 0.5 }}>
                     <ListItemButton
-                      onClick={() => router.push(item.path)}
+                      onClick={() => {
+                        router.push(item.path);
+                        if (onMobileClose) onMobileClose();
+                      }}
                       sx={{
                         borderRadius: "8px",
                         bgcolor: isActive
@@ -202,7 +215,10 @@ export const Sidebar = () => {
 
       {/* Footer Profile */}
       <Box
-        onClick={() => router.push("/admin")}
+        onClick={() => {
+          router.push("/admin");
+          if (onMobileClose) onMobileClose();
+        }}
         sx={{
           mt: "auto",
           p: 2,
@@ -249,6 +265,48 @@ export const Sidebar = () => {
           <Logout />
         </Box>
       </Box>
-    </Drawer>
+    </Box>
+  );
+
+  return (
+    <>
+      {/* Mobile Temporary Drawer (< lg) */}
+      <Drawer
+        variant="temporary"
+        open={mobileOpen}
+        onClose={onMobileClose}
+        ModalProps={{ keepMounted: true }}
+        sx={{
+          display: { xs: "block", lg: "none" },
+          "& .MuiDrawer-paper": {
+            width: drawerWidth,
+            boxSizing: "border-box",
+            border: "none",
+            background: Colors.PRIMARY_DARK,
+          },
+        }}
+      >
+        {drawerContent}
+      </Drawer>
+
+      {/* Desktop Permanent Drawer (>= lg) */}
+      <Drawer
+        variant="permanent"
+        sx={{
+          display: { xs: "none", lg: "block" },
+          width: drawerWidth,
+          flexShrink: 0,
+          "& .MuiDrawer-paper": {
+            width: drawerWidth,
+            boxSizing: "border-box",
+            border: "none",
+            background: Colors.PRIMARY_DARK,
+            color: Colors.WHITE,
+          },
+        }}
+      >
+        {drawerContent}
+      </Drawer>
+    </>
   );
 };

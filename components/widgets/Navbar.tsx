@@ -1,9 +1,10 @@
 "use client";
 import React from "react";
-import { Box, Button, Typography, Chip } from "@mui/material";
+import { Box, Button, Typography, Chip, IconButton } from "@mui/material";
 import {
   GetApp as ExportIcon,
   FiberManualRecord as LiveIcon,
+  Menu as MenuIcon,
 } from "@mui/icons-material";
 import { usePathname } from "next/navigation";
 
@@ -19,52 +20,52 @@ const PAGE_CONFIG: any = {
     showActions: false,
   },
   "/membership-overview": {
-    title: "",
+    title: "School Membership",
     description: "",
     showActions: false,
   },
   "/teacher-certification": {
-    title: "",
+    title: "Teacher Certification",
     description: "",
     showActions: false,
   },
   "/innovation-research": {
-    title: "",
+    title: "Innovation & Research",
     description: "",
     showActions: false,
   },
   "/student-startup": {
-    title: "",
+    title: "Student Startups",
     description: "",
     showActions: false,
   },
   "/team": {
-    title: "",
+    title: "Team Overview",
     description: "",
     showActions: false,
   },
   "/school": {
-    title: "",
+    title: "School Profile",
     description: "",
     showActions: false,
   },
   "/teacher": {
-    title: "",
+    title: "Teacher Profile",
     description: "",
     showActions: false,
   },
 };
 
-export const Navbar = () => {
+interface NavbarProps {
+  onMenuClick?: () => void;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
   const pathname = usePathname();
   const activeKey =
     Object.keys(PAGE_CONFIG).find((key) => pathname.includes(key)) ||
     "/dashboard";
-  const config = PAGE_CONFIG[activeKey];
-
-  if (!config.title && !config.description && !config.showActions) {
-    return null;
-  }
+  const config = PAGE_CONFIG[activeKey] || { title: "Dashboard", description: "", showActions: false };
 
   return (
     <Box
@@ -76,43 +77,61 @@ export const Navbar = () => {
         top: 0,
         zIndex: 1100,
         bgcolor: "#FAF7F0",
-        mx: -2,
-        px: 2,
-        height: "72px",
-        pt: 0,
-        pb: 0,
-        mb: 4,
+        mx: { xs: -1.5, sm: -2 },
+        px: { xs: 1.5, sm: 2 },
+        height: { xs: "60px", sm: "72px" },
+        mb: { xs: 2.5, sm: 4 },
         borderBottom: "1px solid rgba(18, 35, 51, 0.1)",
       }}
     >
-      <Box>
-        <Typography
-          sx={{
-            fontSize: "22px",
-            fontWeight: 700,
-            color: "#122333",
-            letterSpacing: "-0.5px",
-            lineHeight: 1.2,
-          }}
-        >
-          {config.title}
-        </Typography>
-        {config.description && (
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+        {onMenuClick && (
+          <IconButton
+            onClick={onMenuClick}
+            sx={{
+              display: { xs: "flex", lg: "none" },
+              color: "#122333",
+              p: 0.8,
+              borderRadius: "10px",
+              bgcolor: "rgba(18, 35, 51, 0.05)",
+              "&:hover": { bgcolor: "rgba(18, 35, 51, 0.1)" },
+            }}
+            aria-label="open menu"
+          >
+            <MenuIcon />
+          </IconButton>
+        )}
+
+        <Box>
           <Typography
             sx={{
-              fontSize: "14px",
-              fontWeight: 500,
-              color: "rgba(18, 35, 51, 0.6)",
-              mt: 0.5,
+              fontSize: { xs: "18px", sm: "22px" },
+              fontWeight: 700,
+              color: "#122333",
+              letterSpacing: "-0.5px",
+              lineHeight: 1.2,
             }}
           >
-            {config.description}
+            {config.title}
           </Typography>
-        )}
+          {config.description && (
+            <Typography
+              sx={{
+                fontSize: { xs: "12px", sm: "14px" },
+                fontWeight: 500,
+                color: "rgba(18, 35, 51, 0.6)",
+                mt: 0.5,
+                display: { xs: "none", sm: "block" },
+              }}
+            >
+              {config.description}
+            </Typography>
+          )}
+        </Box>
       </Box>
 
       {config.showActions && (
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 1, sm: 2 } }}>
           <Chip
             icon={
               <LiveIcon
@@ -129,6 +148,7 @@ export const Navbar = () => {
               fontWeight: 700,
               fontSize: "12px",
               border: "1px solid rgba(0, 209, 193, 0.2)",
+              display: { xs: "none", sm: "inline-flex" },
               "& .MuiChip-label": { px: 1.5 },
             }}
           />
@@ -140,14 +160,14 @@ export const Navbar = () => {
               color: "#fff",
               textTransform: "none",
               borderRadius: "100px",
-              px: 3,
-              py: 1,
+              px: { xs: 1.5, sm: 3 },
+              py: 0.8,
               fontWeight: 700,
-              fontSize: "13px",
+              fontSize: { xs: "12px", sm: "13px" },
               "&:hover": { bgcolor: "#1A2B3B" },
             }}
           >
-            Export Report
+            Export
           </Button>
         </Box>
       )}

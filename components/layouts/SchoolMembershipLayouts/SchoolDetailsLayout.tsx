@@ -49,6 +49,11 @@ export const SchoolDetailsLayout = () => {
   const [schoolData, setSchoolData] = useState<SchoolDetails | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [activeTab, setActiveTab] = useState<number>(0);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen((prev) => !prev);
+  };
 
   // Pagination states for teachers and students tables
   const [teacherPage, setTeacherPage] = useState<number>(1);
@@ -93,7 +98,7 @@ export const SchoolDetailsLayout = () => {
           fontFamily: Poppins.style.fontFamily,
         }}
       >
-        <Sidebar />
+        <Sidebar mobileOpen={mobileOpen} onMobileClose={handleDrawerToggle} />
         <Box
           component="main"
           sx={{
@@ -101,9 +106,11 @@ export const SchoolDetailsLayout = () => {
             height: "100vh",
             display: "flex",
             flexDirection: "column",
+            overflowX: "hidden",
+            width: { xs: "100%", lg: "calc(100% - 250px)" },
           }}
         >
-          <Navbar />
+          <Navbar onMenuClick={handleDrawerToggle} />
           <Box
             sx={{
               flexGrow: 1,
@@ -129,7 +136,7 @@ export const SchoolDetailsLayout = () => {
           fontFamily: Poppins.style.fontFamily,
         }}
       >
-        <Sidebar />
+        <Sidebar mobileOpen={mobileOpen} onMobileClose={handleDrawerToggle} />
         <Box
           component="main"
           sx={{
@@ -137,9 +144,11 @@ export const SchoolDetailsLayout = () => {
             height: "100vh",
             display: "flex",
             flexDirection: "column",
+            overflowX: "hidden",
+            width: { xs: "100%", lg: "calc(100% - 250px)" },
           }}
         >
-          <Navbar />
+          <Navbar onMenuClick={handleDrawerToggle} />
           <Box
             sx={{
               flexGrow: 1,
@@ -209,18 +218,22 @@ export const SchoolDetailsLayout = () => {
         fontFamily: Poppins.style.fontFamily,
       }}
     >
-      <Sidebar />
+      <Sidebar mobileOpen={mobileOpen} onMobileClose={handleDrawerToggle} />
       <Box
         component="main"
         sx={{
           flexGrow: 1,
           height: "100vh",
           overflowY: "auto",
-          px: 2,
-          pb: 2,
+          overflowX: "hidden",
+          px: { xs: 1.5, sm: 2, md: 3 },
+          pb: 3,
+          position: "relative",
+          bgcolor: "#FAF7F0",
+          width: { xs: "100%", lg: "calc(100% - 250px)" },
         }}
       >
-        <Navbar />
+        <Navbar onMenuClick={handleDrawerToggle} />
 
         {/* Back Button Row */}
         <Box
@@ -255,7 +268,7 @@ export const SchoolDetailsLayout = () => {
           </Button>
         </Box>
 
-        {/* School Profile Banner Card - Premium Slate Gradient */}
+        {/* School Profile Banner Card */}
         <SchoolProfileBanner school={school} capitalizeWord={capitalizeWord} />
 
         {/* Premium Statistics Metrics */}
@@ -271,6 +284,8 @@ export const SchoolDetailsLayout = () => {
           <Tabs
             value={activeTab}
             onChange={handleTabChange}
+            variant="scrollable"
+            scrollButtons="auto"
             sx={{
               "& .MuiTabs-indicator": {
                 bgcolor: Colors.PRIMARY_DARK,
@@ -283,7 +298,7 @@ export const SchoolDetailsLayout = () => {
                 fontSize: "15px",
                 color: "rgba(18, 35, 51, 0.4)",
                 px: 1,
-                mr: 4,
+                mr: { xs: 2, sm: 4 },
                 minWidth: "auto",
                 transition: "all 0.2s ease",
                 "&.Mui-selected": {
