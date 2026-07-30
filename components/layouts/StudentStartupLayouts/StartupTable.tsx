@@ -158,7 +158,7 @@ export const StartupTable = () => {
   const indexOfLast = indexOfFirst + startups.length;
 
   return (
-    <Box sx={{ mt: 2 }}>
+    <Box sx={{ mt: 0 }}>
       {/* Top Header & Search Bar Row */}
       <Box
         sx={{

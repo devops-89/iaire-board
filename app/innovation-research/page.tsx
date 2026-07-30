@@ -40,14 +40,15 @@ export default function InnovationResearchPage() {
           flexGrow: 1,
           height: "100vh",
           overflowY: "auto",
-          px: 2,
-          pb: 2,
+          px: { xs: 1.5, sm: 2, md: 3 },
+          pt: { xs: 2, sm: 3 },
+          pb: 3,
         }}
       >
         <Navbar />
 
         {/* Page Heading */}
-        <Box sx={{ mt: 3, mb: 4 }}>
+        <Box sx={{ mt: 0, mb: 3 }}>
           <Typography
             sx={{
               fontSize: "20px",

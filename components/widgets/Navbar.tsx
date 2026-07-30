@@ -20,22 +20,27 @@ const PAGE_CONFIG: any = {
     showActions: false,
   },
   "/membership-overview": {
-    title: "School Membership",
+    title: "",
     description: "",
     showActions: false,
   },
   "/teacher-certification": {
-    title: "Teacher Certification",
+    title: "",
     description: "",
     showActions: false,
   },
   "/innovation-research": {
-    title: "Innovation & Research",
+    title: "",
     description: "",
     showActions: false,
   },
   "/student-startup": {
-    title: "Student Startups",
+    title: "",
+    description: "",
+    showActions: false,
+  },
+  "/student-startups": {
+    title: "",
     description: "",
     showActions: false,
   },
@@ -67,21 +72,27 @@ export const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
     "/dashboard";
   const config = PAGE_CONFIG[activeKey] || { title: "Dashboard", description: "", showActions: false };
 
+  const hasContent = Boolean(config.title || config.showActions);
+
+  if (!hasContent && !onMenuClick) {
+    return null;
+  }
+
   return (
     <Box
       sx={{
-        display: "flex",
+        display: hasContent ? "flex" : { xs: "flex", lg: "none" },
         justifyContent: "space-between",
         alignItems: "center",
         position: ["-webkit-sticky", "sticky"],
         top: 0,
         zIndex: 1100,
         bgcolor: "#FAF7F0",
-        mx: { xs: -1.5, sm: -2 },
-        px: { xs: 1.5, sm: 2 },
-        height: { xs: "60px", sm: "72px" },
-        mb: { xs: 2.5, sm: 4 },
-        borderBottom: "1px solid rgba(18, 35, 51, 0.1)",
+        mx: hasContent ? { xs: -1.5, sm: -2 } : 0,
+        px: hasContent ? { xs: 1.5, sm: 2 } : 0,
+        height: hasContent ? { xs: "60px", sm: "72px" } : { xs: "48px", lg: 0 },
+        mb: hasContent ? { xs: 2.5, sm: 4 } : 0,
+        borderBottom: hasContent ? "1px solid rgba(18, 35, 51, 0.1)" : "none",
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
@@ -102,32 +113,34 @@ export const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
           </IconButton>
         )}
 
-        <Box>
-          <Typography
-            sx={{
-              fontSize: { xs: "18px", sm: "22px" },
-              fontWeight: 700,
-              color: "#122333",
-              letterSpacing: "-0.5px",
-              lineHeight: 1.2,
-            }}
-          >
-            {config.title}
-          </Typography>
-          {config.description && (
+        {config.title ? (
+          <Box>
             <Typography
               sx={{
-                fontSize: { xs: "12px", sm: "14px" },
-                fontWeight: 500,
-                color: "rgba(18, 35, 51, 0.6)",
-                mt: 0.5,
-                display: { xs: "none", sm: "block" },
+                fontSize: { xs: "18px", sm: "22px" },
+                fontWeight: 700,
+                color: "#122333",
+                letterSpacing: "-0.5px",
+                lineHeight: 1.2,
               }}
             >
-              {config.description}
+              {config.title}
             </Typography>
-          )}
-        </Box>
+            {config.description && (
+              <Typography
+                sx={{
+                  fontSize: { xs: "12px", sm: "14px" },
+                  fontWeight: 500,
+                  color: "rgba(18, 35, 51, 0.6)",
+                  mt: 0.5,
+                  display: { xs: "none", sm: "block" },
+                }}
+              >
+                {config.description}
+              </Typography>
+            )}
+          </Box>
+        ) : null}
       </Box>
 
       {config.showActions && (
