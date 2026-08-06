@@ -27,12 +27,12 @@ export const MembersCard = ({
     <Paper
       elevation={0}
       sx={{
-        p: 3,
-        borderRadius: "20px",
+        p: { xs: 2.5, sm: 3 },
+        borderRadius: { xs: "16px", sm: "20px" },
         bgcolor: "#fff",
         border: "1px solid rgba(18, 35, 51, 0.05)",
         boxShadow: "0 10px 30px rgba(18, 35, 51, 0.03)",
-        maxHeight: "calc(100vh - 160px)",
+        maxHeight: { xs: "none", md: "calc(100vh - 160px)" },
         height: "auto",
         display: "flex",
         flexDirection: "column",
@@ -40,7 +40,12 @@ export const MembersCard = ({
     >
       <Typography
         variant="h6"
-        sx={{ fontWeight: 800, color: Colors.PRIMARY_DARK, mb: 3 }}
+        sx={{
+          fontWeight: 800,
+          color: Colors.PRIMARY_DARK,
+          mb: 3,
+          fontSize: { xs: "16px", sm: "18px" },
+        }}
       >
         Team Members ({members?.length || 0})
       </Typography>
@@ -120,16 +125,19 @@ export const MembersCard = ({
                 <Box
                   sx={{
                     display: "flex",
-                    alignItems: "center",
+                    alignItems: { xs: "flex-start", sm: "center" },
                     justifyContent: "space-between",
                     width: "100%",
+                    gap: 1.5,
                   }}
                 >
                   <Box
                     sx={{
                       display: "flex",
-                      alignItems: "center",
-                      gap: 2,
+                      alignItems: "flex-start",
+                      gap: { xs: 1.5, sm: 2 },
+                      minWidth: 0,
+                      flex: 1,
                     }}
                   >
                     <Avatar
@@ -139,23 +147,25 @@ export const MembersCard = ({
                         undefined
                       }
                       sx={{
-                        width: 48,
-                        height: 48,
+                        width: { xs: 40, sm: 48 },
+                        height: { xs: 40, sm: 48 },
                         bgcolor: "rgba(32, 103, 106, 0.08)",
                         color: Colors.PRIMARY,
                         fontWeight: 700,
+                        flexShrink: 0,
                       }}
                     >
                       {student.fullName?.charAt(0) ||
                         student.firstName?.charAt(0) ||
                         "S"}
                     </Avatar>
-                    <Box>
+                    <Box sx={{ minWidth: 0, flex: 1 }}>
                       <Typography
                         sx={{
                           fontWeight: 700,
                           fontSize: "14px",
                           color: Colors.PRIMARY_DARK,
+                          wordBreak: "break-word",
                         }}
                       >
                         {capitalizeWord(
@@ -166,8 +176,9 @@ export const MembersCard = ({
                       <Box
                         sx={{
                           display: "flex",
+                          flexWrap: "wrap",
                           alignItems: "center",
-                          gap: 1.5,
+                          gap: 1,
                           mt: 0.5,
                         }}
                       >
@@ -199,20 +210,25 @@ export const MembersCard = ({
                             </Typography>
                           </>
                         )}
-                        <Divider
-                          orientation="vertical"
-                          flexItem
-                          sx={{ height: 12, my: "auto" }}
-                        />
-                        <Typography
-                          sx={{
-                            fontSize: "12px",
-                            color: "rgba(18, 35, 51, 0.4)",
-                            fontWeight: 500,
-                          }}
-                        >
-                          {student.email}
-                        </Typography>
+                        {student.email && (
+                          <>
+                            <Divider
+                              orientation="vertical"
+                              flexItem
+                              sx={{ height: 12, my: "auto" }}
+                            />
+                            <Typography
+                              sx={{
+                                fontSize: "12px",
+                                color: "rgba(18, 35, 51, 0.4)",
+                                fontWeight: 500,
+                                wordBreak: "break-word",
+                              }}
+                            >
+                              {student.email}
+                            </Typography>
+                          </>
+                        )}
                       </Box>
                     </Box>
                   </Box>
@@ -220,7 +236,8 @@ export const MembersCard = ({
                     sx={{
                       display: "flex",
                       alignItems: "center",
-                      gap: 2,
+                      gap: 1.5,
+                      flexShrink: 0,
                     }}
                   >
                     <Typography
@@ -261,7 +278,6 @@ export const MembersCard = ({
                   }}
                 >
 
-
                   {/* Parents Grid */}
                   <Grid container spacing={1.5}>
                     {/* Father Info */}
@@ -280,6 +296,7 @@ export const MembersCard = ({
                             fontWeight: 700,
                             color: Colors.PRIMARY_DARK,
                             mb: 0.5,
+                            wordBreak: "break-word",
                           }}
                         >
                           Father:{" "}
@@ -299,6 +316,7 @@ export const MembersCard = ({
                             sx={{
                               fontSize: "11px",
                               color: "rgba(18, 35, 51, 0.6)",
+                              wordBreak: "break-word",
                             }}
                           >
                             Email:{" "}
@@ -308,6 +326,7 @@ export const MembersCard = ({
                             sx={{
                               fontSize: "11px",
                               color: "rgba(18, 35, 51, 0.6)",
+                              wordBreak: "break-word",
                             }}
                           >
                             Phone:{" "}
@@ -333,6 +352,7 @@ export const MembersCard = ({
                             fontWeight: 700,
                             color: Colors.PRIMARY_DARK,
                             mb: 0.5,
+                            wordBreak: "break-word",
                           }}
                         >
                           Mother:{" "}
@@ -352,6 +372,7 @@ export const MembersCard = ({
                             sx={{
                               fontSize: "11px",
                               color: "rgba(18, 35, 51, 0.6)",
+                              wordBreak: "break-word",
                             }}
                           >
                             Email:{" "}
@@ -361,6 +382,7 @@ export const MembersCard = ({
                             sx={{
                               fontSize: "11px",
                               color: "rgba(18, 35, 51, 0.6)",
+                              wordBreak: "break-word",
                             }}
                           >
                             Phone:{" "}

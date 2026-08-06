@@ -40,19 +40,19 @@ export const SubmissionsTables = ({
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           borderRadius: "20px",
           bgcolor: "#fff",
           border: "1px solid rgba(18, 35, 51, 0.05)",
           boxShadow: "0 10px 30px rgba(18, 35, 51, 0.03)",
-          mb: 4,
+          mb: { xs: 2.5, sm: 4 },
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 3 }}>
           <StartupIcon sx={{ color: Colors.PRIMARY, fontSize: 24 }} />
           <Typography
             variant="h6"
-            sx={{ fontWeight: 800, color: Colors.PRIMARY_DARK }}
+            sx={{ fontWeight: 800, color: Colors.PRIMARY_DARK, fontSize: { xs: "16px", sm: "18px" } }}
           >
             Registered Startups ({startups?.length || 0})
           </Typography>
@@ -75,10 +75,10 @@ export const SubmissionsTables = ({
             sx={{
               border: "1px solid rgba(18, 35, 51, 0.08)",
               borderRadius: "12px",
-              overflow: "hidden",
+              overflowX: "auto",
             }}
           >
-            <Table>
+            <Table sx={{ minWidth: 650 }}>
               <TableHead sx={{ bgcolor: "rgba(18, 35, 51, 0.015)" }}>
                 <TableRow>
                   <TableCell
@@ -248,19 +248,19 @@ export const SubmissionsTables = ({
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           borderRadius: "20px",
           bgcolor: "#fff",
           border: "1px solid rgba(18, 35, 51, 0.05)",
           boxShadow: "0 10px 30px rgba(18, 35, 51, 0.03)",
-          mb: 4,
+          mb: { xs: 2.5, sm: 4 },
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 3 }}>
           <IdeaIcon sx={{ color: Colors.PRIMARY, fontSize: 24 }} />
           <Typography
             variant="h6"
-            sx={{ fontWeight: 800, color: Colors.PRIMARY_DARK }}
+            sx={{ fontWeight: 800, color: Colors.PRIMARY_DARK, fontSize: { xs: "16px", sm: "18px" } }}
           >
             Registered Innovations ({innovations?.length || 0})
           </Typography>
@@ -283,10 +283,10 @@ export const SubmissionsTables = ({
             sx={{
               border: "1px solid rgba(18, 35, 51, 0.08)",
               borderRadius: "12px",
-              overflow: "hidden",
+              overflowX: "auto",
             }}
           >
-            <Table>
+            <Table sx={{ minWidth: 650 }}>
               <TableHead sx={{ bgcolor: "rgba(18, 35, 51, 0.015)" }}>
                 <TableRow>
                   <TableCell
@@ -426,19 +426,19 @@ export const SubmissionsTables = ({
       <Paper
         elevation={0}
         sx={{
-          p: 3,
+          p: { xs: 2, sm: 3 },
           borderRadius: "20px",
           bgcolor: "#fff",
           border: "1px solid rgba(18, 35, 51, 0.05)",
           boxShadow: "0 10px 30px rgba(18, 35, 51, 0.03)",
-          mb: 4,
+          mb: { xs: 2.5, sm: 4 },
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 3 }}>
           <SubjectIcon sx={{ color: Colors.PRIMARY, fontSize: 24 }} />
           <Typography
             variant="h6"
-            sx={{ fontWeight: 800, color: Colors.PRIMARY_DARK }}
+            sx={{ fontWeight: 800, color: Colors.PRIMARY_DARK, fontSize: { xs: "16px", sm: "18px" } }}
           >
             Research Submissions ({researchSubmissions?.length || 0})
           </Typography>
@@ -461,10 +461,10 @@ export const SubmissionsTables = ({
             sx={{
               border: "1px solid rgba(18, 35, 51, 0.08)",
               borderRadius: "12px",
-              overflow: "hidden",
+              overflowX: "auto",
             }}
           >
-            <Table>
+            <Table sx={{ minWidth: 650 }}>
               <TableHead sx={{ bgcolor: "rgba(18, 35, 51, 0.015)" }}>
                 <TableRow>
                   <TableCell

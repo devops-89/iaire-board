@@ -33,6 +33,11 @@ export const TeamDetailsLayout = () => {
 
   const [loading, setLoading] = useState(true);
   const [teamData, setTeamData] = useState<any>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen((prev) => !prev);
+  };
 
   useEffect(() => {
     const fetchTeamDetails = async () => {
@@ -96,18 +101,27 @@ export const TeamDetailsLayout = () => {
           fontFamily: Poppins.style.fontFamily,
         }}
       >
-        <Sidebar />
+        <Sidebar mobileOpen={mobileOpen} onMobileClose={handleDrawerToggle} />
         <Box
           component="main"
           sx={{
             flexGrow: 1,
             height: "100vh",
             display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+            flexDirection: "column",
           }}
         >
-          <CircularProgress sx={{ color: Colors.PRIMARY }} />
+          <Navbar onMenuClick={handleDrawerToggle} />
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <CircularProgress sx={{ color: Colors.PRIMARY }} />
+          </Box>
         </Box>
       </Box>
     );
@@ -123,32 +137,41 @@ export const TeamDetailsLayout = () => {
           fontFamily: Poppins.style.fontFamily,
         }}
       >
-        <Sidebar />
+        <Sidebar mobileOpen={mobileOpen} onMobileClose={handleDrawerToggle} />
         <Box
           component="main"
           sx={{
             flexGrow: 1,
             height: "100vh",
-            p: 4,
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
           }}
         >
-          <Typography
-            variant="h5"
-            sx={{ color: Colors.PRIMARY_DARK, mb: 2, fontWeight: 700 }}
+          <Navbar onMenuClick={handleDrawerToggle} />
+          <Box
+            sx={{
+              flexGrow: 1,
+              p: { xs: 2, sm: 4 },
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
           >
-            Team not found
-          </Typography>
-          <Button
-            variant="contained"
-            onClick={handleBack}
-            sx={{ bgcolor: Colors.PRIMARY }}
-          >
-            Back
-          </Button>
+            <Typography
+              variant="h5"
+              sx={{ color: Colors.PRIMARY_DARK, mb: 2, fontWeight: 700 }}
+            >
+              Team not found
+            </Typography>
+            <Button
+              variant="contained"
+              onClick={handleBack}
+              sx={{ bgcolor: Colors.PRIMARY }}
+            >
+              Back
+            </Button>
+          </Box>
         </Box>
       </Box>
     );
@@ -183,21 +206,21 @@ export const TeamDetailsLayout = () => {
         fontFamily: Poppins.style.fontFamily,
       }}
     >
-      <Sidebar />
+      <Sidebar mobileOpen={mobileOpen} onMobileClose={handleDrawerToggle} />
       <Box
         component="main"
         sx={{
           flexGrow: 1,
           height: "100vh",
           overflowY: "auto",
-          px: 2,
-          pb: 2,
+          px: { xs: 2, sm: 3, md: 4 },
+          pb: { xs: 2, sm: 4 },
         }}
       >
-        <Navbar />
+        <Navbar onMenuClick={handleDrawerToggle} />
 
         {/* Back Button */}
-        <Box sx={{ display: "flex", alignItems: "center", mt: 3, mb: 4 }}>
+        <Box sx={{ display: "flex", alignItems: "center", mt: { xs: 1.5, sm: 3 }, mb: { xs: 2.5, sm: 4 } }}>
           <Button
             startIcon={<BackIcon />}
             onClick={handleBack}
@@ -226,13 +249,13 @@ export const TeamDetailsLayout = () => {
         <Paper
           elevation={0}
           sx={{
-            p: 4,
-            borderRadius: "24px",
+            p: { xs: 2.5, sm: 3.5, md: 4 },
+            borderRadius: { xs: "18px", sm: "24px" },
             background: "linear-gradient(135deg, #111E2E 0%, #0A1420 100%)",
             boxShadow: "0 20px 40px rgba(18, 35, 51, 0.08)",
             position: "relative",
             overflow: "hidden",
-            mb: 4,
+            mb: { xs: 2.5, sm: 4 },
             color: "#fff",
             "&::after": {
               content: '""',
@@ -247,16 +270,16 @@ export const TeamDetailsLayout = () => {
             },
           }}
         >
-          <Grid container spacing={3} sx={{ alignItems: "center" }}>
-            <Grid>
+          <Grid container spacing={{ xs: 2, sm: 3 }} sx={{ alignItems: "center" }}>
+            <Grid size={{ xs: "auto" }}>
               <Avatar
                 sx={{
-                  width: 90,
-                  height: 90,
-                  borderRadius: "24px",
+                  width: { xs: 64, sm: 80, md: 90 },
+                  height: { xs: 64, sm: 80, md: 90 },
+                  borderRadius: { xs: "16px", sm: "24px" },
                   bgcolor: "rgba(255, 255, 255, 0.08)",
                   color: Colors.PRIMARY,
-                  fontSize: "32px",
+                  fontSize: { xs: "24px", sm: "28px", md: "32px" },
                   fontWeight: 800,
                   border: `2px solid ${Colors.PRIMARY}`,
                   boxShadow: "0 8px 24px rgba(0, 0, 0, 0.2)",
@@ -265,8 +288,21 @@ export const TeamDetailsLayout = () => {
                 {title?.charAt(0).toUpperCase()}
               </Avatar>
             </Grid>
-            <Grid size="grow">
+            <Grid size={{ xs: "grow" }}>
               <Box>
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontWeight: 800,
+                    fontFamily: Poppins.style.fontFamily,
+                    fontSize: { xs: "20px", sm: "24px", md: "28px" },
+                    letterSpacing: "-0.5px",
+                    wordBreak: "break-word",
+                    mb: 1,
+                  }}
+                >
+                  {capitalizeWord(title)}
+                </Typography>
                 <Box
                   sx={{
                     display: "flex",
@@ -275,16 +311,6 @@ export const TeamDetailsLayout = () => {
                     gap: 1.5,
                   }}
                 >
-                  <Typography
-                    variant="h4"
-                    sx={{
-                      fontWeight: 800,
-                      fontFamily: Poppins.style.fontFamily,
-                      letterSpacing: "-0.5px",
-                    }}
-                  >
-                    {capitalizeWord(title)}
-                  </Typography>
                   <Chip
                     label={type || "GENERAL"}
                     size="small"
@@ -298,17 +324,17 @@ export const TeamDetailsLayout = () => {
                       textTransform: "uppercase",
                     }}
                   />
+                  <Typography
+                    sx={{
+                      fontFamily: "monospace",
+                      fontSize: { xs: "11px", sm: "14px" },
+                      color: "rgba(255, 255, 255, 0.7)",
+                      wordBreak: "break-word",
+                    }}
+                  >
+                    Team Code: {teamCode || "N/A"}
+                  </Typography>
                 </Box>
-                <Typography
-                  sx={{
-                    fontFamily: "monospace",
-                    fontSize: "14px",
-                    color: "rgba(255, 255, 255, 0.7)",
-                    mt: 1,
-                  }}
-                >
-                  Team Code: {teamCode || "N/A"}
-                </Typography>
               </Box>
             </Grid>
           </Grid>
@@ -324,10 +350,10 @@ export const TeamDetailsLayout = () => {
         />
 
         {/* Details Grid */}
-        <Grid container spacing={3} sx={{ mb: 4 }}>
+        <Grid container spacing={{ xs: 2.5, sm: 3 }} sx={{ mb: 4 }}>
           {/* Left Column: Mentors and School Details */}
           <Grid size={{ xs: 12, md: 5 }}>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 2.5, sm: 3 } }}>
               <MentorCard mentor={mentor} capitalizeWord={capitalizeWord} />
               <AssistantMentorCard
                 assistantMentor={assistantMentor}
@@ -349,7 +375,7 @@ export const TeamDetailsLayout = () => {
           <Grid size={{ xs: 12, md: 7 }}>
             <Box
               sx={{
-                position: "sticky",
+                position: { xs: "static", md: "sticky" },
                 top: 24,
               }}
             >

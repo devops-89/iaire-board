@@ -22,8 +22,8 @@ export const MentorCard = ({ mentor, capitalizeWord }: MentorCardProps) => {
     <Paper
       elevation={0}
       sx={{
-        p: 3,
-        borderRadius: "20px",
+        p: { xs: 2.5, sm: 3 },
+        borderRadius: { xs: "16px", sm: "20px" },
         bgcolor: "#fff",
         border: "1px solid rgba(18, 35, 51, 0.05)",
         boxShadow: "0 10px 30px rgba(18, 35, 51, 0.03)",
@@ -35,6 +35,7 @@ export const MentorCard = ({ mentor, capitalizeWord }: MentorCardProps) => {
           fontWeight: 800,
           color: Colors.PRIMARY_DARK,
           mb: 2.5,
+          fontSize: { xs: "16px", sm: "18px" },
         }}
       >
         Mentor Details
@@ -52,20 +53,22 @@ export const MentorCard = ({ mentor, capitalizeWord }: MentorCardProps) => {
             mentor.profileImageDownloadUrl || mentor.profileImage || undefined
           }
           sx={{
-            width: 56,
-            height: 56,
+            width: { xs: 48, sm: 56 },
+            height: { xs: 48, sm: 56 },
             border: `2px solid ${Colors.PRIMARY}`,
             boxShadow: "0 4px 12px rgba(32, 103, 106, 0.15)",
+            flexShrink: 0,
           }}
         >
           {mentor.fullName?.charAt(0) || "M"}
         </Avatar>
-        <Box>
+        <Box sx={{ minWidth: 0, flex: 1 }}>
           <Typography
             sx={{
               fontWeight: 700,
-              fontSize: "16px",
+              fontSize: { xs: "15px", sm: "16px" },
               color: Colors.PRIMARY_DARK,
+              wordBreak: "break-word",
             }}
           >
             {capitalizeWord(mentor.fullName)}
@@ -84,24 +87,26 @@ export const MentorCard = ({ mentor, capitalizeWord }: MentorCardProps) => {
 
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
         <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-          <EmailIcon sx={{ color: Colors.PRIMARY, fontSize: 20 }} />
+          <EmailIcon sx={{ color: Colors.PRIMARY, fontSize: 20, flexShrink: 0 }} />
           <Typography
             sx={{
               fontSize: "13px",
               color: "rgba(18, 35, 51, 0.7)",
               fontWeight: 500,
+              wordBreak: "break-word",
             }}
           >
             {mentor.email}
           </Typography>
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-          <PhoneIcon sx={{ color: Colors.PRIMARY, fontSize: 20 }} />
+          <PhoneIcon sx={{ color: Colors.PRIMARY, fontSize: 20, flexShrink: 0 }} />
           <Typography
             sx={{
               fontSize: "13px",
               color: "rgba(18, 35, 51, 0.7)",
               fontWeight: 500,
+              wordBreak: "break-word",
             }}
           >
             {mentor.phone || "--"}
@@ -109,13 +114,14 @@ export const MentorCard = ({ mentor, capitalizeWord }: MentorCardProps) => {
         </Box>
         {mentor.gender && (
           <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-            <GenderIcon sx={{ color: Colors.PRIMARY, fontSize: 20 }} />
+            <GenderIcon sx={{ color: Colors.PRIMARY, fontSize: 20, flexShrink: 0 }} />
             <Typography
               sx={{
                 fontSize: "13px",
                 color: "rgba(18, 35, 51, 0.7)",
                 fontWeight: 500,
                 textTransform: "capitalize",
+                wordBreak: "break-word",
               }}
             >
               {mentor.gender}
@@ -124,12 +130,13 @@ export const MentorCard = ({ mentor, capitalizeWord }: MentorCardProps) => {
         )}
         {mentor.experienceYears && (
           <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-            <ExpIcon sx={{ color: Colors.PRIMARY, fontSize: 20 }} />
+            <ExpIcon sx={{ color: Colors.PRIMARY, fontSize: 20, flexShrink: 0 }} />
             <Typography
               sx={{
                 fontSize: "13px",
                 color: "rgba(18, 35, 51, 0.7)",
                 fontWeight: 500,
+                wordBreak: "break-word",
               }}
             >
               {mentor.experienceYears} Years Experience
@@ -149,6 +156,7 @@ export const MentorCard = ({ mentor, capitalizeWord }: MentorCardProps) => {
                 color: Colors.PRIMARY,
                 fontSize: 20,
                 mt: 0.2,
+                flexShrink: 0,
               }}
             />
             <Typography
@@ -156,6 +164,7 @@ export const MentorCard = ({ mentor, capitalizeWord }: MentorCardProps) => {
                 fontSize: "13px",
                 color: "rgba(18, 35, 51, 0.7)",
                 fontWeight: 500,
+                wordBreak: "break-word",
               }}
             >
               Subjects: {mentor.primarySubjects.join(", ")}

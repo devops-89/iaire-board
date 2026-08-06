@@ -13,14 +13,14 @@ export const TeacherAdminsCard = ({ schoolAdmins }: TeacherAdminsCardProps) => {
     <Paper
       elevation={0}
       sx={{
-        p: 4,
-        borderRadius: "24px",
+        p: { xs: 2.5, sm: 3.5, md: 4 },
+        borderRadius: { xs: "18px", sm: "24px" },
         border: "1px solid rgba(18, 35, 51, 0.05)",
         bgcolor: "#fff",
         boxShadow: "0 10px 40px rgba(18, 35, 51, 0.03)",
       }}
     >
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 3 }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: { xs: 2, sm: 3 } }}>
         <Box
           sx={{
             display: "flex",
@@ -31,12 +31,13 @@ export const TeacherAdminsCard = ({ schoolAdmins }: TeacherAdminsCardProps) => {
             borderRadius: "8px",
             bgcolor: "rgba(139, 92, 246, 0.08)",
             color: "#8B5CF6",
+            flexShrink: 0,
           }}
         >
           <AdminIcon sx={{ fontSize: 18 }} />
         </Box>
         <Typography
-          sx={{ fontSize: "16px", fontWeight: 800, color: Colors.PRIMARY_DARK }}
+          sx={{ fontSize: { xs: "15px", sm: "16px" }, fontWeight: 800, color: Colors.PRIMARY_DARK }}
         >
           School Administrators
         </Typography>
@@ -71,7 +72,7 @@ export const TeacherAdminsCard = ({ schoolAdmins }: TeacherAdminsCardProps) => {
                   display: "flex",
                   alignItems: "center",
                   gap: 2,
-                  p: 2,
+                  p: { xs: 1.5, sm: 2 },
                   borderRadius: "16px",
                   border: "1px solid rgba(18, 35, 51, 0.04)",
                   bgcolor: "rgba(18, 35, 51, 0.015)",
@@ -92,6 +93,7 @@ export const TeacherAdminsCard = ({ schoolAdmins }: TeacherAdminsCardProps) => {
                     fontWeight: 700,
                     bgcolor: "rgba(18, 35, 51, 0.05)",
                     color: Colors.PRIMARY_DARK,
+                    flexShrink: 0,
                   }}
                 >
                   {adminName.charAt(0).toUpperCase()}

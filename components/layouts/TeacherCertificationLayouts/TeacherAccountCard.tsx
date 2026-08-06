@@ -24,8 +24,8 @@ export const TeacherAccountCard = ({
     <Paper
       elevation={0}
       sx={{
-        p: 4,
-        borderRadius: "24px",
+        p: { xs: 2.5, sm: 3.5, md: 4 },
+        borderRadius: { xs: "18px", sm: "24px" },
         border: "1px solid rgba(18, 35, 51, 0.05)",
         bgcolor: "#fff",
         boxShadow: "0 10px 40px rgba(18, 35, 51, 0.03)",
@@ -33,10 +33,10 @@ export const TeacherAccountCard = ({
     >
       <Typography
         sx={{
-          fontSize: "16px",
+          fontSize: { xs: "15px", sm: "16px" },
           fontWeight: 800,
           color: Colors.PRIMARY_DARK,
-          mb: 3.5,
+          mb: { xs: 2.5, sm: 3.5 },
         }}
       >
         Account Information
@@ -54,11 +54,12 @@ export const TeacherAccountCard = ({
               borderRadius: "8px",
               bgcolor: "rgba(139, 92, 246, 0.08)",
               color: "#8B5CF6",
+              flexShrink: 0,
             }}
           >
             <RoleIcon sx={{ fontSize: 18 }} />
           </Box>
-          <Box>
+          <Box sx={{ minWidth: 0, flex: 1 }}>
             <Typography
               sx={{
                 fontSize: "11px",
@@ -75,6 +76,7 @@ export const TeacherAccountCard = ({
                 color: Colors.PRIMARY_DARK,
                 fontWeight: 700,
                 mt: 0.2,
+                wordBreak: "break-word",
               }}
             >
               {role}
@@ -95,11 +97,12 @@ export const TeacherAccountCard = ({
               borderRadius: "8px",
               bgcolor: "rgba(100, 116, 139, 0.08)",
               color: "#64748B",
+              flexShrink: 0,
             }}
           >
             <DateIcon sx={{ fontSize: 18 }} />
           </Box>
-          <Box>
+          <Box sx={{ minWidth: 0, flex: 1 }}>
             <Typography
               sx={{
                 fontSize: "11px",
@@ -116,6 +119,7 @@ export const TeacherAccountCard = ({
                 color: Colors.PRIMARY_DARK,
                 fontWeight: 700,
                 mt: 0.2,
+                wordBreak: "break-word",
               }}
             >
               {formattedDate}
@@ -137,11 +141,12 @@ export const TeacherAccountCard = ({
                   borderRadius: "8px",
                   bgcolor: "rgba(16, 185, 129, 0.08)",
                   color: "#10B981",
+                  flexShrink: 0,
                 }}
               >
                 <DateIcon sx={{ fontSize: 18 }} />
               </Box>
-              <Box>
+              <Box sx={{ minWidth: 0, flex: 1 }}>
                 <Typography
                   sx={{
                     fontSize: "11px",
@@ -158,6 +163,7 @@ export const TeacherAccountCard = ({
                     color: Colors.PRIMARY_DARK,
                     fontWeight: 700,
                     mt: 0.2,
+                    wordBreak: "break-word",
                   }}
                 >
                   {formattedApprovedDate}

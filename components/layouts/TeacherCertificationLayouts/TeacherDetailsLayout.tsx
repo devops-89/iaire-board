@@ -26,7 +26,12 @@ export const TeacherDetailsLayout = () => {
   const [teacherData, setTeacherData] = useState<Teacher | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [teamPage, setTeamPage] = useState<number>(1);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const teamsPerPage = 10;
+
+  const handleDrawerToggle = () => {
+    setMobileOpen((prev) => !prev);
+  };
 
   useEffect(() => {
     if (!teacherId) return;
@@ -63,18 +68,27 @@ export const TeacherDetailsLayout = () => {
           fontFamily: Poppins.style.fontFamily,
         }}
       >
-        <Sidebar />
+        <Sidebar mobileOpen={mobileOpen} onMobileClose={handleDrawerToggle} />
         <Box
           component="main"
           sx={{
             flexGrow: 1,
             height: "100vh",
             display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+            flexDirection: "column",
           }}
         >
-          <CircularProgress sx={{ color: Colors.PRIMARY_DARK }} />
+          <Navbar onMenuClick={handleDrawerToggle} />
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <CircularProgress sx={{ color: Colors.PRIMARY_DARK }} />
+          </Box>
         </Box>
       </Box>
     );
@@ -90,32 +104,41 @@ export const TeacherDetailsLayout = () => {
           fontFamily: Poppins.style.fontFamily,
         }}
       >
-        <Sidebar />
+        <Sidebar mobileOpen={mobileOpen} onMobileClose={handleDrawerToggle} />
         <Box
           component="main"
           sx={{
             flexGrow: 1,
             height: "100vh",
-            p: 4,
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
           }}
         >
-          <Typography
-            variant="h5"
-            sx={{ color: Colors.PRIMARY_DARK, mb: 2, fontWeight: 700 }}
+          <Navbar onMenuClick={handleDrawerToggle} />
+          <Box
+            sx={{
+              flexGrow: 1,
+              p: { xs: 2, sm: 4 },
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
           >
-            Teacher not found
-          </Typography>
-          <Button
-            variant="contained"
-            onClick={handleBack}
-            sx={{ bgcolor: Colors.PRIMARY_DARK }}
-          >
-            Back to Teachers
-          </Button>
+            <Typography
+              variant="h5"
+              sx={{ color: Colors.PRIMARY_DARK, mb: 2, fontWeight: 700 }}
+            >
+              Teacher not found
+            </Typography>
+            <Button
+              variant="contained"
+              onClick={handleBack}
+              sx={{ bgcolor: Colors.PRIMARY_DARK }}
+            >
+              Back to Teachers
+            </Button>
+          </Box>
         </Box>
       </Box>
     );
@@ -195,26 +218,26 @@ export const TeacherDetailsLayout = () => {
         fontFamily: Poppins.style.fontFamily,
       }}
     >
-      <Sidebar />
+      <Sidebar mobileOpen={mobileOpen} onMobileClose={handleDrawerToggle} />
       <Box
         component="main"
         sx={{
           flexGrow: 1,
           height: "100vh",
           overflowY: "auto",
-          px: 2,
-          pb: 2,
+          px: { xs: 2, sm: 3, md: 4 },
+          pb: { xs: 2, sm: 4 },
         }}
       >
-        <Navbar />
+        <Navbar onMenuClick={handleDrawerToggle} />
 
         {/* Back Button Row */}
         <Box
           sx={{
             display: "flex",
             alignItems: "center",
-            mt: 3,
-            mb: 4,
+            mt: { xs: 1.5, sm: 3 },
+            mb: { xs: 2.5, sm: 4 },
           }}
         >
           <Button
@@ -249,10 +272,10 @@ export const TeacherDetailsLayout = () => {
         />
 
         {/* Two Columns Grid */}
-        <Grid container spacing={4}>
+        <Grid container spacing={{ xs: 2.5, sm: 3, md: 4 }}>
           {/* Left Column */}
           <Grid size={{ xs: 12, md: 8 }}>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 2.5, sm: 3, md: 4 } }}>
               {/* Personal Details Card */}
               <TeacherPersonalCard
                 teacherData={teacherData}
@@ -278,8 +301,8 @@ export const TeacherDetailsLayout = () => {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                gap: 4,
-                position: "sticky",
+                gap: { xs: 2.5, sm: 3, md: 4 },
+                position: { xs: "static", md: "sticky" },
                 top: "24px",
               }}
             >
@@ -300,7 +323,7 @@ export const TeacherDetailsLayout = () => {
         </Grid>
 
         {/* Associated Teams & Innovations Card (Full Width) */}
-        <Box sx={{ mt: 4 }}>
+        <Box sx={{ mt: { xs: 2.5, sm: 3, md: 4 } }}>
           <TeacherTeamsCard
             teamsList={teamsList}
             teamPage={teamPage}

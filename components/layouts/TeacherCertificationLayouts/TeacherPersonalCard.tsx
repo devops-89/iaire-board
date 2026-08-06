@@ -28,8 +28,8 @@ export const TeacherPersonalCard = ({
     <Paper
       elevation={0}
       sx={{
-        p: 4,
-        borderRadius: "24px",
+        p: { xs: 2.5, sm: 3.5, md: 4 },
+        borderRadius: { xs: "18px", sm: "24px" },
         border: "1px solid rgba(18, 35, 51, 0.05)",
         bgcolor: "#fff",
         boxShadow: "0 10px 40px rgba(18, 35, 51, 0.03)",
@@ -37,21 +37,21 @@ export const TeacherPersonalCard = ({
     >
       <Typography
         sx={{
-          fontSize: "16px",
+          fontSize: { xs: "15px", sm: "16px" },
           fontWeight: 800,
           color: Colors.PRIMARY_DARK,
-          mb: 3.5,
+          mb: { xs: 2.5, sm: 3.5 },
         }}
       >
         Personal & Academic Profile
       </Typography>
 
-      <Grid container spacing={3.5}>
+      <Grid container spacing={{ xs: 2, sm: 3, md: 3.5 }}>
         {/* Username */}
         <Grid size={{ xs: 12, sm: 6 }}>
           <Box
             sx={{
-              p: 2.5,
+              p: { xs: 2, sm: 2.5 },
               borderRadius: "16px",
               bgcolor: "rgba(18, 35, 51, 0.015)",
               border: "1px solid rgba(18, 35, 51, 0.03)",
@@ -77,11 +77,12 @@ export const TeacherPersonalCard = ({
                 borderRadius: "10px",
                 bgcolor: "rgba(59, 130, 246, 0.08)",
                 color: "#3B82F6",
+                flexShrink: 0,
               }}
             >
               <PersonIcon sx={{ fontSize: 20 }} />
             </Box>
-            <Box>
+            <Box sx={{ minWidth: 0, flex: 1 }}>
               <Typography
                 sx={{
                   fontSize: "11px",
@@ -98,6 +99,7 @@ export const TeacherPersonalCard = ({
                   color: Colors.PRIMARY_DARK,
                   fontWeight: 700,
                   mt: 0.5,
+                  wordBreak: "break-word",
                 }}
               >
                 {teacherData.username || "--"}
@@ -110,7 +112,7 @@ export const TeacherPersonalCard = ({
         <Grid size={{ xs: 12, sm: 6 }}>
           <Box
             sx={{
-              p: 2.5,
+              p: { xs: 2, sm: 2.5 },
               borderRadius: "16px",
               bgcolor: "rgba(18, 35, 51, 0.015)",
               border: "1px solid rgba(18, 35, 51, 0.03)",
@@ -136,11 +138,12 @@ export const TeacherPersonalCard = ({
                 borderRadius: "10px",
                 bgcolor: "rgba(139, 92, 246, 0.08)",
                 color: "#8B5CF6",
+                flexShrink: 0,
               }}
             >
               <EmailIcon sx={{ fontSize: 20 }} />
             </Box>
-            <Box>
+            <Box sx={{ minWidth: 0, flex: 1 }}>
               <Typography
                 sx={{
                   fontSize: "11px",
@@ -157,6 +160,7 @@ export const TeacherPersonalCard = ({
                   color: Colors.PRIMARY_DARK,
                   fontWeight: 700,
                   mt: 0.5,
+                  wordBreak: "break-word",
                 }}
               >
                 {teacherData.email || "--"}
@@ -169,7 +173,7 @@ export const TeacherPersonalCard = ({
         <Grid size={{ xs: 12, sm: 6 }}>
           <Box
             sx={{
-              p: 2.5,
+              p: { xs: 2, sm: 2.5 },
               borderRadius: "16px",
               bgcolor: "rgba(18, 35, 51, 0.015)",
               border: "1px solid rgba(18, 35, 51, 0.03)",
@@ -195,11 +199,12 @@ export const TeacherPersonalCard = ({
                 borderRadius: "10px",
                 bgcolor: "rgba(16, 185, 129, 0.08)",
                 color: "#10B981",
+                flexShrink: 0,
               }}
             >
               <PhoneIcon sx={{ fontSize: 20 }} />
             </Box>
-            <Box>
+            <Box sx={{ minWidth: 0, flex: 1 }}>
               <Typography
                 sx={{
                   fontSize: "11px",
@@ -216,6 +221,7 @@ export const TeacherPersonalCard = ({
                   color: Colors.PRIMARY_DARK,
                   fontWeight: 700,
                   mt: 0.5,
+                  wordBreak: "break-word",
                 }}
               >
                 {teacherData.phone || "--"}
@@ -228,7 +234,7 @@ export const TeacherPersonalCard = ({
         <Grid size={{ xs: 12, sm: 6 }}>
           <Box
             sx={{
-              p: 2.5,
+              p: { xs: 2, sm: 2.5 },
               borderRadius: "16px",
               bgcolor: "rgba(18, 35, 51, 0.015)",
               border: "1px solid rgba(18, 35, 51, 0.03)",
@@ -254,11 +260,12 @@ export const TeacherPersonalCard = ({
                 borderRadius: "10px",
                 bgcolor: "rgba(236, 72, 153, 0.08)",
                 color: "#EC4899",
+                flexShrink: 0,
               }}
             >
               <GenderIcon sx={{ fontSize: 20 }} />
             </Box>
-            <Box>
+            <Box sx={{ minWidth: 0, flex: 1 }}>
               <Typography
                 sx={{
                   fontSize: "11px",
@@ -276,6 +283,7 @@ export const TeacherPersonalCard = ({
                   fontWeight: 700,
                   mt: 0.5,
                   textTransform: "capitalize",
+                  wordBreak: "break-word",
                 }}
               >
                 {teacherData.gender ? teacherData.gender.toLowerCase() : "--"}
@@ -288,7 +296,7 @@ export const TeacherPersonalCard = ({
         <Grid size={{ xs: 12, sm: 6 }}>
           <Box
             sx={{
-              p: 2.5,
+              p: { xs: 2, sm: 2.5 },
               borderRadius: "16px",
               bgcolor: "rgba(18, 35, 51, 0.015)",
               border: "1px solid rgba(18, 35, 51, 0.03)",
@@ -314,11 +322,12 @@ export const TeacherPersonalCard = ({
                 borderRadius: "10px",
                 bgcolor: "rgba(245, 158, 11, 0.08)",
                 color: "#F59E0B",
+                flexShrink: 0,
               }}
             >
               <SubjectIcon sx={{ fontSize: 20 }} />
             </Box>
-            <Box>
+            <Box sx={{ minWidth: 0, flex: 1 }}>
               <Typography
                 sx={{
                   fontSize: "11px",
@@ -335,6 +344,7 @@ export const TeacherPersonalCard = ({
                   color: Colors.PRIMARY_DARK,
                   fontWeight: 700,
                   mt: 0.5,
+                  wordBreak: "break-word",
                 }}
               >
                 {subjects}
@@ -347,7 +357,7 @@ export const TeacherPersonalCard = ({
         <Grid size={{ xs: 12, sm: 6 }}>
           <Box
             sx={{
-              p: 2.5,
+              p: { xs: 2, sm: 2.5 },
               borderRadius: "16px",
               bgcolor: "rgba(18, 35, 51, 0.015)",
               border: "1px solid rgba(18, 35, 51, 0.03)",
@@ -373,11 +383,12 @@ export const TeacherPersonalCard = ({
                 borderRadius: "10px",
                 bgcolor: "rgba(20, 184, 166, 0.08)",
                 color: "#14B8A6",
+                flexShrink: 0,
               }}
             >
               <ExpIcon sx={{ fontSize: 20 }} />
             </Box>
-            <Box>
+            <Box sx={{ minWidth: 0, flex: 1 }}>
               <Typography
                 sx={{
                   fontSize: "11px",
@@ -394,6 +405,7 @@ export const TeacherPersonalCard = ({
                   color: Colors.PRIMARY_DARK,
                   fontWeight: 700,
                   mt: 0.5,
+                  wordBreak: "break-word",
                 }}
               >
                 {experienceVal}

@@ -47,17 +47,17 @@ export const TeacherTeamsCard = ({
     <Paper
       elevation={0}
       sx={{
-        pt: 4,
-        px: 4,
+        pt: { xs: 2.5, sm: 3.5, md: 4 },
+        px: { xs: 2, sm: 3, md: 4 },
         pb: 0,
-        borderRadius: "24px",
+        borderRadius: { xs: "18px", sm: "24px" },
         border: "1px solid rgba(18, 35, 51, 0.05)",
         bgcolor: "#fff",
         boxShadow: "0 10px 40px rgba(18, 35, 51, 0.03)",
         overflow: "hidden",
       }}
     >
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 3 }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: { xs: 2, sm: 3 } }}>
         <Box
           sx={{
             display: "flex",
@@ -68,19 +68,20 @@ export const TeacherTeamsCard = ({
             borderRadius: "8px",
             bgcolor: "rgba(139, 92, 246, 0.08)",
             color: "#8B5CF6",
+            flexShrink: 0,
           }}
         >
           <TeamIcon sx={{ fontSize: 18 }} />
         </Box>
         <Typography
-          sx={{ fontSize: "16px", fontWeight: 800, color: Colors.PRIMARY_DARK }}
+          sx={{ fontSize: { xs: "15px", sm: "16px" }, fontWeight: 800, color: Colors.PRIMARY_DARK }}
         >
           Associated Teams & Innovations ({totalTeams})
         </Typography>
       </Box>
 
-      <TableContainer>
-        <Table>
+      <TableContainer sx={{ overflowX: "auto" }}>
+        <Table sx={{ minWidth: 650 }}>
           <TableHead
             sx={{
               bgcolor: "rgba(18, 35, 51, 0.015)",
@@ -326,13 +327,13 @@ export const TeacherTeamsCard = ({
             flexDirection: { xs: "column", sm: "row" },
             justifyContent: "space-between",
             alignItems: "center",
-            px: 4,
+            px: { xs: 2, sm: 3, md: 4 },
             py: 2.5,
             borderTop: "1px solid rgba(18, 35, 51, 0.05)",
             bgcolor: "#FBF9F6",
             gap: 2,
             mt: 3,
-            mx: -4,
+            mx: { xs: -2, sm: -3, md: -4 },
             mb: 0,
             borderRadius: "0 0 24px 24px",
           }}

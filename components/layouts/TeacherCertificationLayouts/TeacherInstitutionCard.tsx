@@ -31,8 +31,8 @@ export const TeacherInstitutionCard = ({
     <Paper
       elevation={0}
       sx={{
-        p: 4,
-        borderRadius: "24px",
+        p: { xs: 2.5, sm: 3.5, md: 4 },
+        borderRadius: { xs: "18px", sm: "24px" },
         border: "1px solid rgba(18, 35, 51, 0.05)",
         bgcolor: "#fff",
         boxShadow: "0 10px 40px rgba(18, 35, 51, 0.03)",
@@ -40,21 +40,21 @@ export const TeacherInstitutionCard = ({
     >
       <Typography
         sx={{
-          fontSize: "16px",
+          fontSize: { xs: "15px", sm: "16px" },
           fontWeight: 800,
           color: Colors.PRIMARY_DARK,
-          mb: 3.5,
+          mb: { xs: 2.5, sm: 3.5 },
         }}
       >
         Associated Institution Details
       </Typography>
 
-      <Grid container spacing={3}>
+      <Grid container spacing={{ xs: 2, sm: 3 }}>
         {/* School & Board Details Card */}
         <Grid size={{ xs: 12, sm: 6 }}>
           <Box
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               borderRadius: "16px",
               bgcolor: "rgba(18, 35, 51, 0.015)",
               border: "1px solid rgba(18, 35, 51, 0.03)",
@@ -86,6 +86,7 @@ export const TeacherInstitutionCard = ({
                   bgcolor: "rgba(6, 182, 212, 0.08)",
                   color: "#06B6D4",
                   border: "1px solid rgba(18, 35, 51, 0.08)",
+                  flexShrink: 0,
                   p:
                     teacherData.school?.logo ||
                     teacherData.school?.schoolLogoDownloadUrl
@@ -95,7 +96,7 @@ export const TeacherInstitutionCard = ({
               >
                 <SchoolIcon sx={{ fontSize: 24 }} />
               </Avatar>
-              <Box>
+              <Box sx={{ minWidth: 0, flex: 1 }}>
                 <Typography
                   sx={{
                     fontSize: "11px",
@@ -114,6 +115,7 @@ export const TeacherInstitutionCard = ({
                     fontWeight: 800,
                     mt: 0.5,
                     lineHeight: 1.3,
+                    wordBreak: "break-word",
                   }}
                 >
                   {schoolName}
@@ -138,6 +140,7 @@ export const TeacherInstitutionCard = ({
                   bgcolor: "rgba(79, 70, 229, 0.08)",
                   color: "#4F46E5",
                   border: "1px solid rgba(18, 35, 51, 0.08)",
+                  flexShrink: 0,
                   p:
                     teacherData.board?.logo ||
                     teacherData.board?.boardLogoDownloadUrl
@@ -147,7 +150,7 @@ export const TeacherInstitutionCard = ({
               >
                 <BoardIcon sx={{ fontSize: 24 }} />
               </Avatar>
-              <Box sx={{ flex: 1 }}>
+              <Box sx={{ minWidth: 0, flex: 1 }}>
                 <Typography
                   sx={{
                     fontSize: "11px",
@@ -166,6 +169,7 @@ export const TeacherInstitutionCard = ({
                     fontWeight: 800,
                     mt: 0.5,
                     lineHeight: 1.3,
+                    wordBreak: "break-word",
                   }}
                 >
                   {boardName} {boardCode && `(${boardCode})`}
@@ -178,6 +182,7 @@ export const TeacherInstitutionCard = ({
                       mt: 1,
                       fontWeight: 600,
                       lineHeight: 1.4,
+                      wordBreak: "break-word",
                     }}
                   >
                     {boardDesc}
@@ -192,7 +197,7 @@ export const TeacherInstitutionCard = ({
         <Grid size={{ xs: 12, sm: 6 }}>
           <Box
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               borderRadius: "16px",
               bgcolor: "rgba(18, 35, 51, 0.015)",
               border: "1px solid rgba(18, 35, 51, 0.03)",
@@ -220,11 +225,12 @@ export const TeacherInstitutionCard = ({
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                flexShrink: 0,
               }}
             >
               <LocationIcon sx={{ fontSize: 26 }} />
             </Avatar>
-            <Box sx={{ flex: 1 }}>
+            <Box sx={{ minWidth: 0, flex: 1 }}>
               <Typography
                 sx={{
                   fontSize: "11px",
@@ -243,6 +249,7 @@ export const TeacherInstitutionCard = ({
                   fontWeight: 700,
                   mt: 1,
                   lineHeight: 1.5,
+                  wordBreak: "break-word",
                 }}
               >
                 {schoolLocation}
