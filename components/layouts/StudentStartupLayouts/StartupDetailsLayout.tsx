@@ -305,8 +305,14 @@ export const StartupDetailsLayout = () => {
                     )}
 
                     {startup.stage && (
-                      <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
-                        <StageIcon sx={{ fontSize: 16, color: "rgba(18, 35, 51, 0.4)" }} />
+                      <Stack
+                        direction="row"
+                        spacing={1}
+                        sx={{ alignItems: "center" }}
+                      >
+                        <StageIcon
+                          sx={{ fontSize: 16, color: "rgba(18, 35, 51, 0.4)" }}
+                        />
                         <Typography
                           sx={{
                             fontSize: "13px",
@@ -840,145 +846,157 @@ export const StartupDetailsLayout = () => {
               )}
 
               {/* School Membership Tier Progress Card */}
-              {startup.tierProgressDetails && Object.keys(startup.tierProgressDetails).length > 0 && (
-                <Paper
-                  elevation={0}
-                  sx={{
-                    p: 4,
-                    borderRadius: "24px",
-                    border: "1px solid rgba(18, 35, 51, 0.05)",
-                    boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
-                    bgcolor: "#fff",
-                  }}
-                >
-                  <Stack
-                    direction="row"
-                    spacing={1.5}
-                    sx={{ mb: 3, alignItems: "center" }}
+              {startup.tierProgressDetails &&
+                Object.keys(startup.tierProgressDetails).length > 0 && (
+                  <Paper
+                    elevation={0}
+                    sx={{
+                      p: 4,
+                      borderRadius: "24px",
+                      border: "1px solid rgba(18, 35, 51, 0.05)",
+                      boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
+                      bgcolor: "#fff",
+                    }}
                   >
-                    <StageIcon sx={{ color: "#4CAF50", fontSize: 24 }} />
-                    <Typography
-                      sx={{
-                        fontSize: "16px",
-                        fontWeight: 800,
-                        color: Colors.PRIMARY_DARK,
-                      }}
+                    <Stack
+                      direction="row"
+                      spacing={1.5}
+                      sx={{ mb: 3, alignItems: "center" }}
                     >
-                      School Membership Tier Progress
-                    </Typography>
-                  </Stack>
+                      <StageIcon sx={{ color: "#4CAF50", fontSize: 24 }} />
+                      <Typography
+                        sx={{
+                          fontSize: "16px",
+                          fontWeight: 800,
+                          color: Colors.PRIMARY_DARK,
+                        }}
+                      >
+                        School Membership Tier Progress
+                      </Typography>
+                    </Stack>
 
-                  <Stack spacing={4}>
-                    {Object.entries(startup.tierProgressDetails).map(([role, tiers]: [string, any]) => (
-                      <Box key={role}>
-                        <Typography
-                          sx={{
-                            fontSize: "11px",
-                            fontWeight: 800,
-                            color: "rgba(18, 35, 51, 0.4)",
-                            textTransform: "uppercase",
-                            letterSpacing: "1px",
-                            mb: 2,
-                          }}
-                        >
-                          Role: {formatStatus(role)}
-                        </Typography>
-
-                        <Stack spacing={3}>
-                          {tiers.map((tier: any, idx: number) => (
-                            <Box
-                              key={idx}
+                    <Stack spacing={4}>
+                      {Object.entries(startup.tierProgressDetails).map(
+                        ([role, tiers]: [string, any]) => (
+                          <Box key={role}>
+                            <Typography
                               sx={{
-                                p: 2.5,
-                                borderRadius: "16px",
-                                border: "1px solid rgba(18, 35, 51, 0.04)",
-                                bgcolor: "rgba(18, 35, 51, 0.015)",
+                                fontSize: "11px",
+                                fontWeight: 800,
+                                color: "rgba(18, 35, 51, 0.4)",
+                                textTransform: "uppercase",
+                                letterSpacing: "1px",
+                                mb: 2,
                               }}
                             >
-                              <Typography
-                                sx={{
-                                  fontSize: "14px",
-                                  fontWeight: 800,
-                                  color: Colors.PRIMARY_DARK,
-                                  mb: 2,
-                                }}
-                              >
-                                {formatText(tier.membershipTier)}
-                              </Typography>
+                              Role: {formatStatus(role)}
+                            </Typography>
 
-                              <Stack spacing={2}>
-                                {tier.requirements?.map((req: any, reqIdx: number) => {
-                                  const isCompleted = req.current >= req.required;
-                                  const progressPercent = Math.min(
-                                    (req.current / req.required) * 100,
-                                    100
-                                  );
+                            <Stack spacing={3}>
+                              {tiers.map((tier: any, idx: number) => (
+                                <Box
+                                  key={idx}
+                                  sx={{
+                                    p: 2.5,
+                                    borderRadius: "16px",
+                                    border: "1px solid rgba(18, 35, 51, 0.04)",
+                                    bgcolor: "rgba(18, 35, 51, 0.015)",
+                                  }}
+                                >
+                                  <Typography
+                                    sx={{
+                                      fontSize: "14px",
+                                      fontWeight: 800,
+                                      color: Colors.PRIMARY_DARK,
+                                      mb: 2,
+                                    }}
+                                  >
+                                    {formatText(tier.membershipTier)}
+                                  </Typography>
 
-                                  return (
-                                    <Box key={reqIdx}>
-                                      <Box
-                                        sx={{
-                                          display: "flex",
-                                          flexDirection: "row",
-                                          justifyContent: "space-between",
-                                          alignItems: "flex-start",
-                                          mb: 1,
-                                        }}
-                                      >
-                                        <Typography
-                                          sx={{
-                                            fontSize: "13px",
-                                            fontWeight: 600,
-                                            color: isCompleted
-                                              ? Colors.PRIMARY_DARK
-                                              : "rgba(18, 35, 51, 0.7)",
-                                            flex: 1,
-                                            pr: 2,
-                                          }}
-                                        >
-                                          {req.description}
-                                        </Typography>
-                                        <Typography
-                                          sx={{
-                                            fontSize: "12px",
-                                            fontWeight: 700,
-                                            color: isCompleted ? "#0F9D58" : "#F4B400",
-                                          }}
-                                        >
-                                          {req.current} / {req.required}
-                                        </Typography>
-                                      </Box>
-                                      <Box
-                                        sx={{
-                                          width: "100%",
-                                          height: 6,
-                                          bgcolor: "rgba(18, 35, 51, 0.06)",
-                                          borderRadius: "3px",
-                                          overflow: "hidden",
-                                        }}
-                                      >
-                                        <Box
-                                          sx={{
-                                            width: `${progressPercent}%`,
-                                            height: "100%",
-                                            bgcolor: isCompleted ? "#0F9D58" : "#F4B400",
-                                            borderRadius: "3px",
-                                            transition: "width 0.5s ease-in-out",
-                                          }}
-                                        />
-                                      </Box>
-                                    </Box>
-                                  );
-                                })}
-                              </Stack>
-                            </Box>
-                          ))}
-                        </Stack>
-                      </Box>
-                    ))}
-                  </Stack>
-                </Paper>
-              )}
+                                  <Stack spacing={2}>
+                                    {tier.requirements?.map(
+                                      (req: any, reqIdx: number) => {
+                                        const isCompleted =
+                                          req.current >= req.required;
+                                        const progressPercent = Math.min(
+                                          (req.current / req.required) * 100,
+                                          100,
+                                        );
+
+                                        return (
+                                          <Box key={reqIdx}>
+                                            <Box
+                                              sx={{
+                                                display: "flex",
+                                                flexDirection: "row",
+                                                justifyContent: "space-between",
+                                                alignItems: "flex-start",
+                                                mb: 1,
+                                              }}
+                                            >
+                                              <Typography
+                                                sx={{
+                                                  fontSize: "13px",
+                                                  fontWeight: 600,
+                                                  color: isCompleted
+                                                    ? Colors.PRIMARY_DARK
+                                                    : "rgba(18, 35, 51, 0.7)",
+                                                  flex: 1,
+                                                  pr: 2,
+                                                }}
+                                              >
+                                                {req.description}
+                                              </Typography>
+                                              <Typography
+                                                sx={{
+                                                  fontSize: "12px",
+                                                  fontWeight: 700,
+                                                  color: isCompleted
+                                                    ? "#0F9D58"
+                                                    : "#F4B400",
+                                                }}
+                                              >
+                                                {req.current} / {req.required}
+                                              </Typography>
+                                            </Box>
+                                            <Box
+                                              sx={{
+                                                width: "100%",
+                                                height: 6,
+                                                bgcolor:
+                                                  "rgba(18, 35, 51, 0.06)",
+                                                borderRadius: "3px",
+                                                overflow: "hidden",
+                                              }}
+                                            >
+                                              <Box
+                                                sx={{
+                                                  width: `${progressPercent}%`,
+                                                  height: "100%",
+                                                  bgcolor: isCompleted
+                                                    ? "#0F9D58"
+                                                    : "#F4B400",
+                                                  borderRadius: "3px",
+                                                  transition:
+                                                    "width 0.5s ease-in-out",
+                                                }}
+                                              />
+                                            </Box>
+                                          </Box>
+                                        );
+                                      },
+                                    )}
+                                  </Stack>
+                                </Box>
+                              ))}
+                            </Stack>
+                          </Box>
+                        ),
+                      )}
+                    </Stack>
+                  </Paper>
+                )}
             </Stack>
           </Grid>
 
@@ -1222,7 +1240,9 @@ export const StartupDetailsLayout = () => {
                   spacing={1.5}
                   sx={{ mb: 3, alignItems: "center" }}
                 >
-                  <StageIcon sx={{ color: Colors.PRIMARY_DARK, fontSize: 24 }} />
+                  <StageIcon
+                    sx={{ color: Colors.PRIMARY_DARK, fontSize: 24 }}
+                  />
                   <Typography
                     sx={{
                       fontSize: "16px",
@@ -1353,12 +1373,31 @@ export const StartupDetailsLayout = () => {
                               },
                             }}
                           >
-                            <Box sx={{ textAlign: "left", minWidth: 0, flex: 1 }}>
-                              <Typography sx={{ fontSize: "12px", fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                            <Box
+                              sx={{ textAlign: "left", minWidth: 0, flex: 1 }}
+                            >
+                              <Typography
+                                sx={{
+                                  fontSize: "12px",
+                                  fontWeight: 700,
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  whiteSpace: "nowrap",
+                                }}
+                              >
                                 {formatText(doc.type)}
                               </Typography>
-                              <Typography sx={{ fontSize: "10px", color: "rgba(18, 35, 51, 0.4)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                                {doc.originalFileName} ({(doc.fileSize / 1024).toFixed(1)} KB)
+                              <Typography
+                                sx={{
+                                  fontSize: "10px",
+                                  color: "rgba(18, 35, 51, 0.4)",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  whiteSpace: "nowrap",
+                                }}
+                              >
+                                {doc.originalFileName} (
+                                {(doc.fileSize / 1024).toFixed(1)} KB)
                               </Typography>
                             </Box>
                           </Button>

@@ -34,7 +34,12 @@ import { useRouter } from "next/navigation";
 
 const getStatusColor = (status: string) => {
   const s = status?.toUpperCase();
-  if (s === "APPROVED" || s === "ACTIVE" || s === "FUNDED" || s === "PATENT_GRANTED") {
+  if (
+    s === "APPROVED" ||
+    s === "ACTIVE" ||
+    s === "FUNDED" ||
+    s === "PATENT_GRANTED"
+  ) {
     return { bg: "rgba(15, 157, 88, 0.08)", text: "#0F9D58" };
   }
   if (s === "REJECTED" || s === "INACTIVE" || s === "CLOSED") {
@@ -80,7 +85,10 @@ export const StartupTable = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedStartup, setSelectedStartup] = useState<any>(null);
 
-  const handleOpenMenu = (event: React.MouseEvent<HTMLElement>, startup: any) => {
+  const handleOpenMenu = (
+    event: React.MouseEvent<HTMLElement>,
+    startup: any,
+  ) => {
     event.stopPropagation();
     setAnchorEl(event.currentTarget);
     setSelectedStartup(startup);
@@ -105,7 +113,7 @@ export const StartupTable = () => {
         const res = await startupControllers.getStartups(
           currentPage,
           itemsPerPage,
-          searchQuery
+          searchQuery,
         );
         if (res?.data && res.data.success) {
           const payload = res.data.data;
@@ -248,7 +256,13 @@ export const StartupTable = () => {
           </Box>
         ) : startups.length === 0 ? (
           <Box sx={{ py: 8, textAlign: "center" }}>
-            <Typography sx={{ color: "rgba(18, 35, 51, 0.4)", fontSize: "14px", fontWeight: 500 }}>
+            <Typography
+              sx={{
+                color: "rgba(18, 35, 51, 0.4)",
+                fontSize: "14px",
+                fontWeight: 500,
+              }}
+            >
               No startups found
             </Typography>
           </Box>
@@ -369,7 +383,9 @@ export const StartupTable = () => {
                   return (
                     <TableRow
                       key={startup.id}
-                      onClick={() => router.push(`/student-startups/${startup.id}`)}
+                      onClick={() =>
+                        router.push(`/student-startups/${startup.id}`)
+                      }
                       sx={{
                         cursor: "pointer",
                         transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
@@ -519,9 +535,16 @@ export const StartupTable = () => {
                 bgcolor: "#FBF9F6",
               }}
             >
-              <Typography sx={{ fontSize: "13px", fontWeight: 600, color: "rgba(18, 35, 51, 0.5)" }}>
+              <Typography
+                sx={{
+                  fontSize: "13px",
+                  fontWeight: 600,
+                  color: "rgba(18, 35, 51, 0.5)",
+                }}
+              >
                 Showing {totalStartups === 0 ? 0 : indexOfFirst + 1} to{" "}
-                {Math.min(indexOfLast, totalStartups)} of {totalStartups} startups
+                {Math.min(indexOfLast, totalStartups)} of {totalStartups}{" "}
+                startups
               </Typography>
 
               <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
