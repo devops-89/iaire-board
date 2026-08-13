@@ -141,7 +141,6 @@ export const InnovationDetailsLayout = () => {
           overflowY: "auto",
           overflowX: "hidden",
           px: { xs: 1.5, sm: 2, md: 3 },
-          pt: { xs: 2, sm: 3 },
           pb: 3,
           position: "relative",
           bgcolor: "#FAF7F0",
