@@ -48,8 +48,8 @@ export const SchoolStudentsTab = ({
     <Paper
       elevation={0}
       sx={{
-        pt: 4,
-        px: 4,
+        pt: { xs: 2.5, sm: 4 },
+        px: { xs: 2, sm: 4 },
         pb: 0,
         borderRadius: "24px",
         border: "1px solid rgba(18, 35, 51, 0.05)",

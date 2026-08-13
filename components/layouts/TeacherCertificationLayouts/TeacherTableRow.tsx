@@ -68,7 +68,7 @@ export const TeacherTableRow: React.FC<TeacherTableRowProps> = ({
       }}
     >
       {/* Monospace School ID */}
-      <TableCell sx={{ py: 2, px: 3 }}>
+      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 } }}>
         <Box
           component="span"
           sx={{
@@ -90,7 +90,7 @@ export const TeacherTableRow: React.FC<TeacherTableRowProps> = ({
       </TableCell>
 
       {/* Teacher Name & Avatar */}
-      <TableCell sx={{ py: 2, px: 3 }}>
+      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 } }}>
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
           <Avatar
             sx={{
@@ -123,7 +123,7 @@ export const TeacherTableRow: React.FC<TeacherTableRowProps> = ({
       </TableCell>
 
       {/* Email */}
-      <TableCell sx={{ py: 2, px: 3 }}>
+      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 } }}>
         <Typography
           sx={{
             fontSize: "13px",
@@ -136,7 +136,7 @@ export const TeacherTableRow: React.FC<TeacherTableRowProps> = ({
       </TableCell>
 
       {/* Glowing Status Chip */}
-      <TableCell sx={{ py: 2, px: 3 }}>
+      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 } }}>
         <Chip
           label={isTeacherActive ? "Active" : "Inactive"}
           size="small"

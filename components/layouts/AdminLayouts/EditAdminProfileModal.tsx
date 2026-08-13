@@ -346,7 +346,9 @@ export const EditAdminProfileModal = ({
         },
         paper: {
           sx: {
-            borderRadius: "32px !important",
+            borderRadius: { xs: "20px !important", sm: "32px !important" },
+            m: { xs: 1.5, sm: 2 },
+            maxHeight: { xs: "calc(100% - 32px)", sm: "calc(100% - 64px)" },
             p: 0.5,
             fontFamily: Poppins.style.fontFamily,
             boxShadow: "0 24px 48px rgba(18, 35, 51, 0.15)",

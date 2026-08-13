@@ -34,7 +34,7 @@ export const TeacherTablePagination: React.FC<TeacherTablePaginationProps> = ({
         flexDirection: { xs: "column", sm: "row" },
         justifyContent: "space-between",
         alignItems: "center",
-        px: 3,
+        px: { xs: 2, sm: 3 },
         py: 2.5,
         borderTop: "1px solid rgba(18, 35, 51, 0.05)",
         bgcolor: "#FBF9F6",
@@ -46,6 +46,7 @@ export const TeacherTablePagination: React.FC<TeacherTablePaginationProps> = ({
           fontSize: "13px",
           fontWeight: 600,
           color: "rgba(18, 35, 51, 0.5)",
+          textAlign: { xs: "center", sm: "left" },
         }}
       >
         Showing {totalTeachers === 0 ? 0 : indexOfFirstTeacher + 1} to{" "}

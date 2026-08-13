@@ -17,7 +17,7 @@ export const SchoolStats = ({
   studentsCount,
 }: SchoolStatsProps) => {
   return (
-    <Grid container spacing={3} sx={{ mb: 4 }}>
+    <Grid container spacing={{ xs: 2, sm: 3 }} sx={{ mb: 4 }}>
       {/* Total Teachers Card */}
       <Grid size={{ xs: 12, sm: 6 }}>
         <Card
@@ -39,7 +39,8 @@ export const SchoolStats = ({
               display: "flex",
               alignItems: "center",
               gap: 2.5,
-              p: "24px !important",
+              p: { xs: 2, sm: 3 },
+              "&:last-child": { pb: { xs: 2, sm: 3 } },
             }}
           >
             <Box
@@ -52,6 +53,7 @@ export const SchoolStats = ({
                 borderRadius: "12px",
                 bgcolor: "rgba(59, 130, 246, 0.08)",
                 color: "#3B82F6",
+                flexShrink: 0,
               }}
             >
               <PeopleIcon sx={{ fontSize: 24 }} />
@@ -104,7 +106,8 @@ export const SchoolStats = ({
               display: "flex",
               alignItems: "center",
               gap: 2.5,
-              p: "24px !important",
+              p: { xs: 2, sm: 3 },
+              "&:last-child": { pb: { xs: 2, sm: 3 } },
             }}
           >
             <Box

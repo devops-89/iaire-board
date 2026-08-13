@@ -18,25 +18,13 @@ export const SchoolTableHeader: React.FC<SchoolTableHeaderProps> = ({
     <Box
       sx={{
         display: "flex",
-        flexDirection: { xs: "column", sm: "row" },
+        alignItems: "center",
         justifyContent: "space-between",
-        alignItems: { xs: "stretch", sm: "center" },
         gap: 2,
         mb: 3,
       }}
     >
-      <Typography
-        sx={{
-          fontSize: "20px",
-          fontWeight: 800,
-          color: Colors.PRIMARY_DARK,
-          letterSpacing: "-0.5px",
-        }}
-      >
-        Registered Institutions
-      </Typography>
-
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, width: "100%" }}>
         {/* Premium Search Box */}
         <Paper
           elevation={0}

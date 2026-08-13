@@ -226,8 +226,8 @@ export const AdminProfile = () => {
       {/* Admin User Profile Card */}
       <Paper
         sx={{
-          p: 4,
-          borderRadius: "32px",
+          p: { xs: 2.5, sm: 4 },
+          borderRadius: { xs: "24px", sm: "32px" },
           bgcolor: "#fff",
           boxShadow: "0 4px 24px rgba(0,0,0,0.03)",
           border: "1px solid rgba(0,0,0,0.04)",
@@ -236,19 +236,29 @@ export const AdminProfile = () => {
         <Box
           sx={{
             display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
             justifyContent: "space-between",
-            alignItems: "flex-start",
+            alignItems: { xs: "stretch", sm: "flex-start" },
             mb: 4,
+            gap: 2,
           }}
         >
-          <Box sx={{ display: "flex", gap: 3, alignItems: "center" }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
+              gap: { xs: 2, sm: 3 },
+              alignItems: { xs: "center", sm: "flex-start" },
+              textAlign: { xs: "center", sm: "left" },
+            }}
+          >
             <Avatar
               src={userAvatar}
               sx={{
-                width: 100,
-                height: 100,
+                width: { xs: 80, sm: 100 },
+                height: { xs: 80, sm: 100 },
                 bgcolor: "#00D1C1",
-                fontSize: "32px",
+                fontSize: { xs: "26px", sm: "32px" },
                 fontWeight: 700,
                 boxShadow: "0 8px 24px rgba(0, 209, 193, 0.2)",
               }}
@@ -257,10 +267,20 @@ export const AdminProfile = () => {
             </Avatar>
             <Box>
               <Box
-                sx={{ display: "flex", alignItems: "center", gap: 1, mb: 0.5 }}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: { xs: "center", sm: "flex-start" },
+                  gap: 1,
+                  mb: 0.5,
+                }}
               >
                 <Typography
-                  sx={{ fontSize: "24px", fontWeight: 800, color: "#122333" }}
+                  sx={{
+                    fontSize: { xs: "20px", sm: "24px" },
+                    fontWeight: 800,
+                    color: "#122333",
+                  }}
                 >
                   {userName}
                 </Typography>
@@ -303,6 +323,7 @@ export const AdminProfile = () => {
               borderColor: "rgba(0,0,0,0.1)",
               px: 3,
               py: 1,
+              width: { xs: "100%", sm: "auto" },
             }}
           >
             Edit Profile
@@ -311,7 +332,7 @@ export const AdminProfile = () => {
 
         <Divider sx={{ mb: 4, opacity: 0.6 }} />
 
-        <Grid container spacing={4}>
+        <Grid container spacing={{ xs: 2, sm: 4 }}>
           <Grid size={{ xs: 12, md: 6 }}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
               <Box
@@ -324,7 +345,7 @@ export const AdminProfile = () => {
               >
                 <MailIcon />
               </Box>
-              <Box>
+              <Box sx={{ minWidth: 0 }}>
                 <Typography
                   sx={{
                     fontSize: "12px",
@@ -334,7 +355,10 @@ export const AdminProfile = () => {
                 >
                   EMAIL ADDRESS
                 </Typography>
-                <Typography sx={{ fontSize: "14px", fontWeight: 600 }}>
+                <Typography
+                  noWrap
+                  sx={{ fontSize: "14px", fontWeight: 600 }}
+                >
                   {userEmail}
                 </Typography>
               </Box>
@@ -352,7 +376,7 @@ export const AdminProfile = () => {
               >
                 <PhoneIcon />
               </Box>
-              <Box>
+              <Box sx={{ minWidth: 0 }}>
                 <Typography
                   sx={{
                     fontSize: "12px",
@@ -362,7 +386,10 @@ export const AdminProfile = () => {
                 >
                   PHONE NUMBER
                 </Typography>
-                <Typography sx={{ fontSize: "14px", fontWeight: 600 }}>
+                <Typography
+                  noWrap
+                  sx={{ fontSize: "14px", fontWeight: 600 }}
+                >
                   {userPhone}
                 </Typography>
               </Box>
@@ -374,8 +401,8 @@ export const AdminProfile = () => {
       {/* Board Details Card */}
       <Paper
         sx={{
-          p: 4,
-          borderRadius: "32px",
+          p: { xs: 2.5, sm: 4 },
+          borderRadius: { xs: "24px", sm: "32px" },
           bgcolor: "#fff",
           boxShadow: "0 4px 24px rgba(0,0,0,0.03)",
           border: "1px solid rgba(0,0,0,0.04)",
@@ -384,8 +411,10 @@ export const AdminProfile = () => {
         <Box
           sx={{
             display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
             justifyContent: "space-between",
-            alignItems: "center",
+            alignItems: { xs: "stretch", sm: "center" },
+            gap: 2,
             mb: 3,
           }}
         >
@@ -421,6 +450,7 @@ export const AdminProfile = () => {
               borderColor: "rgba(0,0,0,0.1)",
               px: 3,
               py: 1,
+              width: { xs: "100%", sm: "auto" },
             }}
           >
             Edit Board Details
@@ -670,8 +700,8 @@ export const AdminProfile = () => {
       {boardAuthorities && boardAuthorities.length > 0 && (
         <Paper
           sx={{
-            p: 4,
-            borderRadius: "32px",
+            p: { xs: 2.5, sm: 4 },
+            borderRadius: { xs: "24px", sm: "32px" },
             bgcolor: "#fff",
             boxShadow: "0 4px 24px rgba(0,0,0,0.03)",
             border: "1px solid rgba(0,0,0,0.04)",
@@ -680,8 +710,10 @@ export const AdminProfile = () => {
           <Box
             sx={{
               display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
               justifyContent: "space-between",
-              alignItems: "center",
+              alignItems: { xs: "flex-start", sm: "center" },
+              gap: 1.5,
               mb: 3,
             }}
           >

@@ -188,7 +188,7 @@ export const TeacherTable = () => {
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
+                      px: { xs: 2, sm: 3 },
                     }}
                   >
                     School ID
@@ -201,7 +201,7 @@ export const TeacherTable = () => {
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
+                      px: { xs: 2, sm: 3 },
                     }}
                   >
                     Teacher Name
@@ -214,7 +214,7 @@ export const TeacherTable = () => {
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
+                      px: { xs: 2, sm: 3 },
                     }}
                   >
                     Email Address
@@ -227,7 +227,7 @@ export const TeacherTable = () => {
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
+                      px: { xs: 2, sm: 3 },
                     }}
                   >
                     Status
@@ -241,7 +241,7 @@ export const TeacherTable = () => {
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
+                      px: { xs: 2, sm: 3 },
                     }}
                   >
                     Actions

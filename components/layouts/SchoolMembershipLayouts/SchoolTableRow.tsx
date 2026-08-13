@@ -35,7 +35,7 @@ export const SchoolTableRow: React.FC<SchoolTableRowProps> = ({
       }}
     >
       {/* Display ID badge */}
-      <TableCell sx={{ py: 2, px: 3 }}>
+      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 } }}>
         <Box
           component="span"
           sx={{
@@ -57,7 +57,7 @@ export const SchoolTableRow: React.FC<SchoolTableRowProps> = ({
       </TableCell>
 
       {/* School Name & Avatar */}
-      <TableCell sx={{ py: 2, px: 3 }}>
+      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 } }}>
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
           <Avatar
             src={school.logoDownloadUrl || school.logo || undefined}
@@ -93,7 +93,7 @@ export const SchoolTableRow: React.FC<SchoolTableRowProps> = ({
       </TableCell>
 
       {/* Membership Code Monospace Badge */}
-      <TableCell sx={{ py: 2, px: 3 }} align="center">
+      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 } }} align="center">
         {school.membershipCode ? (
           <Box
             component="span"
@@ -128,7 +128,7 @@ export const SchoolTableRow: React.FC<SchoolTableRowProps> = ({
       </TableCell>
 
       {/* Registration Year with Calendar Icon */}
-      <TableCell sx={{ py: 2, px: 3 }}>
+      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 } }}>
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <CalendarIcon
             sx={{
@@ -149,7 +149,7 @@ export const SchoolTableRow: React.FC<SchoolTableRowProps> = ({
       </TableCell>
 
       {/* Glowing Status Chips */}
-      <TableCell sx={{ py: 2, px: 3 }}>
+      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 } }}>
         <Chip
           label={school.isActive ? "Active" : "Inactive"}
           size="small"
@@ -208,7 +208,7 @@ export const SchoolTableRow: React.FC<SchoolTableRowProps> = ({
       </TableCell>
 
       {/* More Action Button */}
-      <TableCell align="right" sx={{ py: 2, px: 3 }}>
+      <TableCell align="right" sx={{ py: 2, px: { xs: 2, sm: 3 } }}>
         <IconButton
           size="small"
           onClick={(e) => {

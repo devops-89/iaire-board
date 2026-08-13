@@ -20,27 +20,27 @@ const PAGE_CONFIG: any = {
     showActions: false,
   },
   "/membership-overview": {
-    title: "",
+    title: "Registered Institutions",
     description: "",
     showActions: false,
   },
   "/teacher-certification": {
-    title: "",
+    title: "Registered Teachers",
     description: "",
     showActions: false,
   },
   "/innovation-research": {
-    title: "",
+    title: "Innovation & Research Status",
     description: "",
     showActions: false,
   },
   "/student-startup": {
-    title: "",
+    title: "Student Startup Details",
     description: "",
     showActions: false,
   },
   "/student-startups": {
-    title: "",
+    title: "Student Startup Status",
     description: "",
     showActions: false,
   },

@@ -189,7 +189,7 @@ export const SchoolTable = () => {
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
+                      px: { xs: 2, sm: 3 },
                     }}
                   >
                     Display ID
@@ -202,7 +202,7 @@ export const SchoolTable = () => {
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
+                      px: { xs: 2, sm: 3 },
                     }}
                   >
                     School Name
@@ -216,7 +216,7 @@ export const SchoolTable = () => {
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
+                      px: { xs: 2, sm: 3 },
                     }}
                   >
                     Membership Code
@@ -229,7 +229,7 @@ export const SchoolTable = () => {
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
+                      px: { xs: 2, sm: 3 },
                     }}
                   >
                     Registration Year
@@ -242,7 +242,7 @@ export const SchoolTable = () => {
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
+                      px: { xs: 2, sm: 3 },
                     }}
                   >
                     Status
@@ -256,7 +256,7 @@ export const SchoolTable = () => {
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
+                      px: { xs: 2, sm: 3 },
                     }}
                   >
                     Actions

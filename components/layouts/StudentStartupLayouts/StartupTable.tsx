@@ -167,28 +167,15 @@ export const StartupTable = () => {
 
   return (
     <Box sx={{ mt: 0 }}>
-      {/* Top Header & Search Bar Row */}
+      {/* Search Bar Row */}
       <Box
         sx={{
           display: "flex",
-          justifyContent: "space-between",
-          alignItems: { xs: "stretch", sm: "center" },
+          justifyContent: "flex-end",
+          alignItems: "center",
           mb: 3,
-          flexDirection: { xs: "column", sm: "row" },
-          gap: 2,
         }}
       >
-        <Typography
-          sx={{
-            fontSize: { xs: "18px", sm: "20px" },
-            fontWeight: 800,
-            color: Colors.PRIMARY_DARK,
-            letterSpacing: "-0.5px",
-          }}
-        >
-          Student Startup Status
-        </Typography>
-
         <Paper
           elevation={0}
           sx={{

@@ -23,13 +23,13 @@ export const SchoolProfileTab = ({
   if (!school) return null;
 
   return (
-    <Grid container spacing={4}>
+    <Grid container spacing={{ xs: 2, sm: 3, md: 4 }}>
       {/* General Info Card */}
       <Grid size={{ xs: 12, md: 8 }}>
         <Paper
           elevation={0}
           sx={{
-            p: 4,
+            p: { xs: 2.5, sm: 4 },
             borderRadius: "24px",
             border: "1px solid rgba(18, 35, 51, 0.05)",
             bgcolor: "#fff",
@@ -47,7 +47,7 @@ export const SchoolProfileTab = ({
             Contact & Address Details
           </Typography>
 
-          <Grid container spacing={3.5}>
+          <Grid container spacing={{ xs: 2, sm: 3 }}>
             {/* Full Address */}
             <Grid size={{ xs: 12 }}>
               <Box
@@ -78,11 +78,12 @@ export const SchoolProfileTab = ({
                     borderRadius: "10px",
                     bgcolor: "rgba(244, 63, 94, 0.08)",
                     color: "#F43F5E",
+                    flexShrink: 0,
                   }}
                 >
                   <LocationIcon sx={{ fontSize: 20 }} />
                 </Box>
-                <Box>
+                <Box sx={{ flex: 1, minWidth: 0 }}>
                   <Typography
                     sx={{
                       fontSize: "11px",
@@ -99,6 +100,8 @@ export const SchoolProfileTab = ({
                       color: Colors.PRIMARY_DARK,
                       fontWeight: 700,
                       mt: 0.5,
+                      wordBreak: "break-word",
+                      overflowWrap: "anywhere",
                     }}
                   >
                     {fullAddress || "No address details available."}
@@ -353,7 +356,7 @@ export const SchoolProfileTab = ({
         <Paper
           elevation={0}
           sx={{
-            p: 4,
+            p: { xs: 2.5, sm: 4 },
             borderRadius: "24px",
             border: "1px solid rgba(18, 35, 51, 0.05)",
             bgcolor: "#fff",

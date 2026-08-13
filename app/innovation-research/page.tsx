@@ -47,7 +47,6 @@ export default function InnovationResearchPage() {
           overflowY: "auto",
           overflowX: "hidden",
           px: { xs: 1.5, sm: 2, md: 3 },
-          pt: { xs: 2, sm: 3 },
           pb: 3,
           position: "relative",
           bgcolor: "#FAF7F0",
@@ -55,20 +54,6 @@ export default function InnovationResearchPage() {
         }}
       >
         <Navbar onMenuClick={handleDrawerToggle} />
-
-        {/* Page Heading */}
-        <Box sx={{ mt: 0, mb: 3 }}>
-          <Typography
-            sx={{
-              fontSize: { xs: "18px", sm: "20px" },
-              fontWeight: 800,
-              color: Colors.PRIMARY_DARK,
-              letterSpacing: "-0.5px",
-            }}
-          >
-            Innovation & Research Status
-          </Typography>
-        </Box>
 
         {/* Flex Row with Segmented Tabs and Search Bar */}
         <Box

@@ -225,8 +225,12 @@ export const TeacherDetailsLayout = () => {
           flexGrow: 1,
           height: "100vh",
           overflowY: "auto",
-          px: { xs: 2, sm: 3, md: 4 },
-          pb: { xs: 2, sm: 4 },
+          overflowX: "hidden",
+          px: { xs: 1.5, sm: 2, md: 3 },
+          pb: 3,
+          position: "relative",
+          bgcolor: "#FAF7F0",
+          width: { xs: "100%", lg: "calc(100% - 250px)" },
         }}
       >
         <Navbar onMenuClick={handleDrawerToggle} />
