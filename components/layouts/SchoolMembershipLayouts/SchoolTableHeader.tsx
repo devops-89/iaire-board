@@ -63,19 +63,6 @@ export const SchoolTableHeader: React.FC<SchoolTableHeaderProps> = ({
             }}
           />
         </Paper>
-
-        <IconButton
-          onClick={onAddClick}
-          sx={{
-            bgcolor: Colors.PRIMARY_DARK,
-            color: "#fff",
-            "&:hover": { bgcolor: "#1A2B3B" },
-            width: 40,
-            height: 40,
-          }}
-        >
-          <AddIcon sx={{ fontSize: 20 }} />
-        </IconButton>
       </Box>
     </Box>
   );

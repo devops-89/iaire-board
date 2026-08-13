@@ -385,7 +385,13 @@ export const StartupTable = () => {
                         },
                       }}
                     >
-                      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 }, width: { xs: 180, sm: 220 } }}>
+                      <TableCell
+                        sx={{
+                          py: 2,
+                          px: { xs: 2, sm: 3 },
+                          width: { xs: 180, sm: 220 },
+                        }}
+                      >
                         <Typography
                           noWrap
                           title={formatText(startup.startupName)}
@@ -404,7 +410,13 @@ export const StartupTable = () => {
                         </Typography>
                       </TableCell>
 
-                      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 }, width: { xs: 140, sm: 200 } }}>
+                      <TableCell
+                        sx={{
+                          py: 2,
+                          px: { xs: 2, sm: 3 },
+                          width: { xs: 140, sm: 200 },
+                        }}
+                      >
                         <Typography
                           noWrap
                           title={formatText(startup.sector)}
@@ -422,7 +434,9 @@ export const StartupTable = () => {
                         </Typography>
                       </TableCell>
 
-                      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 }, width: 120 }}>
+                      <TableCell
+                        sx={{ py: 2, px: { xs: 2, sm: 3 }, width: 120 }}
+                      >
                         <Chip
                           label={formatText(startup.stage || "IDEA")}
                           size="small"
@@ -436,7 +450,13 @@ export const StartupTable = () => {
                         />
                       </TableCell>
 
-                      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 }, width: { xs: 180, sm: 220 } }}>
+                      <TableCell
+                        sx={{
+                          py: 2,
+                          px: { xs: 2, sm: 3 },
+                          width: { xs: 180, sm: 220 },
+                        }}
+                      >
                         <Typography
                           noWrap
                           title={startup.school?.name || ""}
@@ -454,7 +474,13 @@ export const StartupTable = () => {
                         </Typography>
                       </TableCell>
 
-                      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 }, width: { xs: 160, sm: 200 } }}>
+                      <TableCell
+                        sx={{
+                          py: 2,
+                          px: { xs: 2, sm: 3 },
+                          width: { xs: 160, sm: 200 },
+                        }}
+                      >
                         <Typography
                           noWrap
                           title={startup.creator?.fullName || ""}
@@ -472,7 +498,9 @@ export const StartupTable = () => {
                         </Typography>
                       </TableCell>
 
-                      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 }, width: 120 }}>
+                      <TableCell
+                        sx={{ py: 2, px: { xs: 2, sm: 3 }, width: 120 }}
+                      >
                         <Chip
                           label={formatStatus(startup.status || "PENDING")}
                           size="small"
@@ -486,7 +514,10 @@ export const StartupTable = () => {
                         />
                       </TableCell>
 
-                      <TableCell align="right" sx={{ py: 2, px: { xs: 2, sm: 3 }, width: 80 }}>
+                      <TableCell
+                        align="right"
+                        sx={{ py: 2, px: { xs: 2, sm: 3 }, width: 80 }}
+                      >
                         <IconButton
                           size="small"
                           onClick={(e) => {
