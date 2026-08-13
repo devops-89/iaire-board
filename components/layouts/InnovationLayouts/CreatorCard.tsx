@@ -35,7 +35,7 @@ export const CreatorCard: React.FC<CreatorCardProps> = ({ creator }) => {
     <Paper
       elevation={0}
       sx={{
-        p: 4,
+        p: { xs: 2.5, sm: 4 },
         borderRadius: "24px",
         border: "1px solid rgba(18, 35, 51, 0.05)",
         boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",

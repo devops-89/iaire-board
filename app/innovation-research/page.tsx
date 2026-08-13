@@ -18,6 +18,11 @@ export default function InnovationResearchPage() {
     "innovations",
   );
   const [searchQuery, setSearchQuery] = useState("");
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen((prev) => !prev);
+  };
 
   const handleTabChange = (tab: "innovations" | "research") => {
     setActiveTab(tab);
@@ -33,25 +38,29 @@ export default function InnovationResearchPage() {
         fontFamily: Poppins.style.fontFamily,
       }}
     >
-      <Sidebar />
+      <Sidebar mobileOpen={mobileOpen} onMobileClose={handleDrawerToggle} />
       <Box
         component="main"
         sx={{
           flexGrow: 1,
           height: "100vh",
           overflowY: "auto",
+          overflowX: "hidden",
           px: { xs: 1.5, sm: 2, md: 3 },
           pt: { xs: 2, sm: 3 },
           pb: 3,
+          position: "relative",
+          bgcolor: "#FAF7F0",
+          width: { xs: "100%", lg: "calc(100% - 250px)" },
         }}
       >
-        <Navbar />
+        <Navbar onMenuClick={handleDrawerToggle} />
 
         {/* Page Heading */}
         <Box sx={{ mt: 0, mb: 3 }}>
           <Typography
             sx={{
-              fontSize: "20px",
+              fontSize: { xs: "18px", sm: "20px" },
               fontWeight: 800,
               color: Colors.PRIMARY_DARK,
               letterSpacing: "-0.5px",
@@ -81,7 +90,7 @@ export default function InnovationResearchPage() {
               borderRadius: "14px",
               p: "5px",
               border: "1px solid rgba(18, 35, 51, 0.06)",
-              width: "320px",
+              width: { xs: "100%", sm: "320px" },
             }}
           >
             {/* Sliding Background Indicator Pill */}

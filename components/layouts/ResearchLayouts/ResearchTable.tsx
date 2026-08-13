@@ -209,7 +209,7 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
           </Box>
         ) : (
           <>
-            <Table sx={{ minWidth: 700 }}>
+            <Table sx={{ minWidth: 650 }}>
               <TableHead
                 sx={{
                   bgcolor: "rgba(18, 35, 51, 0.015)",
@@ -225,8 +225,8 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
-                      width: 320,
+                      px: { xs: 2, sm: 3 },
+                      width: { xs: 200, sm: 280 },
                     }}
                   >
                     Research Title
@@ -239,9 +239,8 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      pl: 8,
-                      pr: 2,
-                      width: 250,
+                      px: { xs: 2, sm: 3 },
+                      width: { xs: 180, sm: 220 },
                     }}
                   >
                     School
@@ -254,8 +253,7 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      pl: 8,
-                      pr: 2,
+                      px: { xs: 2, sm: 3 },
                       width: 120,
                     }}
                   >
@@ -269,9 +267,8 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      pl: 8,
-                      pr: 2,
-                      width: 320,
+                      px: { xs: 2, sm: 3 },
+                      width: { xs: 200, sm: 280 },
                     }}
                   >
                     Description
@@ -284,8 +281,7 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      pl: 8,
-                      pr: 2,
+                      px: { xs: 2, sm: 3 },
                     }}
                   >
                     Status
@@ -299,7 +295,7 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
+                      px: { xs: 2, sm: 3 },
                     }}
                   >
                     Actions
@@ -329,7 +325,7 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
                         },
                       }}
                     >
-                      <TableCell sx={{ py: 2, px: 3, width: 320 }}>
+                      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 }, width: { xs: 200, sm: 280 } }}>
                         <Typography
                           noWrap
                           title={formatTitle(submission.title)}
@@ -341,14 +337,14 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
                             overflow: "hidden",
                             textOverflow: "ellipsis",
                             whiteSpace: "nowrap",
-                            maxWidth: 290,
+                            maxWidth: 260,
                           }}
                         >
                           {formatTitle(submission.title)}
                         </Typography>
                       </TableCell>
 
-                      <TableCell sx={{ py: 2, pl: 8, pr: 2, width: 250 }}>
+                      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 }, width: { xs: 180, sm: 220 } }}>
                         <Typography
                           noWrap
                           title={submission.school?.name || ""}
@@ -359,14 +355,14 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
                             overflow: "hidden",
                             textOverflow: "ellipsis",
                             whiteSpace: "nowrap",
-                            maxWidth: 220,
+                            maxWidth: 200,
                           }}
                         >
                           {submission.school?.name || "--"}
                         </Typography>
                       </TableCell>
 
-                      <TableCell sx={{ py: 2, pl: 8, pr: 2, width: 120 }}>
+                      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 }, width: 120 }}>
                         {submission.creator?.role === "TEACHER" ? (
                           <Chip
                             label="Teacher"
@@ -394,7 +390,7 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
                         )}
                       </TableCell>
 
-                      <TableCell sx={{ py: 2, pl: 8, pr: 2, width: 320 }}>
+                      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 }, width: { xs: 200, sm: 280 } }}>
                         <Typography
                           noWrap
                           title={submission.description || ""}
@@ -406,14 +402,14 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
                             overflow: "hidden",
                             textOverflow: "ellipsis",
                             whiteSpace: "nowrap",
-                            maxWidth: 290,
+                            maxWidth: 260,
                           }}
                         >
                           {submission.description || "--"}
                         </Typography>
                       </TableCell>
 
-                      <TableCell sx={{ py: 2, pl: 8, pr: 2 }}>
+                      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 } }}>
                         <Chip
                           label={formatStatus(submission.status || "PENDING")}
                           size="small"
@@ -427,7 +423,7 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
                         />
                       </TableCell>
 
-                      <TableCell align="right" sx={{ py: 2, px: 3 }}>
+                      <TableCell align="right" sx={{ py: 2, px: { xs: 2, sm: 3 } }}>
                         <IconButton
                           size="small"
                           onClick={(e) => {
@@ -455,9 +451,11 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
             <Box
               sx={{
                 display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
                 justifyContent: "space-between",
                 alignItems: "center",
-                px: 3,
+                gap: { xs: 1.5, sm: 0 },
+                px: { xs: 2, sm: 3 },
                 py: 2.5,
                 borderTop: "1px solid rgba(18, 35, 51, 0.05)",
                 bgcolor: "#FBF9F6",

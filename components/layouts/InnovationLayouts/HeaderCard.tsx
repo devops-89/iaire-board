@@ -66,7 +66,7 @@ export const HeaderCard: React.FC<HeaderCardProps> = ({
     <Paper
       elevation={0}
       sx={{
-        p: 4,
+        p: { xs: 2.5, sm: 4 },
         borderRadius: "24px",
         border: "1px solid rgba(18, 35, 51, 0.05)",
         boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
@@ -78,14 +78,15 @@ export const HeaderCard: React.FC<HeaderCardProps> = ({
         spacing={2}
         sx={{
           justifyContent: "space-between",
-          alignItems: "center",
+          alignItems: { xs: "flex-start", sm: "center" },
           flexWrap: "wrap",
+          gap: 1.5,
         }}
       >
         <Box>
           <Typography
             sx={{
-              fontSize: "24px",
+              fontSize: { xs: "18px", sm: "24px" },
               fontWeight: 800,
               color: Colors.PRIMARY_DARK,
               letterSpacing: "-0.5px",

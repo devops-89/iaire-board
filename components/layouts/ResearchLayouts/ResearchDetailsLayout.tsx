@@ -76,6 +76,11 @@ export const ResearchDetailsLayout = () => {
 
   const [research, setResearch] = useState<any | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen((prev) => !prev);
+  };
 
   useEffect(() => {
     if (!id) return;
@@ -113,7 +118,7 @@ export const ResearchDetailsLayout = () => {
           fontFamily: Poppins.style.fontFamily,
         }}
       >
-        <Sidebar />
+        <Sidebar mobileOpen={mobileOpen} onMobileClose={handleDrawerToggle} />
         <Box
           component="main"
           sx={{
@@ -122,6 +127,7 @@ export const ResearchDetailsLayout = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            width: { xs: "100%", lg: "calc(100% - 250px)" },
           }}
         >
           <CircularProgress sx={{ color: Colors.PRIMARY_DARK }} />
@@ -140,13 +146,14 @@ export const ResearchDetailsLayout = () => {
           fontFamily: Poppins.style.fontFamily,
         }}
       >
-        <Sidebar />
+        <Sidebar mobileOpen={mobileOpen} onMobileClose={handleDrawerToggle} />
         <Box
           component="main"
           sx={{
             flexGrow: 1,
             height: "100vh",
             p: 4,
+            width: { xs: "100%", lg: "calc(100% - 250px)" },
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
@@ -200,18 +207,23 @@ export const ResearchDetailsLayout = () => {
         fontFamily: Poppins.style.fontFamily,
       }}
     >
-      <Sidebar />
+      <Sidebar mobileOpen={mobileOpen} onMobileClose={handleDrawerToggle} />
       <Box
         component="main"
         sx={{
           flexGrow: 1,
           height: "100vh",
           overflowY: "auto",
-          px: 2,
-          pb: 2,
+          overflowX: "hidden",
+          px: { xs: 1.5, sm: 2, md: 3 },
+          pt: { xs: 2, sm: 3 },
+          pb: 3,
+          position: "relative",
+          bgcolor: "#FAF7F0",
+          width: { xs: "100%", lg: "calc(100% - 250px)" },
         }}
       >
-        <Navbar />
+        <Navbar onMenuClick={handleDrawerToggle} />
 
         {/* Back Button Row */}
         <Box sx={{ mt: 3, mb: 3 }}>
@@ -240,13 +252,13 @@ export const ResearchDetailsLayout = () => {
         </Box>
 
         {/* Dynamic Detail layout */}
-        <Grid container spacing={4}>
+        <Grid container spacing={{ xs: 2, sm: 3, md: 4 }}>
           {/* Main Info Header Card */}
           <Grid size={{ xs: 12 }}>
             <Paper
               elevation={0}
               sx={{
-                p: 4,
+                p: { xs: 2.5, sm: 4 },
                 borderRadius: "24px",
                 border: "1px solid rgba(18, 35, 51, 0.05)",
                 boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
@@ -258,14 +270,15 @@ export const ResearchDetailsLayout = () => {
                 spacing={2}
                 sx={{
                   justifyContent: "space-between",
-                  alignItems: "center",
+                  alignItems: { xs: "flex-start", sm: "center" },
                   flexWrap: "wrap",
+                  gap: 1.5,
                 }}
               >
                 <Box>
                   <Typography
                     sx={{
-                      fontSize: "24px",
+                      fontSize: { xs: "18px", sm: "24px" },
                       fontWeight: 800,
                       color: Colors.PRIMARY_DARK,
                       letterSpacing: "-0.5px",

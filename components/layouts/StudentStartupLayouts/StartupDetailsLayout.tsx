@@ -77,6 +77,11 @@ export const StartupDetailsLayout = () => {
 
   const [startup, setStartup] = useState<any | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen((prev) => !prev);
+  };
 
   useEffect(() => {
     if (!id) return;
@@ -114,7 +119,7 @@ export const StartupDetailsLayout = () => {
           fontFamily: Poppins.style.fontFamily,
         }}
       >
-        <Sidebar />
+        <Sidebar mobileOpen={mobileOpen} onMobileClose={handleDrawerToggle} />
         <Box
           component="main"
           sx={{
@@ -123,6 +128,7 @@ export const StartupDetailsLayout = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            width: { xs: "100%", lg: "calc(100% - 250px)" },
           }}
         >
           <CircularProgress sx={{ color: Colors.PRIMARY_DARK }} />
@@ -141,13 +147,14 @@ export const StartupDetailsLayout = () => {
           fontFamily: Poppins.style.fontFamily,
         }}
       >
-        <Sidebar />
+        <Sidebar mobileOpen={mobileOpen} onMobileClose={handleDrawerToggle} />
         <Box
           component="main"
           sx={{
             flexGrow: 1,
             height: "100vh",
             p: 4,
+            width: { xs: "100%", lg: "calc(100% - 250px)" },
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
@@ -201,18 +208,23 @@ export const StartupDetailsLayout = () => {
         fontFamily: Poppins.style.fontFamily,
       }}
     >
-      <Sidebar />
+      <Sidebar mobileOpen={mobileOpen} onMobileClose={handleDrawerToggle} />
       <Box
         component="main"
         sx={{
           flexGrow: 1,
           height: "100vh",
           overflowY: "auto",
-          px: 2,
-          pb: 2,
+          overflowX: "hidden",
+          px: { xs: 1.5, sm: 2, md: 3 },
+          pt: { xs: 2, sm: 3 },
+          pb: 3,
+          position: "relative",
+          bgcolor: "#FAF7F0",
+          width: { xs: "100%", lg: "calc(100% - 250px)" },
         }}
       >
-        <Navbar />
+        <Navbar onMenuClick={handleDrawerToggle} />
 
         {/* Back Button Row */}
         <Box sx={{ mt: 3, mb: 3 }}>
@@ -241,13 +253,13 @@ export const StartupDetailsLayout = () => {
         </Box>
 
         {/* Dynamic Detail layout */}
-        <Grid container spacing={4}>
+        <Grid container spacing={{ xs: 2, sm: 3, md: 4 }}>
           {/* Main Info Header Card */}
           <Grid size={{ xs: 12 }}>
             <Paper
               elevation={0}
               sx={{
-                p: 4,
+                p: { xs: 2.5, sm: 4 },
                 borderRadius: "24px",
                 border: "1px solid rgba(18, 35, 51, 0.05)",
                 boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
@@ -259,14 +271,15 @@ export const StartupDetailsLayout = () => {
                 spacing={2}
                 sx={{
                   justifyContent: "space-between",
-                  alignItems: "center",
+                  alignItems: { xs: "flex-start", sm: "center" },
                   flexWrap: "wrap",
+                  gap: 1.5,
                 }}
               >
-                <Box>
+                <Box sx={{ flex: 1, minWidth: 0 }}>
                   <Typography
                     sx={{
-                      fontSize: "24px",
+                      fontSize: { xs: "18px", sm: "24px" },
                       fontWeight: 800,
                       color: Colors.PRIMARY_DARK,
                       letterSpacing: "-0.5px",
@@ -275,10 +288,13 @@ export const StartupDetailsLayout = () => {
                   >
                     {formatText(startup.startupName)}
                   </Typography>
-                  <Stack
-                    direction="row"
-                    spacing={3}
-                    sx={{ alignItems: "center", flexWrap: "wrap" }}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      alignItems: "center",
+                      gap: 1.5,
+                    }}
                   >
                     <Typography
                       sx={{
@@ -305,10 +321,13 @@ export const StartupDetailsLayout = () => {
                     )}
 
                     {startup.stage && (
-                      <Stack
-                        direction="row"
-                        spacing={1}
-                        sx={{ alignItems: "center" }}
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          alignItems: "center",
+                          gap: 0.5,
+                        }}
                       >
                         <StageIcon
                           sx={{ fontSize: 16, color: "rgba(18, 35, 51, 0.4)" }}
@@ -322,9 +341,9 @@ export const StartupDetailsLayout = () => {
                         >
                           Stage: {formatStatus(startup.stage)}
                         </Typography>
-                      </Stack>
+                      </Box>
                     )}
-                  </Stack>
+                  </Box>
                 </Box>
                 <Chip
                   label={formatStatus(startup.status || "PENDING")}
@@ -344,12 +363,12 @@ export const StartupDetailsLayout = () => {
 
           {/* Left Column - Details Description & Creator cards */}
           <Grid size={{ xs: 12, md: 8 }}>
-            <Stack spacing={4}>
+            <Stack spacing={{ xs: 2, sm: 3 }}>
               {/* Business Idea Card */}
               <Paper
                 elevation={0}
                 sx={{
-                  p: 4,
+                  p: { xs: 2.5, sm: 4 },
                   borderRadius: "24px",
                   border: "1px solid rgba(18, 35, 51, 0.05)",
                   boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
@@ -389,7 +408,7 @@ export const StartupDetailsLayout = () => {
                 <Paper
                   elevation={0}
                   sx={{
-                    p: 4,
+                    p: { xs: 2.5, sm: 4 },
                     borderRadius: "24px",
                     border: "1px solid rgba(18, 35, 51, 0.05)",
                     boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
@@ -430,7 +449,7 @@ export const StartupDetailsLayout = () => {
                 <Paper
                   elevation={0}
                   sx={{
-                    p: 4,
+                    p: { xs: 2.5, sm: 4 },
                     borderRadius: "24px",
                     border: "1px solid rgba(18, 35, 51, 0.05)",
                     boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
@@ -851,7 +870,7 @@ export const StartupDetailsLayout = () => {
                   <Paper
                     elevation={0}
                     sx={{
-                      p: 4,
+                      p: { xs: 2.5, sm: 4 },
                       borderRadius: "24px",
                       border: "1px solid rgba(18, 35, 51, 0.05)",
                       boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
@@ -1002,13 +1021,13 @@ export const StartupDetailsLayout = () => {
 
           {/* Right Column - Sidebar School & Metadata details */}
           <Grid size={{ xs: 12, md: 4 }}>
-            <Stack spacing={4}>
+            <Stack spacing={{ xs: 2, sm: 3 }}>
               {/* School Information Card */}
               {school && (
                 <Paper
                   elevation={0}
                   sx={{
-                    p: 4,
+                    p: { xs: 2.5, sm: 4 },
                     borderRadius: "24px",
                     border: "1px solid rgba(18, 35, 51, 0.05)",
                     boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
@@ -1228,7 +1247,7 @@ export const StartupDetailsLayout = () => {
               <Paper
                 elevation={0}
                 sx={{
-                  p: 4,
+                  p: { xs: 2.5, sm: 4 },
                   borderRadius: "24px",
                   border: "1px solid rgba(18, 35, 51, 0.05)",
                   boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",

@@ -172,7 +172,7 @@ export const StartupTable = () => {
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "center",
+          alignItems: { xs: "stretch", sm: "center" },
           mb: 3,
           flexDirection: { xs: "column", sm: "row" },
           gap: 2,
@@ -180,7 +180,7 @@ export const StartupTable = () => {
       >
         <Typography
           sx={{
-            fontSize: "20px",
+            fontSize: { xs: "18px", sm: "20px" },
             fontWeight: 800,
             color: Colors.PRIMARY_DARK,
             letterSpacing: "-0.5px",
@@ -268,7 +268,7 @@ export const StartupTable = () => {
           </Box>
         ) : (
           <>
-            <Table sx={{ minWidth: 700 }}>
+            <Table sx={{ minWidth: 650 }}>
               <TableHead
                 sx={{
                   bgcolor: "rgba(18, 35, 51, 0.015)",
@@ -284,8 +284,8 @@ export const StartupTable = () => {
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
-                      width: 220,
+                      px: { xs: 2, sm: 3 },
+                      width: { xs: 180, sm: 220 },
                     }}
                   >
                     Startup Name
@@ -298,8 +298,8 @@ export const StartupTable = () => {
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
-                      width: 200,
+                      px: { xs: 2, sm: 3 },
+                      width: { xs: 140, sm: 200 },
                     }}
                   >
                     Sector
@@ -312,7 +312,7 @@ export const StartupTable = () => {
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
+                      px: { xs: 2, sm: 3 },
                       width: 120,
                     }}
                   >
@@ -326,8 +326,8 @@ export const StartupTable = () => {
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
-                      width: 220,
+                      px: { xs: 2, sm: 3 },
+                      width: { xs: 180, sm: 220 },
                     }}
                   >
                     School
@@ -340,8 +340,8 @@ export const StartupTable = () => {
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
-                      width: 200,
+                      px: { xs: 2, sm: 3 },
+                      width: { xs: 160, sm: 200 },
                     }}
                   >
                     Founder
@@ -354,7 +354,7 @@ export const StartupTable = () => {
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
+                      px: { xs: 2, sm: 3 },
                       width: 120,
                     }}
                   >
@@ -369,7 +369,7 @@ export const StartupTable = () => {
                       letterSpacing: "0.5px",
                       textTransform: "uppercase",
                       py: 2,
-                      px: 3,
+                      px: { xs: 2, sm: 3 },
                       width: 80,
                     }}
                   >
@@ -398,7 +398,7 @@ export const StartupTable = () => {
                         },
                       }}
                     >
-                      <TableCell sx={{ py: 2, px: 3, width: 220 }}>
+                      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 }, width: { xs: 180, sm: 220 } }}>
                         <Typography
                           noWrap
                           title={formatText(startup.startupName)}
@@ -410,14 +410,14 @@ export const StartupTable = () => {
                             overflow: "hidden",
                             textOverflow: "ellipsis",
                             whiteSpace: "nowrap",
-                            maxWidth: 200,
+                            maxWidth: 180,
                           }}
                         >
                           {formatText(startup.startupName)}
                         </Typography>
                       </TableCell>
 
-                      <TableCell sx={{ py: 2, px: 3, width: 200 }}>
+                      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 }, width: { xs: 140, sm: 200 } }}>
                         <Typography
                           noWrap
                           title={formatText(startup.sector)}
@@ -428,14 +428,14 @@ export const StartupTable = () => {
                             overflow: "hidden",
                             textOverflow: "ellipsis",
                             whiteSpace: "nowrap",
-                            maxWidth: 180,
+                            maxWidth: 160,
                           }}
                         >
                           {formatText(startup.sector) || "--"}
                         </Typography>
                       </TableCell>
 
-                      <TableCell sx={{ py: 2, px: 3, width: 120 }}>
+                      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 }, width: 120 }}>
                         <Chip
                           label={formatText(startup.stage || "IDEA")}
                           size="small"
@@ -449,7 +449,7 @@ export const StartupTable = () => {
                         />
                       </TableCell>
 
-                      <TableCell sx={{ py: 2, px: 3, width: 220 }}>
+                      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 }, width: { xs: 180, sm: 220 } }}>
                         <Typography
                           noWrap
                           title={startup.school?.name || ""}
@@ -460,14 +460,14 @@ export const StartupTable = () => {
                             overflow: "hidden",
                             textOverflow: "ellipsis",
                             whiteSpace: "nowrap",
-                            maxWidth: 200,
+                            maxWidth: 180,
                           }}
                         >
                           {startup.school?.name || "--"}
                         </Typography>
                       </TableCell>
 
-                      <TableCell sx={{ py: 2, px: 3, width: 200 }}>
+                      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 }, width: { xs: 160, sm: 200 } }}>
                         <Typography
                           noWrap
                           title={startup.creator?.fullName || ""}
@@ -478,14 +478,14 @@ export const StartupTable = () => {
                             overflow: "hidden",
                             textOverflow: "ellipsis",
                             whiteSpace: "nowrap",
-                            maxWidth: 180,
+                            maxWidth: 160,
                           }}
                         >
                           {startup.creator?.fullName || "--"}
                         </Typography>
                       </TableCell>
 
-                      <TableCell sx={{ py: 2, px: 3, width: 120 }}>
+                      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 }, width: 120 }}>
                         <Chip
                           label={formatStatus(startup.status || "PENDING")}
                           size="small"
@@ -499,7 +499,7 @@ export const StartupTable = () => {
                         />
                       </TableCell>
 
-                      <TableCell align="right" sx={{ py: 2, px: 3, width: 80 }}>
+                      <TableCell align="right" sx={{ py: 2, px: { xs: 2, sm: 3 }, width: 80 }}>
                         <IconButton
                           size="small"
                           onClick={(e) => {
@@ -527,9 +527,11 @@ export const StartupTable = () => {
             <Box
               sx={{
                 display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
                 justifyContent: "space-between",
                 alignItems: "center",
-                px: 3,
+                gap: { xs: 1.5, sm: 0 },
+                px: { xs: 2, sm: 3 },
                 py: 2.5,
                 borderTop: "1px solid rgba(18, 35, 51, 0.05)",
                 bgcolor: "#FBF9F6",
