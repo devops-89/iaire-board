@@ -66,14 +66,18 @@ interface SidebarProps {
   onMobileClose?: () => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, onMobileClose }) => {
+export const Sidebar: React.FC<SidebarProps> = ({
+  mobileOpen = false,
+  onMobileClose,
+}) => {
   const router = useRouter();
   const pathname = usePathname();
   const { user } = useAuth();
 
   const userName = user?.fullName || user?.name || "CISCE Admin";
   const userRole = user?.role || "SUPER_ADMIN";
-  const userAvatar = user?.profileImageDownloadUrl || user?.profileImage || user?.avatar || "";
+  const userAvatar =
+    user?.profileImageDownloadUrl || user?.profileImage || user?.avatar || "";
 
   const getInitials = (name: string) => {
     if (!name) return "AD";
@@ -170,18 +174,20 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, onMobileCl
                       sx={{
                         borderRadius: "8px",
                         bgcolor: isActive
-                          ? "rgba(255,255,255,0.1)"
+                          ? "rgba(221, 255, 247, 0.12)"
                           : "transparent",
                         borderLeft: isActive
-                          ? `4px solid ${Colors.PRIMARY}`
+                          ? `4px solid ${Colors.ACCENT_MINT}`
                           : "4px solid transparent",
-                        "&:hover": { bgcolor: "rgba(255,255,255,0.05)" },
+                        "&:hover": { bgcolor: "rgba(255,255,255,0.06)" },
                         py: 1,
                       }}
                     >
                       <ListItemIcon
                         sx={{
-                          color: isActive ? Colors.PRIMARY : "rgba(255,255,255,0.6)",
+                          color: isActive
+                            ? Colors.ACCENT_MINT
+                            : Colors.BORDER_STONE,
                           minWidth: 38,
                           "& svg": { fontSize: 20 },
                         }}
@@ -193,10 +199,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, onMobileCl
                           <Typography
                             sx={{
                               fontSize: "13px",
-                              fontWeight: isActive ? 600 : 500,
+                              fontWeight: isActive ? 700 : 500,
                               color: isActive
-                                ? "#fff"
-                                : "rgba(255,255,255,0.7)",
+                                ? Colors.ACCENT_MINT
+                                : Colors.BORDER_STONE,
                               fontFamily: Poppins.style.fontFamily,
                             }}
                           >
@@ -228,12 +234,27 @@ export const Sidebar: React.FC<SidebarProps> = ({ mobileOpen = false, onMobileCl
           "&:hover": { bgcolor: "rgba(255,255,255,0.05)" },
         }}
       >
-        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, flex: 1, minWidth: 0 }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1.5,
+              flex: 1,
+              minWidth: 0,
+            }}
+          >
             <Avatar
               src={userAvatar}
               sx={{
-                bgcolor: Colors.PRIMARY,
+                bgcolor: Colors.ACCENT_MINT,
+                color: Colors.PRIMARY_DARK,
                 width: 32,
                 height: 32,
                 fontSize: "12px",

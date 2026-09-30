@@ -37,12 +37,12 @@ const getStatusColor = (status: string) => {
     s === "PUBLISHED" ||
     s === "PATENT_GRANTED"
   ) {
-    return { bg: "rgba(15, 157, 88, 0.08)", text: "#0F9D58" };
+    return { bg: Colors.ACCENT_MINT, text: Colors.PRIMARY_DARK, isMint: true };
   }
   if (s === "REJECTED" || s === "INACTIVE") {
-    return { bg: "rgba(219, 68, 85, 0.08)", text: "#DB4437" };
+    return { bg: "rgba(219, 68, 85, 0.08)", text: "#DB4437", isMint: false };
   }
-  return { bg: "rgba(244, 180, 0, 0.08)", text: "#F4B400" };
+  return { bg: "#F4F2EE", text: "#735B29", isMint: false };
 };
 
 const formatTitle = (title: string) => {
@@ -174,9 +174,9 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
         component={Paper}
         elevation={0}
         sx={{
-          borderRadius: "24px",
-          boxShadow: "0 10px 40px rgba(18, 35, 51, 0.03)",
-          border: "1px solid rgba(18, 35, 51, 0.05)",
+          borderRadius: "20px",
+          boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
+          border: `1px solid ${Colors.BORDER_STONE}`,
           overflowX: "auto",
           position: "relative",
           bgcolor: "#fff",
@@ -199,7 +199,7 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
           <Box sx={{ py: 8, textAlign: "center" }}>
             <Typography
               sx={{
-                color: "rgba(18, 35, 51, 0.4)",
+                color: "rgba(16, 18, 22, 0.4)",
                 fontSize: "14px",
                 fontWeight: 500,
               }}
@@ -212,8 +212,8 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
             <Table sx={{ minWidth: 650 }}>
               <TableHead
                 sx={{
-                  bgcolor: "rgba(18, 35, 51, 0.015)",
-                  borderBottom: "1px solid rgba(18, 35, 51, 0.08)",
+                  bgcolor: "#FAFBFD",
+                  borderBottom: `1px solid ${Colors.BORDER_STONE}`,
                 }}
               >
                 <TableRow>
@@ -315,13 +315,13 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
                       }
                       sx={{
                         cursor: "pointer",
-                        transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
-                        borderBottom: "1px solid rgba(18, 35, 51, 0.04)",
+                        transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
+                        borderBottom: "1px solid rgba(212, 210, 205, 0.45)",
                         "&:last-child": { borderBottom: "none" },
                         "&:hover": {
-                          bgcolor: "rgba(18, 35, 51, 0.015)",
+                          bgcolor: "rgba(221, 255, 247, 0.14)",
                           transform: "translateY(-1px)",
-                          boxShadow: "0 4px 15px rgba(18, 35, 51, 0.03)",
+                          boxShadow: "0 4px 16px rgba(16, 18, 22, 0.03)",
                         },
                       }}
                     >
@@ -350,7 +350,7 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
                           title={submission.school?.name || ""}
                           sx={{
                             fontSize: "13px",
-                            color: "rgba(18, 35, 51, 0.7)",
+                            color: "rgba(16, 18, 22, 0.7)",
                             fontWeight: 500,
                             overflow: "hidden",
                             textOverflow: "ellipsis",
@@ -368,11 +368,12 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
                             label="Teacher"
                             size="small"
                             sx={{
-                              bgcolor: "rgba(103, 58, 183, 0.08)",
-                              color: "#673AB7",
+                              bgcolor: "#FAFBFD",
+                              color: Colors.PRIMARY_DARK,
                               fontWeight: 700,
                               fontSize: "10px",
                               borderRadius: "6px",
+                              border: `1px solid ${Colors.BORDER_STONE}`,
                             }}
                           />
                         ) : (
@@ -380,8 +381,8 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
                             label="Student"
                             size="small"
                             sx={{
-                              bgcolor: "rgba(0, 150, 136, 0.08)",
-                              color: "#009688",
+                              bgcolor: Colors.ACCENT_MINT,
+                              color: Colors.PRIMARY_DARK,
                               fontWeight: 700,
                               fontSize: "10px",
                               borderRadius: "6px",
@@ -396,7 +397,7 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
                           title={submission.description || ""}
                           sx={{
                             fontSize: "13px",
-                            color: "rgba(18, 35, 51, 0.7)",
+                            color: "rgba(16, 18, 22, 0.7)",
                             fontWeight: 500,
                             lineHeight: 1.4,
                             overflow: "hidden",
@@ -411,14 +412,34 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
 
                       <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 } }}>
                         <Chip
+                          icon={
+                            statusStyle.isMint ? (
+                              <Box
+                                sx={{
+                                  width: 6,
+                                  height: 6,
+                                  borderRadius: "50%",
+                                  bgcolor: "#0D9488",
+                                  mr: -0.5,
+                                }}
+                              />
+                            ) : undefined
+                          }
                           label={formatStatus(submission.status || "PENDING")}
                           size="small"
                           sx={{
                             bgcolor: statusStyle.bg,
                             color: statusStyle.text,
-                            fontWeight: 700,
-                            fontSize: "10px",
-                            borderRadius: "6px",
+                            fontWeight: 800,
+                            fontSize: "11px",
+                            borderRadius: "8px",
+                            border: `1px solid ${
+                              statusStyle.isMint
+                                ? "rgba(13, 148, 136, 0.25)"
+                                : "transparent"
+                            }`,
+                            px: 0.5,
+                            height: "26px",
                           }}
                         />
                       </TableCell>
@@ -431,9 +452,9 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
                             handleOpenMenu(e, submission);
                           }}
                           sx={{
-                            color: "rgba(18, 35, 51, 0.4)",
+                            color: "rgba(16, 18, 22, 0.4)",
                             "&:hover": {
-                              bgcolor: "rgba(18, 35, 51, 0.06)",
+                              bgcolor: Colors.ACCENT_MINT,
                               color: Colors.PRIMARY_DARK,
                             },
                           }}
@@ -456,16 +477,16 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
                 alignItems: "center",
                 gap: { xs: 1.5, sm: 0 },
                 px: { xs: 2, sm: 3 },
-                py: 2.5,
-                borderTop: "1px solid rgba(18, 35, 51, 0.05)",
-                bgcolor: "#FBF9F6",
+                py: 2.2,
+                borderTop: `1px solid ${Colors.BORDER_STONE}`,
+                bgcolor: "#FAFBFD",
               }}
             >
               <Typography
                 sx={{
                   fontSize: "13px",
                   fontWeight: 600,
-                  color: "rgba(18, 35, 51, 0.5)",
+                  color: "rgba(16, 18, 22, 0.55)",
                 }}
               >
                 Showing {totalResearch === 0 ? 0 : indexOfFirst + 1} to{" "}
@@ -478,11 +499,16 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
                   onClick={handlePrevPage}
                   disabled={currentPage === 1}
                   sx={{
-                    border: "1px solid rgba(18, 35, 51, 0.08)",
+                    border: `1px solid ${Colors.BORDER_STONE}`,
                     borderRadius: "8px",
                     bgcolor: "#fff",
                     width: 36,
                     height: 36,
+                    color: Colors.PRIMARY_DARK,
+                    "&:hover:not(:disabled)": {
+                      bgcolor: Colors.ACCENT_MINT,
+                      borderColor: Colors.BORDER_STONE,
+                    },
                   }}
                 >
                   <PrevIcon sx={{ fontSize: 18 }} />
@@ -501,9 +527,20 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
                         borderRadius: "8px",
                         fontSize: "13px",
                         fontWeight: isActive ? 800 : 600,
-                        color: isActive ? "#fff" : Colors.PRIMARY_DARK,
+                        color: isActive ? Colors.ACCENT_MINT : Colors.PRIMARY_DARK,
                         bgcolor: isActive ? Colors.PRIMARY_DARK : "transparent",
+                        border: isActive
+                          ? `1px solid ${Colors.PRIMARY_DARK}`
+                          : `1px solid transparent`,
                         p: 0,
+                        "&:hover": {
+                          bgcolor: isActive
+                            ? Colors.PRIMARY_DARK
+                            : Colors.ACCENT_MINT,
+                          color: isActive
+                            ? Colors.ACCENT_MINT
+                            : Colors.PRIMARY_DARK,
+                        },
                       }}
                     >
                       {pageNum}
@@ -515,11 +552,16 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
                   onClick={handleNextPage}
                   disabled={currentPage === totalPages || totalPages === 0}
                   sx={{
-                    border: "1px solid rgba(18, 35, 51, 0.08)",
+                    border: `1px solid ${Colors.BORDER_STONE}`,
                     borderRadius: "8px",
                     bgcolor: "#fff",
                     width: 36,
                     height: 36,
+                    color: Colors.PRIMARY_DARK,
+                    "&:hover:not(:disabled)": {
+                      bgcolor: Colors.ACCENT_MINT,
+                      borderColor: Colors.BORDER_STONE,
+                    },
                   }}
                 >
                   <NextIcon sx={{ fontSize: 18 }} />
@@ -539,28 +581,27 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
         slotProps={{
           paper: {
             sx: {
-              borderRadius: "10px",
-              boxShadow: "0 6px 20px rgba(18, 35, 51, 0.06)",
-              border: "1px solid rgba(18, 35, 51, 0.06)",
+              borderRadius: "14px",
+              boxShadow: "0 10px 30px rgba(16, 18, 22, 0.08)",
+              border: `1px solid ${Colors.BORDER_STONE}`,
               bgcolor: "#fff",
-              minWidth: "120px",
-              py: 0.3,
+              minWidth: "140px",
+              p: 0.5,
               mt: 0.5,
-              "& .MuiList-root": {
-                py: 0,
-              },
               "& .MuiMenuItem-root": {
                 px: 1.5,
-                py: 0.8,
-                fontSize: "11px",
-                fontWeight: 700,
+                py: 1,
+                borderRadius: "8px",
+                fontSize: "13px",
+                fontWeight: 600,
                 color: Colors.PRIMARY_DARK,
                 display: "flex",
                 alignItems: "center",
-                gap: 1,
-                transition: "all 0.2s ease",
+                gap: 1.2,
+                transition: "all 0.15s ease",
                 "&:hover": {
-                  bgcolor: "rgba(18, 35, 51, 0.04)",
+                  bgcolor: Colors.ACCENT_MINT,
+                  color: Colors.PRIMARY_DARK,
                   "& .MuiListItemIcon-root": {
                     color: Colors.PRIMARY_DARK,
                   },
@@ -575,16 +616,16 @@ export const ResearchTable: React.FC<ResearchTableProps> = ({
         <MenuItem onClick={handleViewDetails}>
           <ListItemIcon
             sx={{
-              color: "#00D1C1",
+              color: Colors.PRIMARY_DARK,
               minWidth: "auto !important",
-              transition: "color 0.2s ease",
+              transition: "color 0.15s ease",
             }}
           >
             <ViewIcon sx={{ fontSize: 18 }} />
           </ListItemIcon>
           <ListItemText
             primary={
-              <Typography sx={{ fontSize: "14px", fontWeight: 500 }}>
+              <Typography sx={{ fontSize: "13px", fontWeight: 700, color: Colors.PRIMARY_DARK }}>
                 View Details
               </Typography>
             }

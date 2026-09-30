@@ -25,8 +25,8 @@ export const AssistantMentorCard = ({
         p: 3,
         borderRadius: "20px",
         bgcolor: "#fff",
-        border: "1px solid rgba(18, 35, 51, 0.05)",
-        boxShadow: "0 10px 30px rgba(18, 35, 51, 0.03)",
+        border: `1px solid ${Colors.BORDER_STONE}`,
+        boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
       }}
     >
       <Typography
@@ -56,8 +56,9 @@ export const AssistantMentorCard = ({
           sx={{
             width: 56,
             height: 56,
-            border: `2px solid ${Colors.PRIMARY}`,
-            boxShadow: "0 4px 12px rgba(32, 103, 106, 0.15)",
+            border: `2px solid ${Colors.BORDER_STONE}`,
+            bgcolor: Colors.ACCENT_MINT,
+            color: Colors.PRIMARY_DARK,
           }}
         >
           {assistantMentor.firstName?.charAt(0) || "A"}
@@ -89,7 +90,7 @@ export const AssistantMentorCard = ({
 
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
         <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-          <EmailIcon sx={{ color: Colors.PRIMARY, fontSize: 20 }} />
+          <EmailIcon sx={{ color: Colors.PRIMARY_DARK, fontSize: 20 }} />
           <Typography
             sx={{
               fontSize: "13px",
@@ -101,7 +102,7 @@ export const AssistantMentorCard = ({
           </Typography>
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-          <PhoneIcon sx={{ color: Colors.PRIMARY, fontSize: 20 }} />
+          <PhoneIcon sx={{ color: Colors.PRIMARY_DARK, fontSize: 20 }} />
           <Typography
             sx={{
               fontSize: "13px",

@@ -34,7 +34,7 @@ export default function InnovationResearchPage() {
       sx={{
         display: "flex",
         minHeight: "100vh",
-        bgcolor: "#FAF7F0",
+        bgcolor: "#fafaf8",
         fontFamily: Poppins.style.fontFamily,
       }}
     >
@@ -49,7 +49,7 @@ export default function InnovationResearchPage() {
           px: { xs: 1.5, sm: 2, md: 3 },
           pb: 3,
           position: "relative",
-          bgcolor: "#FAF7F0",
+          bgcolor: "#fafaf8",
           width: { xs: "100%", lg: "calc(100% - 250px)" },
         }}
       >
@@ -71,10 +71,10 @@ export default function InnovationResearchPage() {
             sx={{
               display: "inline-flex",
               position: "relative",
-              bgcolor: "rgba(18, 35, 51, 0.04)",
+              bgcolor: "#FAFBFD",
               borderRadius: "14px",
               p: "5px",
-              border: "1px solid rgba(18, 35, 51, 0.06)",
+              border: `1px solid ${Colors.BORDER_STONE}`,
               width: { xs: "100%", sm: "320px" },
             }}
           >
@@ -88,7 +88,7 @@ export default function InnovationResearchPage() {
                 height: "calc(100% - 10px)",
                 bgcolor: Colors.PRIMARY_DARK,
                 borderRadius: "10px",
-                boxShadow: "0 4px 12px rgba(18, 35, 51, 0.15)",
+                boxShadow: "0 2px 8px rgba(16, 18, 22, 0.15)",
                 transform:
                   activeTab === "innovations"
                     ? "translateX(0)"
@@ -105,8 +105,8 @@ export default function InnovationResearchPage() {
                 flex: 1,
                 color:
                   activeTab === "innovations"
-                    ? "#fff"
-                    : "rgba(18, 35, 51, 0.6)",
+                    ? Colors.ACCENT_MINT
+                    : "rgba(16, 18, 22, 0.6)",
                 bgcolor: "transparent",
                 fontWeight: 700,
                 borderRadius: "10px",
@@ -118,7 +118,9 @@ export default function InnovationResearchPage() {
                 "&:hover": {
                   bgcolor: "transparent",
                   color:
-                    activeTab === "innovations" ? "#fff" : Colors.PRIMARY_DARK,
+                    activeTab === "innovations"
+                      ? Colors.ACCENT_MINT
+                      : Colors.PRIMARY_DARK,
                 },
               }}
             >
@@ -130,7 +132,9 @@ export default function InnovationResearchPage() {
               sx={{
                 flex: 1,
                 color:
-                  activeTab === "research" ? "#fff" : "rgba(18, 35, 51, 0.6)",
+                  activeTab === "research"
+                    ? Colors.ACCENT_MINT
+                    : "rgba(16, 18, 22, 0.6)",
                 bgcolor: "transparent",
                 fontWeight: 700,
                 borderRadius: "10px",
@@ -142,7 +146,9 @@ export default function InnovationResearchPage() {
                 "&:hover": {
                   bgcolor: "transparent",
                   color:
-                    activeTab === "research" ? "#fff" : Colors.PRIMARY_DARK,
+                    activeTab === "research"
+                      ? Colors.ACCENT_MINT
+                      : Colors.PRIMARY_DARK,
                 },
               }}
             >
@@ -159,18 +165,19 @@ export default function InnovationResearchPage() {
               px: 2,
               py: 0.5,
               borderRadius: "100px",
-              border: "1px solid rgba(18,35,51,0.08)",
+              border: `1px solid ${Colors.BORDER_STONE}`,
               bgcolor: "#fff",
               width: { xs: "100%", sm: "320px" },
               transition: "all 0.3s ease",
+              boxShadow: "0 2px 8px rgba(16, 18, 22, 0.02)",
               "&:focus-within": {
                 borderColor: Colors.PRIMARY_DARK,
-                boxShadow: "0 4px 20px rgba(18, 35, 51, 0.08)",
+                boxShadow: "0 4px 20px rgba(16, 18, 22, 0.08)",
               },
             }}
           >
             <SearchIcon
-              sx={{ color: "rgba(18, 35, 51, 0.4)", fontSize: 20, mr: 1 }}
+              sx={{ color: "rgba(16, 18, 22, 0.45)", fontSize: 20, mr: 1 }}
             />
             <InputBase
               placeholder={
@@ -186,7 +193,7 @@ export default function InnovationResearchPage() {
                 color: Colors.PRIMARY_DARK,
                 width: "100%",
                 "& input::placeholder": {
-                  color: "rgba(18, 35, 51, 0.4)",
+                  color: "rgba(16, 18, 22, 0.4)",
                   opacity: 1,
                 },
               }}

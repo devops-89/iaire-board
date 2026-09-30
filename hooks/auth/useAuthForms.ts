@@ -75,8 +75,6 @@ export const useAuthForms = () => {
         setView("LOGIN");
       }
     };
-
-    // Sync initial state on mount (handles page reload/direct link)
     handlePopState();
 
     window.addEventListener("popstate", handlePopState);
@@ -167,7 +165,6 @@ export const useAuthForms = () => {
     onSubmit: async (values) => {
       setLoading(true);
       try {
-        // If your login API does not support these, we placeholder them or define them in authControllers
         if (authControllers.forgotPassword) {
           await authControllers.forgotPassword(values.email);
         }

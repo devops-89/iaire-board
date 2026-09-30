@@ -34,8 +34,9 @@ export const CreatorProfileHeader = ({
           sx={{
             width: 56,
             height: 56,
-            border: `2px solid ${Colors.PRIMARY}`,
-            boxShadow: "0 4px 12px rgba(32, 103, 106, 0.15)",
+            border: `2px solid ${Colors.BORDER_STONE}`,
+            bgcolor: Colors.ACCENT_MINT,
+            color: Colors.PRIMARY_DARK,
           }}
         >
           {createdByUser.fullName?.charAt(0) || "C"}

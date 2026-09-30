@@ -43,13 +43,13 @@ export const SubmissionsTables = ({
           p: { xs: 2, sm: 3 },
           borderRadius: "20px",
           bgcolor: "#fff",
-          border: "1px solid rgba(18, 35, 51, 0.05)",
-          boxShadow: "0 10px 30px rgba(18, 35, 51, 0.03)",
+          border: `1px solid ${Colors.BORDER_STONE}`,
+          boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
           mb: { xs: 2.5, sm: 4 },
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 3 }}>
-          <StartupIcon sx={{ color: Colors.PRIMARY, fontSize: 24 }} />
+          <StartupIcon sx={{ color: Colors.PRIMARY_DARK, fontSize: 24 }} />
           <Typography
             variant="h6"
             sx={{ fontWeight: 800, color: Colors.PRIMARY_DARK, fontSize: { xs: "16px", sm: "18px" } }}
@@ -73,7 +73,7 @@ export const SubmissionsTables = ({
         ) : (
           <TableContainer
             sx={{
-              border: "1px solid rgba(18, 35, 51, 0.08)",
+              border: `1px solid ${Colors.BORDER_STONE}`,
               borderRadius: "12px",
               overflowX: "auto",
             }}
@@ -251,13 +251,13 @@ export const SubmissionsTables = ({
           p: { xs: 2, sm: 3 },
           borderRadius: "20px",
           bgcolor: "#fff",
-          border: "1px solid rgba(18, 35, 51, 0.05)",
-          boxShadow: "0 10px 30px rgba(18, 35, 51, 0.03)",
+          border: `1px solid ${Colors.BORDER_STONE}`,
+          boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
           mb: { xs: 2.5, sm: 4 },
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 3 }}>
-          <IdeaIcon sx={{ color: Colors.PRIMARY, fontSize: 24 }} />
+          <IdeaIcon sx={{ color: Colors.PRIMARY_DARK, fontSize: 24 }} />
           <Typography
             variant="h6"
             sx={{ fontWeight: 800, color: Colors.PRIMARY_DARK, fontSize: { xs: "16px", sm: "18px" } }}
@@ -281,7 +281,7 @@ export const SubmissionsTables = ({
         ) : (
           <TableContainer
             sx={{
-              border: "1px solid rgba(18, 35, 51, 0.08)",
+              border: `1px solid ${Colors.BORDER_STONE}`,
               borderRadius: "12px",
               overflowX: "auto",
             }}
@@ -429,13 +429,13 @@ export const SubmissionsTables = ({
           p: { xs: 2, sm: 3 },
           borderRadius: "20px",
           bgcolor: "#fff",
-          border: "1px solid rgba(18, 35, 51, 0.05)",
-          boxShadow: "0 10px 30px rgba(18, 35, 51, 0.03)",
+          border: `1px solid ${Colors.BORDER_STONE}`,
+          boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
           mb: { xs: 2.5, sm: 4 },
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 3 }}>
-          <SubjectIcon sx={{ color: Colors.PRIMARY, fontSize: 24 }} />
+          <SubjectIcon sx={{ color: Colors.PRIMARY_DARK, fontSize: 24 }} />
           <Typography
             variant="h6"
             sx={{ fontWeight: 800, color: Colors.PRIMARY_DARK, fontSize: { xs: "16px", sm: "18px" } }}
@@ -459,7 +459,7 @@ export const SubmissionsTables = ({
         ) : (
           <TableContainer
             sx={{
-              border: "1px solid rgba(18, 35, 51, 0.08)",
+              border: `1px solid ${Colors.BORDER_STONE}`,
               borderRadius: "12px",
               overflowX: "auto",
             }}

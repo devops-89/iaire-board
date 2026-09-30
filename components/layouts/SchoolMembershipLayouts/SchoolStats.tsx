@@ -23,13 +23,13 @@ export const SchoolStats = ({
         <Card
           elevation={0}
           sx={{
-            borderRadius: "24px",
-            border: "1px solid rgba(18, 35, 51, 0.05)",
+            borderRadius: "20px",
+            border: `1px solid ${Colors.BORDER_STONE}`,
             bgcolor: "#fff",
-            boxShadow: "0 10px 40px rgba(18, 35, 51, 0.03)",
+            boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
             transition: "all 0.2s ease",
             "&:hover": {
-              boxShadow: "0 16px 40px rgba(18, 35, 51, 0.06)",
+              boxShadow: "0 8px 30px rgba(16, 18, 22, 0.08)",
               transform: "translateY(-2px)",
             },
           }}
@@ -50,9 +50,10 @@ export const SchoolStats = ({
                 justifyContent: "center",
                 width: 48,
                 height: 48,
-                borderRadius: "12px",
-                bgcolor: "rgba(59, 130, 246, 0.08)",
-                color: "#3B82F6",
+                borderRadius: "14px",
+                bgcolor: Colors.ACCENT_MINT,
+                color: Colors.PRIMARY_DARK,
+                border: `1px solid ${Colors.BORDER_STONE}`,
                 flexShrink: 0,
               }}
             >
@@ -90,13 +91,13 @@ export const SchoolStats = ({
         <Card
           elevation={0}
           sx={{
-            borderRadius: "24px",
-            border: "1px solid rgba(18, 35, 51, 0.05)",
+            borderRadius: "20px",
+            border: `1px solid ${Colors.BORDER_STONE}`,
             bgcolor: "#fff",
-            boxShadow: "0 10px 40px rgba(18, 35, 51, 0.03)",
+            boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
             transition: "all 0.2s ease",
             "&:hover": {
-              boxShadow: "0 16px 40px rgba(18, 35, 51, 0.06)",
+              boxShadow: "0 8px 30px rgba(16, 18, 22, 0.08)",
               transform: "translateY(-2px)",
             },
           }}
@@ -117,9 +118,11 @@ export const SchoolStats = ({
                 justifyContent: "center",
                 width: 48,
                 height: 48,
-                borderRadius: "12px",
-                bgcolor: "rgba(16, 185, 129, 0.08)",
-                color: "#10B981",
+                borderRadius: "14px",
+                bgcolor: Colors.ACCENT_MINT,
+                color: Colors.PRIMARY_DARK,
+                border: `1px solid ${Colors.BORDER_STONE}`,
+                flexShrink: 0,
               }}
             >
               <SchoolIcon sx={{ fontSize: 24 }} />

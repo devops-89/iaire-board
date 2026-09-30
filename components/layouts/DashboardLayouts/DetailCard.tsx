@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { Box, Typography, Paper, alpha } from "@mui/material";
+import { Colors } from "@/utils/enum";
 import { 
   School as SchoolIcon, 
   WorkspacePremium as PremiumIcon, 
@@ -32,8 +33,7 @@ export const DetailCard = ({ title, value, subtext, iconKey, color }: any) => {
         p: 2.5,
         borderRadius: "16px",
         bgcolor: "#fff",
-        border: "1px solid rgba(0,0,0,0.08)",
-        borderTop: `4px solid ${color}`,
+        border: `1px solid ${Colors.BORDER_STONE}`,
         height: "100%",
         width: "100%",
         display: "flex",
@@ -44,8 +44,8 @@ export const DetailCard = ({ title, value, subtext, iconKey, color }: any) => {
         transition: "all 0.3s ease",
         "&:hover": {
           transform: "translateY(-4px)",
-          boxShadow: `0 12px 30px ${alpha(color, 0.1)}`,
-          borderColor: alpha(color, 0.3),
+          boxShadow: "0 10px 25px rgba(16, 18, 22, 0.06)",
+          borderColor: Colors.PRIMARY_DARK,
         },
       }}
     >
@@ -62,7 +62,7 @@ export const DetailCard = ({ title, value, subtext, iconKey, color }: any) => {
             sx={{
               fontSize: "14px",
               fontWeight: 700,
-              color: "#122333",
+              color: Colors.PRIMARY_DARK,
               lineHeight: 1.3,
               maxWidth: "75%",
             }}

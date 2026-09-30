@@ -38,14 +38,14 @@ export const SchoolInfoCard: React.FC<SchoolInfoCardProps> = ({
       elevation={0}
       sx={{
         p: { xs: 2.5, sm: 4 },
-        borderRadius: "24px",
-        border: "1px solid rgba(18, 35, 51, 0.05)",
-        boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
+        borderRadius: "20px",
+        border: `1px solid ${Colors.BORDER_STONE}`,
+        boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
         bgcolor: "#fff",
       }}
     >
       <Stack direction="row" spacing={1.5} sx={{ mb: 3, alignItems: "center" }}>
-        <SchoolIcon sx={{ color: "#2196F3", fontSize: 24 }} />
+        <SchoolIcon sx={{ color: Colors.PRIMARY_DARK, fontSize: 24 }} />
         <Typography
           sx={{
             fontSize: "16px",
@@ -73,7 +73,7 @@ export const SchoolInfoCard: React.FC<SchoolInfoCardProps> = ({
             sx={{
               width: 64,
               height: 64,
-              border: "1px solid rgba(18,35,51,0.08)",
+              border: `1px solid ${Colors.BORDER_STONE}`,
               bgcolor: "#fafafa",
               flexShrink: 0,
             }}
@@ -84,8 +84,9 @@ export const SchoolInfoCard: React.FC<SchoolInfoCardProps> = ({
             sx={{
               width: 64,
               height: 64,
-              bgcolor: "rgba(33, 150, 243, 0.1)",
-              color: "#2196F3",
+              bgcolor: Colors.ACCENT_MINT,
+              color: Colors.PRIMARY_DARK,
+              border: `1px solid ${Colors.BORDER_STONE}`,
               flexShrink: 0,
             }}
           >
@@ -107,7 +108,7 @@ export const SchoolInfoCard: React.FC<SchoolInfoCardProps> = ({
           <Typography
             sx={{
               fontSize: "13px",
-              color: "rgba(18, 35, 51, 0.5)",
+              color: "rgba(16, 18, 22, 0.55)",
               fontWeight: 600,
               wordBreak: "break-word",
             }}
@@ -118,7 +119,7 @@ export const SchoolInfoCard: React.FC<SchoolInfoCardProps> = ({
         </Box>
       </Box>
 
-      <Divider sx={{ my: 2, borderColor: "rgba(18,35,51,0.06)" }} />
+      <Divider sx={{ my: 2, borderColor: `rgba(212, 210, 205, 0.45)` }} />
 
       <Stack spacing={2}>
         <Box>

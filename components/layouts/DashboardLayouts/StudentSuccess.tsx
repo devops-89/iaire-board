@@ -15,6 +15,7 @@ import {
   Chip,
   Divider,
 } from "@mui/material";
+import { Colors } from "@/utils/enum";
 import { DashboardData } from "@/assets/generic-data";
 
 const StudentMetricCard = ({ label, value, subtext, color }: any) => (
@@ -22,8 +23,7 @@ const StudentMetricCard = ({ label, value, subtext, color }: any) => (
     sx={{
       p: 2.5,
       borderRadius: "16px",
-      border: "1px solid rgba(0,0,0,0.08)",
-      borderTop: `4px solid ${color}`,
+      border: `1px solid ${Colors.BORDER_STONE}`,
       bgcolor: "#fff",
       height: "100%",
       width: "100%",
@@ -33,29 +33,29 @@ const StudentMetricCard = ({ label, value, subtext, color }: any) => (
       transition: "all 0.3s ease",
       "&:hover": {
         transform: "translateY(-4px)",
-        boxShadow: `0 12px 30px ${color}15`,
-        borderColor: `${color}40`,
+        boxShadow: "0 10px 25px rgba(16, 18, 22, 0.06)",
+        borderColor: Colors.PRIMARY_DARK,
       },
     }}
   >
     <Box>
       <Typography
         sx={{
-          fontSize: "14px",
+          fontSize: "13px",
           fontWeight: 700,
-          color: "#122333",
+          color: Colors.PRIMARY_DARK,
           lineHeight: 1.3,
-          mb: 2,
+          mb: 1.5,
         }}
       >
         {label}
       </Typography>
       <Typography
         sx={{
-          fontSize: "32px",
+          fontSize: "30px",
           fontWeight: 800,
-          color: color,
-          letterSpacing: "-1px",
+          color: Colors.PRIMARY_DARK,
+          letterSpacing: "-0.5px",
           lineHeight: 1,
           mb: 1,
         }}
@@ -63,7 +63,9 @@ const StudentMetricCard = ({ label, value, subtext, color }: any) => (
         {value}
       </Typography>
     </Box>
-    <Typography sx={{ fontSize: "12px", fontWeight: 600, color: "rgba(0,0,0,0.6)" }}>
+    <Typography
+      sx={{ fontSize: "12px", fontWeight: 600, color: "rgba(16, 18, 22, 0.6)" }}
+    >
       {subtext}
     </Typography>
   </Paper>
@@ -73,18 +75,22 @@ const CoverageCard = ({ label, pct, color }: any) => (
   <Paper
     sx={{
       p: 2,
-      borderRadius: "16px",
-      border: "1px solid rgba(0,0,0,0.05)",
+      borderRadius: "14px",
+      border: `1px solid ${Colors.BORDER_STONE}`,
       mb: 1.5,
       bgcolor: "#fff",
-      boxShadow: "0 4px 15px rgba(0,0,0,0.01)",
+      boxShadow: "0 2px 8px rgba(16, 18, 22, 0.02)",
     }}
   >
     <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
-      <Typography sx={{ fontSize: "13px", fontWeight: 700, color: "#122333" }}>
+      <Typography
+        sx={{ fontSize: "13px", fontWeight: 700, color: Colors.PRIMARY_DARK }}
+      >
         {label}
       </Typography>
-      <Typography sx={{ fontSize: "13px", fontWeight: 800, color: color }}>
+      <Typography
+        sx={{ fontSize: "13px", fontWeight: 800, color: Colors.PRIMARY_DARK }}
+      >
         {pct}%
       </Typography>
     </Box>
@@ -94,8 +100,11 @@ const CoverageCard = ({ label, pct, color }: any) => (
       sx={{
         height: 6,
         borderRadius: 3,
-        bgcolor: "#F5F1E8",
-        "& .MuiLinearProgress-bar": { bgcolor: color, borderRadius: 3 },
+        bgcolor: "rgba(212, 210, 205, 0.4)",
+        "& .MuiLinearProgress-bar": {
+          bgcolor: color || Colors.PRIMARY_DARK,
+          borderRadius: 3,
+        },
       }}
     />
   </Paper>
@@ -136,10 +145,10 @@ export const StudentSuccess = () => {
           <Paper
             sx={{
               p: 3,
-              borderRadius: "24px",
-              border: "1px solid rgba(0,0,0,0.08)",
+              borderRadius: "20px",
+              border: `1px solid ${Colors.BORDER_STONE}`,
               bgcolor: "#fff",
-              boxShadow: "0 5px 20px rgba(0,0,0,0.02)",
+              boxShadow: "0 4px 16px rgba(16, 18, 22, 0.04)",
               height: "100%",
             }}
           >
@@ -148,7 +157,7 @@ export const StudentSuccess = () => {
                 fontSize: "15px",
                 fontWeight: 800,
                 mb: 3,
-                color: "#122333",
+                color: Colors.PRIMARY_DARK,
               }}
             >
               Student Training Coverage by Category
@@ -163,10 +172,10 @@ export const StudentSuccess = () => {
           <Paper
             sx={{
               p: 3,
-              borderRadius: "24px",
-              border: "1px solid rgba(0,0,0,0.08)",
+              borderRadius: "20px",
+              border: `1px solid ${Colors.BORDER_STONE}`,
               bgcolor: "#fff",
-              boxShadow: "0 5px 20px rgba(0,0,0,0.02)",
+              boxShadow: "0 4px 16px rgba(16, 18, 22, 0.04)",
               height: "100%",
             }}
           >
@@ -175,7 +184,7 @@ export const StudentSuccess = () => {
                 fontSize: "15px",
                 fontWeight: 800,
                 mb: 3,
-                color: "#122333",
+                color: Colors.PRIMARY_DARK,
               }}
             >
               Student Startup Portfolio Summary
@@ -189,7 +198,7 @@ export const StudentSuccess = () => {
                       sx={{
                         fontSize: "10px",
                         fontWeight: 700,
-                        color: "#122333",
+                        color: Colors.PRIMARY_DARK,
                       }}
                     >
                       CATEGORY
@@ -199,7 +208,7 @@ export const StudentSuccess = () => {
                       sx={{
                         fontSize: "10px",
                         fontWeight: 700,
-                        color: "#122333",
+                        color: Colors.PRIMARY_DARK,
                       }}
                     >
                       COUNT
@@ -209,7 +218,7 @@ export const StudentSuccess = () => {
                       sx={{
                         fontSize: "10px",
                         fontWeight: 700,
-                        color: "#122333",
+                        color: Colors.PRIMARY_DARK,
                       }}
                     >
                       SHARE
@@ -219,7 +228,7 @@ export const StudentSuccess = () => {
                       sx={{
                         fontSize: "10px",
                         fontWeight: 700,
-                        color: "#122333",
+                        color: Colors.PRIMARY_DARK,
                       }}
                     >
                       STATUS
@@ -246,7 +255,11 @@ export const StudentSuccess = () => {
                       </TableCell>
                       <TableCell
                         align="center"
-                        sx={{ fontSize: "12px", fontWeight: 600, color: "#122333" }}
+                        sx={{
+                          fontSize: "12px",
+                          fontWeight: 600,
+                          color: "#122333",
+                        }}
                       >
                         {row.share}
                       </TableCell>
@@ -266,13 +279,34 @@ export const StudentSuccess = () => {
                     </TableRow>
                   ))}
                   <TableRow>
-                    <TableCell sx={{ fontSize: "13px", fontWeight: 800, py: 1.5, color: "#122333" }}>
+                    <TableCell
+                      sx={{
+                        fontSize: "13px",
+                        fontWeight: 800,
+                        py: 1.5,
+                        color: Colors.PRIMARY_DARK,
+                      }}
+                    >
                       Total Startups
                     </TableCell>
-                    <TableCell align="center" sx={{ fontSize: "14px", fontWeight: 900, color: "#122333" }}>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        fontSize: "14px",
+                        fontWeight: 900,
+                        color: Colors.PRIMARY_DARK,
+                      }}
+                    >
                       842
                     </TableCell>
-                    <TableCell align="center" sx={{ fontSize: "13px", fontWeight: 800, color: "#122333" }}>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        fontSize: "13px",
+                        fontWeight: 800,
+                        color: Colors.PRIMARY_DARK,
+                      }}
+                    >
                       100%
                     </TableCell>
                     <TableCell align="center"></TableCell>
@@ -290,7 +324,7 @@ export const StudentSuccess = () => {
                     sx={{
                       fontSize: "10px",
                       fontWeight: 700,
-                      color: "#122333",
+                      color: Colors.PRIMARY_DARK,
                     }}
                   >
                     IP CATEGORY
@@ -300,7 +334,7 @@ export const StudentSuccess = () => {
                     sx={{
                       fontSize: "10px",
                       fontWeight: 700,
-                      color: "#122333",
+                      color: Colors.PRIMARY_DARK,
                     }}
                   >
                     SUBMITTED / PENDING
@@ -310,7 +344,7 @@ export const StudentSuccess = () => {
                     sx={{
                       fontSize: "10px",
                       fontWeight: 700,
-                      color: "#122333",
+                      color: Colors.PRIMARY_DARK,
                     }}
                   >
                     PUBLISHED / GRANTED
@@ -320,7 +354,7 @@ export const StudentSuccess = () => {
                     sx={{
                       fontSize: "10px",
                       fontWeight: 700,
-                      color: "#122333",
+                      color: Colors.PRIMARY_DARK,
                     }}
                   >
                     TOTAL
@@ -329,9 +363,17 @@ export const StudentSuccess = () => {
               </TableHead>
               <TableBody>
                 {ipSummary.map((row: any) => (
-                  <TableRow key={row.cat} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                  <TableRow
+                    key={row.cat}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
                     <TableCell
-                      sx={{ fontSize: "12px", fontWeight: 700, py: 1.5 }}
+                      sx={{
+                        fontSize: "12px",
+                        fontWeight: 700,
+                        py: 1.5,
+                        color: Colors.PRIMARY_DARK,
+                      }}
                     >
                       {row.cat}
                     </TableCell>
@@ -360,7 +402,7 @@ export const StudentSuccess = () => {
                       sx={{
                         fontSize: "14px",
                         fontWeight: 900,
-                        color: "#122333",
+                        color: Colors.PRIMARY_DARK,
                       }}
                     >
                       {row.total}

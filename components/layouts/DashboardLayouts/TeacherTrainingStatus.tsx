@@ -8,6 +8,7 @@ import {
   Grid,
   Chip,
 } from "@mui/material";
+import { Colors } from "@/utils/enum";
 import { 
   Lightbulb as InnovationIcon, 
   Description as ResearchIcon, 
@@ -31,22 +32,22 @@ const MiniStat = ({ label, value, pct, iconKey, color }: any) => {
     <Paper
       sx={{
         p: 2,
-        borderRadius: "20px",
-        border: "1px solid rgba(0,0,0,0.05)",
+        borderRadius: "16px",
+        border: `1px solid ${Colors.BORDER_STONE}`,
         mb: 2,
         display: "flex",
         alignItems: "center",
         gap: 2,
         bgcolor: "#fff",
-        boxShadow: "0 2px 10px rgba(0,0,0,0.02)",
+        boxShadow: "0 2px 10px rgba(16, 18, 22, 0.02)",
       }}
     >
       <Box
         sx={{
-          bgcolor: `${color}10`,
+          bgcolor: Colors.ACCENT_MINT,
           p: 1.2,
           borderRadius: "12px",
-          color: color,
+          color: Colors.PRIMARY_DARK,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -57,17 +58,16 @@ const MiniStat = ({ label, value, pct, iconKey, color }: any) => {
       <Box>
         <Typography
           sx={{
-            fontSize: "11px",
+            fontSize: "12px",
             fontWeight: 700,
-            color: "#122333",
-            opacity: 0.8,
+            color: Colors.PRIMARY_DARK,
           }}
         >
           {label}
         </Typography>
 
         <Typography
-          sx={{ fontSize: "10px", fontWeight: 500, color: "rgba(0,0,0,0.5)" }}
+          sx={{ fontSize: "11px", fontWeight: 600, color: "rgba(16, 18, 22, 0.6)" }}
         >
           {pct}
         </Typography>
@@ -86,7 +86,7 @@ const ProgressBar = ({ label, value, color, max }: any) => (
         mb: 0.8,
       }}
     >
-      <Typography sx={{ fontSize: "12px", fontWeight: 700, color: "#122333" }}>
+      <Typography sx={{ fontSize: "12px", fontWeight: 700, color: Colors.PRIMARY_DARK }}>
         {label}
       </Typography>
     </Box>
@@ -94,10 +94,10 @@ const ProgressBar = ({ label, value, color, max }: any) => (
       variant="determinate"
       value={(value / max) * 100}
       sx={{
-        height: 10,
-        borderRadius: 5,
-        bgcolor: "#F5F1E8",
-        "& .MuiLinearProgress-bar": { bgcolor: color, borderRadius: 5 },
+        height: 8,
+        borderRadius: 4,
+        bgcolor: "rgba(212, 210, 205, 0.4)",
+        "& .MuiLinearProgress-bar": { bgcolor: color || Colors.PRIMARY_DARK, borderRadius: 4 },
       }}
     />
   </Box>
@@ -119,14 +119,14 @@ export const TeacherTrainingStatus = () => {
         <Paper
           sx={{
             p: 2.5,
-            borderRadius: "24px",
-            border: "1px solid rgba(0,0,0,0.05)",
+            borderRadius: "20px",
+            border: `1px solid ${Colors.BORDER_STONE}`,
             bgcolor: "#fff",
-            boxShadow: "0 4px 20px rgba(0,0,0,0.02)",
+            boxShadow: "0 4px 16px rgba(16, 18, 22, 0.04)",
           }}
         >
           <Typography
-            sx={{ fontSize: "14px", fontWeight: 800, mb: 2, color: "#122333" }}
+            sx={{ fontSize: "15px", fontWeight: 800, mb: 2, color: Colors.PRIMARY_DARK }}
           >
             Teacher Status Breakdown
           </Typography>

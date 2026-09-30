@@ -57,13 +57,13 @@ export const TeacherTableRow: React.FC<TeacherTableRowProps> = ({
       onClick={() => onRowClick?.(teacher)}
       sx={{
         cursor: "pointer",
-        transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
-        borderBottom: "1px solid rgba(18, 35, 51, 0.04)",
+        transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
+        borderBottom: `1px solid rgba(212, 210, 205, 0.45)`,
         "&:last-child": { borderBottom: "none" },
         "&:hover": {
-          bgcolor: "rgba(18, 35, 51, 0.015)",
+          bgcolor: "rgba(221, 255, 247, 0.14)",
           transform: "translateY(-1px)",
-          boxShadow: "0 4px 15px rgba(18, 35, 51, 0.03)",
+          boxShadow: "0 4px 16px rgba(16, 18, 22, 0.03)",
         },
       }}
     >
@@ -73,16 +73,16 @@ export const TeacherTableRow: React.FC<TeacherTableRowProps> = ({
           component="span"
           sx={{
             fontFamily: "'Courier New', Courier, monospace",
-            fontWeight: 700,
+            fontWeight: 800,
             fontSize: "12px",
             color: Colors.PRIMARY_DARK,
-            bgcolor: "rgba(18, 35, 51, 0.05)",
-            border: "1px solid rgba(18, 35, 51, 0.08)",
+            bgcolor: "#FAFBFD",
+            border: `1px solid ${Colors.BORDER_STONE}`,
             px: 1.2,
-            py: 0.6,
-            borderRadius: "6px",
+            py: 0.5,
+            borderRadius: "8px",
             display: "inline-block",
-            letterSpacing: "0.2px",
+            letterSpacing: "0.3px",
           }}
         >
           {displaySchoolId}
@@ -91,18 +91,18 @@ export const TeacherTableRow: React.FC<TeacherTableRowProps> = ({
 
       {/* Teacher Name & Avatar */}
       <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 } }}>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1.8 }}>
           <Avatar
             sx={{
-              bgcolor: "rgba(18, 35, 51, 0.05)",
+              bgcolor: Colors.ACCENT_MINT,
               color: Colors.PRIMARY_DARK,
-              fontSize: "14px",
+              fontSize: "15px",
               fontWeight: 800,
-              width: 44,
-              height: 44,
-              borderRadius: "14px",
-              border: "1px solid rgba(18, 35, 51, 0.06)",
-              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.02)",
+              width: 42,
+              height: 42,
+              borderRadius: "12px",
+              border: `1px solid rgba(16, 18, 22, 0.08)`,
+              boxShadow: "0 2px 8px rgba(16, 18, 22, 0.04)",
             }}
           >
             {displayName.charAt(0).toUpperCase()}
@@ -147,22 +147,22 @@ export const TeacherTableRow: React.FC<TeacherTableRowProps> = ({
                   width: 6,
                   height: 6,
                   borderRadius: "50%",
-                  bgcolor: "#10B981",
+                  bgcolor: "#0D9488",
                   ml: 1,
-                  boxShadow: "0 0 8px #10B981",
+                  boxShadow: "0 0 6px rgba(13, 148, 136, 0.8)",
                   animation: "pulse 2s infinite",
                   "@keyframes pulse": {
                     "0%": {
                       transform: "scale(0.95)",
-                      boxShadow: "0 0 0 0 rgba(16, 185, 129, 0.7)",
+                      boxShadow: "0 0 0 0 rgba(13, 148, 136, 0.7)",
                     },
                     "70%": {
                       transform: "scale(1)",
-                      boxShadow: "0 0 0 6px rgba(16, 185, 129, 0)",
+                      boxShadow: "0 0 0 5px rgba(13, 148, 136, 0)",
                     },
                     "100%": {
                       transform: "scale(0.95)",
-                      boxShadow: "0 0 0 0 rgba(16, 185, 129, 0)",
+                      boxShadow: "0 0 0 0 rgba(13, 148, 136, 0)",
                     },
                   },
                 }}
@@ -171,16 +171,16 @@ export const TeacherTableRow: React.FC<TeacherTableRowProps> = ({
           }
           sx={{
             bgcolor: isTeacherActive
-              ? "rgba(16, 185, 129, 0.08)"
-              : "rgba(107, 114, 128, 0.08)",
-            color: isTeacherActive ? "#10B981" : "#6B7280",
+              ? Colors.ACCENT_MINT
+              : "rgba(239, 68, 68, 0.08)",
+            color: isTeacherActive ? Colors.PRIMARY_DARK : "#EF4444",
             fontWeight: 800,
             fontSize: "11px",
             borderRadius: "8px",
             border: `1px solid ${
               isTeacherActive
-                ? "rgba(16, 185, 129, 0.15)"
-                : "rgba(107, 114, 128, 0.15)"
+                ? "rgba(13, 148, 136, 0.25)"
+                : "rgba(239, 68, 68, 0.2)"
             }`,
             pl: isTeacherActive ? 0.5 : 0,
             "& .MuiChip-icon": {
@@ -203,9 +203,13 @@ export const TeacherTableRow: React.FC<TeacherTableRowProps> = ({
             onOpenMenu(e, teacher);
           }}
           sx={{
-            color: "rgba(18, 35, 51, 0.4)",
+            color: Colors.PRIMARY_DARK,
+            opacity: 0.6,
+            borderRadius: "8px",
+            transition: "all 0.2s ease",
             "&:hover": {
-              bgcolor: "rgba(18, 35, 51, 0.06)",
+              bgcolor: Colors.ACCENT_MINT,
+              opacity: 1,
               color: Colors.PRIMARY_DARK,
             },
           }}

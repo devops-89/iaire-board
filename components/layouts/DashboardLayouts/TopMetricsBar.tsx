@@ -19,7 +19,6 @@ import {
 } from "@mui/icons-material";
 import { schoolControllers } from "@/api/school";
 import { Colors } from "@/utils/enum";
-import { DashboardVisualCharts } from "./DashboardVisualCharts";
 
 const defaultStats = {
   totalSchools: 0,
@@ -63,9 +62,8 @@ const GroupedMetricCard = ({
           p: { xs: 2, sm: 2.8 },
           borderRadius: "20px",
           bgcolor: "#FFFFFF",
-          border: "1px solid rgba(32, 103, 106, 0.12)",
-          borderTop: `4px solid ${Colors.PRIMARY}`,
-          boxShadow: "0 6px 20px rgba(18, 35, 51, 0.03)",
+          border: `1px solid ${Colors.BORDER_STONE}`,
+          boxShadow: "0 4px 16px rgba(16, 18, 22, 0.04)",
           transition: "all 0.25s ease-in-out",
           display: "flex",
           flexDirection: "column",
@@ -74,8 +72,8 @@ const GroupedMetricCard = ({
           minHeight: { xs: "150px", sm: "170px" },
           "&:hover": {
             transform: "translateY(-4px)",
-            boxShadow: `0 14px 32px ${alpha(Colors.PRIMARY, 0.12)}`,
-            borderColor: alpha(Colors.PRIMARY, 0.3),
+            boxShadow: "0 12px 28px rgba(16, 18, 22, 0.08)",
+            borderColor: Colors.PRIMARY_DARK,
           },
         }}
       >
@@ -92,7 +90,7 @@ const GroupedMetricCard = ({
               sx={{
                 fontSize: { xs: "11px", sm: "12px" },
                 fontWeight: 700,
-                color: "rgba(18, 35, 51, 0.55)",
+                color: "rgba(16, 18, 22, 0.6)",
                 textTransform: "uppercase",
                 letterSpacing: "0.6px",
               }}
@@ -101,8 +99,8 @@ const GroupedMetricCard = ({
             </Typography>
             <Box
               sx={{
-                bgcolor: `${Colors.PRIMARY}10`,
-                color: Colors.PRIMARY,
+                bgcolor: Colors.ACCENT_MINT,
+                color: Colors.PRIMARY_DARK,
                 p: { xs: 0.9, sm: 1.1 },
                 borderRadius: "12px",
                 display: "flex",
@@ -121,7 +119,7 @@ const GroupedMetricCard = ({
               sx={{
                 fontSize: { xs: "28px", sm: "36px" },
                 fontWeight: 800,
-                color: "#122333",
+                color: Colors.PRIMARY_DARK,
                 lineHeight: 1,
                 letterSpacing: "-1px",
                 mb: 2,
@@ -164,7 +162,7 @@ const GroupedMetricCard = ({
                   }}
                 >
                   Active:{" "}
-                  <span style={{ color: "#122333", fontWeight: 700 }}>
+                  <span style={{ color: Colors.PRIMARY_DARK, fontWeight: 700 }}>
                     {formatValue(activeValue)}
                   </span>
                 </Typography>
@@ -174,7 +172,7 @@ const GroupedMetricCard = ({
                 sx={{
                   width: "1px",
                   height: 12,
-                  bgcolor: "rgba(18, 35, 51, 0.12)",
+                  bgcolor: "rgba(16, 18, 22, 0.12)",
                   display: { xs: "none", sm: "block" },
                 }}
               />
@@ -191,12 +189,12 @@ const GroupedMetricCard = ({
                 <Typography
                   sx={{
                     fontSize: "12px",
-                    color: "rgba(18, 35, 51, 0.65)",
+                    color: "rgba(16, 18, 22, 0.65)",
                     fontWeight: 600,
                   }}
                 >
                   Inactive:{" "}
-                  <span style={{ color: "#122333", fontWeight: 700 }}>
+                  <span style={{ color: Colors.PRIMARY_DARK, fontWeight: 700 }}>
                     {formatValue(inactiveValue)}
                   </span>
                 </Typography>
@@ -229,9 +227,8 @@ const SingleMetricCard = ({
           p: { xs: 2, sm: 2.5 },
           borderRadius: "20px",
           bgcolor: "#FFFFFF",
-          border: "1px solid rgba(32, 103, 106, 0.12)",
-          borderTop: `4px solid ${Colors.PRIMARY}`,
-          boxShadow: "0 6px 20px rgba(18, 35, 51, 0.03)",
+          border: `1px solid ${Colors.BORDER_STONE}`,
+          boxShadow: "0 4px 16px rgba(16, 18, 22, 0.04)",
           transition: "all 0.25s ease-in-out",
           display: "flex",
           flexDirection: "column",
@@ -240,8 +237,8 @@ const SingleMetricCard = ({
           minHeight: { xs: "110px", sm: "125px" },
           "&:hover": {
             transform: "translateY(-4px)",
-            boxShadow: `0 14px 32px ${alpha(Colors.PRIMARY, 0.12)}`,
-            borderColor: alpha(Colors.PRIMARY, 0.3),
+            boxShadow: "0 12px 28px rgba(16, 18, 22, 0.08)",
+            borderColor: Colors.PRIMARY_DARK,
           },
         }}
       >
@@ -257,7 +254,7 @@ const SingleMetricCard = ({
             sx={{
               fontSize: { xs: "11px", sm: "12px" },
               fontWeight: 700,
-              color: "rgba(18, 35, 51, 0.55)",
+              color: "rgba(16, 18, 22, 0.6)",
               textTransform: "uppercase",
               letterSpacing: "0.5px",
               maxWidth: "75%",
@@ -268,8 +265,8 @@ const SingleMetricCard = ({
           </Typography>
           <Box
             sx={{
-              bgcolor: `${Colors.PRIMARY}10`,
-              color: Colors.PRIMARY,
+              bgcolor: Colors.ACCENT_MINT,
+              color: Colors.PRIMARY_DARK,
               p: { xs: 0.8, sm: 1 },
               borderRadius: "10px",
               display: "flex",
@@ -288,7 +285,7 @@ const SingleMetricCard = ({
             sx={{
               fontSize: { xs: "26px", sm: "32px" },
               fontWeight: 800,
-              color: "#122333",
+              color: Colors.PRIMARY_DARK,
               lineHeight: 1.1,
               letterSpacing: "-1px",
             }}
@@ -366,7 +363,7 @@ export const TopMetricsBar = () => {
       </Grid>
 
       {/* Row 2: 4 Standalone Cards */}
-      <Grid container spacing={3}>
+      <Grid container spacing={3} sx={{ mb: 4 }}>
         <SingleMetricCard
           title="Pending Innovations"
           value={data.innovationsPendingCount}
@@ -392,11 +389,6 @@ export const TopMetricsBar = () => {
           loading={loading}
         />
       </Grid>
-
-      {/* Visual Analytics Charts */}
-      <Box sx={{ mt: 5 }}>
-        <DashboardVisualCharts data={data} />
-      </Box>
     </Box>
   );
 };

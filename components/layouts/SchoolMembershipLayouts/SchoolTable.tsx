@@ -149,10 +149,11 @@ export const SchoolTable = () => {
       {/* Main Table Container Card */}
       <TableContainer
         component={Paper}
+        elevation={0}
         sx={{
-          borderRadius: "24px",
-          boxShadow: "0 10px 40px rgba(18, 35, 51, 0.03)",
-          border: "1px solid rgba(18, 35, 51, 0.05)",
+          borderRadius: "20px",
+          boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
+          border: `1px solid ${Colors.BORDER_STONE}`,
           overflowX: "auto",
           position: "relative",
           bgcolor: "#fff",
@@ -176,8 +177,8 @@ export const SchoolTable = () => {
             <Table sx={{ minWidth: 700 }}>
               <TableHead
                 sx={{
-                  bgcolor: "rgba(18, 35, 51, 0.015)",
-                  borderBottom: "1px solid rgba(18, 35, 51, 0.08)",
+                  bgcolor: "#FAFBFD",
+                  borderBottom: `1px solid ${Colors.BORDER_STONE}`,
                 }}
               >
                 <TableRow>
@@ -315,28 +316,28 @@ export const SchoolTable = () => {
         slotProps={{
           paper: {
             sx: {
-              borderRadius: "10px",
-              boxShadow: "0 6px 20px rgba(18, 35, 51, 0.06)",
-              border: "1px solid rgba(18, 35, 51, 0.06)",
+              borderRadius: "14px",
+              boxShadow: "0 8px 24px rgba(16, 18, 22, 0.08)",
+              border: `1px solid ${Colors.BORDER_STONE}`,
               bgcolor: "#fff",
-              minWidth: "120px",
-              py: 0.3,
+              minWidth: "135px",
+              py: 0.5,
               mt: 0.5,
               "& .MuiList-root": {
                 py: 0,
               },
               "& .MuiMenuItem-root": {
-                px: 1.5,
-                py: 0.8,
-                fontSize: "11px",
+                px: 1.8,
+                py: 1,
+                fontSize: "12px",
                 fontWeight: 700,
                 color: Colors.PRIMARY_DARK,
                 display: "flex",
                 alignItems: "center",
-                gap: 1,
+                gap: 1.2,
                 transition: "all 0.2s ease",
                 "&:hover": {
-                  bgcolor: "rgba(18, 35, 51, 0.04)",
+                  bgcolor: "rgba(221, 255, 247, 0.4)",
                   "& .MuiListItemIcon-root": {
                     color: Colors.PRIMARY_DARK,
                   },
@@ -351,7 +352,7 @@ export const SchoolTable = () => {
         <MenuItem onClick={handleViewDetails}>
           <ListItemIcon
             sx={{
-              color: "#00D1C1",
+              color: Colors.PRIMARY_DARK,
               minWidth: "auto !important",
               transition: "color 0.2s ease",
             }}
@@ -360,7 +361,7 @@ export const SchoolTable = () => {
           </ListItemIcon>
           <ListItemText
             primary={
-              <Typography sx={{ fontSize: "14px", fontWeight: 500 }}>
+              <Typography sx={{ fontSize: "13px", fontWeight: 700, color: Colors.PRIMARY_DARK }}>
                 View Details
               </Typography>
             }

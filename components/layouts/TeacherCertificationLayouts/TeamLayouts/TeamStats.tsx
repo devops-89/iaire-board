@@ -35,8 +35,8 @@ export const TeamStats = ({
             p: { xs: 2, sm: 2.5 },
             borderRadius: "16px",
             bgcolor: "#fff",
-            border: "1px solid rgba(18, 35, 51, 0.05)",
-            boxShadow: "0 4px 20px rgba(18, 35, 51, 0.02)",
+            border: `1px solid ${Colors.BORDER_STONE}`,
+            boxShadow: "0 4px 16px rgba(16, 18, 22, 0.03)",
             display: "flex",
             alignItems: "center",
             gap: { xs: 1.5, sm: 2 },
@@ -44,10 +44,11 @@ export const TeamStats = ({
         >
           <Avatar
             sx={{
-              bgcolor: "rgba(0, 209, 193, 0.1)",
-              color: "#00D1C1",
+              bgcolor: Colors.ACCENT_MINT,
+              color: Colors.PRIMARY_DARK,
               width: { xs: 38, sm: 44 },
               height: { xs: 38, sm: 44 },
+              borderRadius: "12px",
               flexShrink: 0,
             }}
           >
@@ -58,7 +59,7 @@ export const TeamStats = ({
               sx={{
                 fontSize: "11px",
                 fontWeight: 700,
-                color: "rgba(18, 35, 51, 0.4)",
+                color: "rgba(16, 18, 22, 0.5)",
                 textTransform: "uppercase",
                 wordBreak: "break-word",
               }}
@@ -86,8 +87,8 @@ export const TeamStats = ({
             p: { xs: 2, sm: 2.5 },
             borderRadius: "16px",
             bgcolor: "#fff",
-            border: "1px solid rgba(18, 35, 51, 0.05)",
-            boxShadow: "0 4px 20px rgba(18, 35, 51, 0.02)",
+            border: `1px solid ${Colors.BORDER_STONE}`,
+            boxShadow: "0 4px 16px rgba(16, 18, 22, 0.03)",
             display: "flex",
             alignItems: "center",
             gap: { xs: 1.5, sm: 2 },
@@ -95,10 +96,11 @@ export const TeamStats = ({
         >
           <Avatar
             sx={{
-              bgcolor: "rgba(33, 150, 243, 0.1)",
-              color: "#2196F3",
+              bgcolor: Colors.ACCENT_MINT,
+              color: Colors.PRIMARY_DARK,
               width: { xs: 38, sm: 44 },
               height: { xs: 38, sm: 44 },
+              borderRadius: "12px",
               flexShrink: 0,
             }}
           >
@@ -109,7 +111,7 @@ export const TeamStats = ({
               sx={{
                 fontSize: "11px",
                 fontWeight: 700,
-                color: "rgba(18, 35, 51, 0.4)",
+                color: "rgba(16, 18, 22, 0.5)",
                 textTransform: "uppercase",
                 wordBreak: "break-word",
               }}
@@ -137,8 +139,8 @@ export const TeamStats = ({
             p: { xs: 2, sm: 2.5 },
             borderRadius: "16px",
             bgcolor: "#fff",
-            border: "1px solid rgba(18, 35, 51, 0.05)",
-            boxShadow: "0 4px 20px rgba(18, 35, 51, 0.02)",
+            border: `1px solid ${Colors.BORDER_STONE}`,
+            boxShadow: "0 4px 16px rgba(16, 18, 22, 0.03)",
             display: "flex",
             alignItems: "center",
             gap: { xs: 1.5, sm: 2 },
@@ -146,10 +148,11 @@ export const TeamStats = ({
         >
           <Avatar
             sx={{
-              bgcolor: "rgba(156, 39, 176, 0.1)",
-              color: "#9C27B0",
+              bgcolor: Colors.ACCENT_MINT,
+              color: Colors.PRIMARY_DARK,
               width: { xs: 38, sm: 44 },
               height: { xs: 38, sm: 44 },
+              borderRadius: "12px",
               flexShrink: 0,
             }}
           >
@@ -160,7 +163,7 @@ export const TeamStats = ({
               sx={{
                 fontSize: "11px",
                 fontWeight: 700,
-                color: "rgba(18, 35, 51, 0.4)",
+                color: "rgba(16, 18, 22, 0.5)",
                 textTransform: "uppercase",
                 wordBreak: "break-word",
               }}
@@ -188,8 +191,8 @@ export const TeamStats = ({
             p: { xs: 2, sm: 2.5 },
             borderRadius: "16px",
             bgcolor: "#fff",
-            border: "1px solid rgba(18, 35, 51, 0.05)",
-            boxShadow: "0 4px 20px rgba(18, 35, 51, 0.02)",
+            border: `1px solid ${Colors.BORDER_STONE}`,
+            boxShadow: "0 4px 16px rgba(16, 18, 22, 0.03)",
             display: "flex",
             alignItems: "center",
             gap: { xs: 1.5, sm: 2 },
@@ -197,10 +200,12 @@ export const TeamStats = ({
         >
           <Avatar
             sx={{
-              bgcolor: "rgba(255, 152, 0, 0.1)",
-              color: "#FF9800",
+              bgcolor: "#FAFBFD",
+              color: Colors.PRIMARY_DARK,
+              border: `1px solid ${Colors.BORDER_STONE}`,
               width: { xs: 38, sm: 44 },
               height: { xs: 38, sm: 44 },
+              borderRadius: "12px",
               flexShrink: 0,
             }}
           >
@@ -211,7 +216,7 @@ export const TeamStats = ({
               sx={{
                 fontSize: "11px",
                 fontWeight: 700,
-                color: "rgba(18, 35, 51, 0.4)",
+                color: "rgba(16, 18, 22, 0.5)",
                 textTransform: "uppercase",
                 wordBreak: "break-word",
               }}
@@ -239,8 +244,8 @@ export const TeamStats = ({
             p: { xs: 2, sm: 2.5 },
             borderRadius: "16px",
             bgcolor: "#fff",
-            border: "1px solid rgba(18, 35, 51, 0.05)",
-            boxShadow: "0 4px 20px rgba(18, 35, 51, 0.02)",
+            border: `1px solid ${Colors.BORDER_STONE}`,
+            boxShadow: "0 4px 16px rgba(16, 18, 22, 0.03)",
             display: "flex",
             alignItems: "center",
             gap: { xs: 1.5, sm: 2 },
@@ -248,10 +253,11 @@ export const TeamStats = ({
         >
           <Avatar
             sx={{
-              bgcolor: "rgba(76, 175, 80, 0.1)",
-              color: "#4CAF50",
+              bgcolor: Colors.ACCENT_MINT,
+              color: Colors.PRIMARY_DARK,
               width: { xs: 38, sm: 44 },
               height: { xs: 38, sm: 44 },
+              borderRadius: "12px",
               flexShrink: 0,
             }}
           >
@@ -262,7 +268,7 @@ export const TeamStats = ({
               sx={{
                 fontSize: "11px",
                 fontWeight: 700,
-                color: "rgba(18, 35, 51, 0.4)",
+                color: "rgba(16, 18, 22, 0.5)",
                 textTransform: "uppercase",
                 wordBreak: "break-word",
               }}

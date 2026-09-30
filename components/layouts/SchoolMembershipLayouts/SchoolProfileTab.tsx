@@ -30,10 +30,10 @@ export const SchoolProfileTab = ({
           elevation={0}
           sx={{
             p: { xs: 2.5, sm: 4 },
-            borderRadius: "24px",
-            border: "1px solid rgba(18, 35, 51, 0.05)",
+            borderRadius: "20px",
+            border: `1px solid ${Colors.BORDER_STONE}`,
             bgcolor: "#fff",
-            boxShadow: "0 10px 40px rgba(18, 35, 51, 0.03)",
+            boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
           }}
         >
           <Typography
@@ -357,10 +357,10 @@ export const SchoolProfileTab = ({
           elevation={0}
           sx={{
             p: { xs: 2.5, sm: 4 },
-            borderRadius: "24px",
-            border: "1px solid rgba(18, 35, 51, 0.05)",
+            borderRadius: "20px",
+            border: `1px solid ${Colors.BORDER_STONE}`,
             bgcolor: "#fff",
-            boxShadow: "0 10px 40px rgba(18, 35, 51, 0.03)",
+            boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
             height: "100%",
             display: "flex",
             flexDirection: "column",
@@ -387,15 +387,15 @@ export const SchoolProfileTab = ({
               p: 3,
               borderRadius: "16px",
               bgcolor: "rgba(18, 35, 51, 0.015)",
-              border: "1px dashed rgba(18, 35, 51, 0.1)",
+              border: `1px dashed ${Colors.BORDER_STONE}`,
               textAlign: "center",
               minHeight: "220px",
             }}
           >
             <Avatar
               sx={{
-                bgcolor: "rgba(0, 209, 193, 0.08)",
-                color: "#00D1C1",
+                bgcolor: Colors.ACCENT_MINT,
+                color: Colors.PRIMARY_DARK,
                 width: 64,
                 height: 64,
                 mb: 2,
@@ -419,7 +419,7 @@ export const SchoolProfileTab = ({
               sx={{
                 fontSize: "11px",
                 fontWeight: 600,
-                color: "rgba(18, 35, 51, 0.4)",
+                color: "rgba(16, 18, 22, 0.5)",
                 mb: 2.5,
               }}
             >
@@ -443,8 +443,9 @@ export const SchoolProfileTab = ({
                 startIcon={<DocIcon />}
                 sx={{
                   bgcolor: Colors.PRIMARY_DARK,
-                  color: "#fff",
-                  "&:hover": { bgcolor: "#1A2B3B" },
+                  color: Colors.ACCENT_MINT,
+                  border: `1px solid ${Colors.BORDER_STONE}`,
+                  "&:hover": { bgcolor: Colors.PRIMARY_DARK, opacity: 0.9 },
                   textTransform: "none",
                   fontWeight: 700,
                   fontSize: "13px",

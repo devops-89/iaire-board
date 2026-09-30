@@ -6,6 +6,7 @@ import { Navbar } from "@/components/widgets/Navbar";
 import { MembershipFooter } from "./MembershipFooter";
 import { SchoolTable } from "./SchoolTable";
 import { Poppins } from "@/utils/font";
+import { Colors } from "@/utils/enum";
 
 export const SchoolMembershipLayout = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -19,7 +20,7 @@ export const SchoolMembershipLayout = () => {
       sx={{
         display: "flex",
         minHeight: "100vh",
-        bgcolor: "#FAF6F0",
+        bgcolor: Colors.APP_BACKGROUND,
         fontFamily: Poppins.style.fontFamily,
       }}
     >
@@ -34,7 +35,7 @@ export const SchoolMembershipLayout = () => {
           px: { xs: 1.5, sm: 2, md: 3 },
           pb: 3,
           position: "relative",
-          bgcolor: "#FAF6F0",
+          bgcolor: Colors.APP_BACKGROUND,
           width: { xs: "100%", lg: "calc(100% - 250px)" },
         }}
       >

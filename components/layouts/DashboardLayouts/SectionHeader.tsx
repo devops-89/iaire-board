@@ -2,6 +2,7 @@
 import React from "react";
 import { Box, Typography, Chip } from "@mui/material";
 import { FontWeights } from "@/utils/style";
+import { Colors } from "@/utils/enum";
 
 interface SectionHeaderProps {
   title: string;
@@ -11,12 +12,12 @@ interface SectionHeaderProps {
 
 export const SectionHeader = ({ title, badge, color }: SectionHeaderProps) => (
   <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 3 }}>
-    <Box sx={{ width: 4, height: 24, bgcolor: color, borderRadius: 2 }} />
+    <Box sx={{ width: 4, height: 24, bgcolor: color || Colors.PRIMARY_DARK, borderRadius: 2 }} />
     <Typography
       sx={{
         fontSize: "18px",
         fontWeight: FontWeights.MEDIUM,
-        color: "#122333",
+        color: Colors.PRIMARY_DARK,
       }}
     >
       {title}
@@ -26,10 +27,10 @@ export const SectionHeader = ({ title, badge, color }: SectionHeaderProps) => (
         label={badge}
         sx={{
           height: 22,
-          bgcolor: "rgba(18, 35, 51, 0.05)",
+          bgcolor: Colors.ACCENT_MINT,
           fontSize: "10px",
           fontWeight: 700,
-          color: "rgba(18, 35, 51, 0.6)",
+          color: Colors.PRIMARY_DARK,
         }}
       />
     )}

@@ -32,10 +32,10 @@ export const TeacherInstitutionCard = ({
       elevation={0}
       sx={{
         p: { xs: 2.5, sm: 3.5, md: 4 },
-        borderRadius: { xs: "18px", sm: "24px" },
-        border: "1px solid rgba(18, 35, 51, 0.05)",
+        borderRadius: "20px",
+        border: `1px solid ${Colors.BORDER_STONE}`,
         bgcolor: "#fff",
-        boxShadow: "0 10px 40px rgba(18, 35, 51, 0.03)",
+        boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
       }}
     >
       <Typography
@@ -83,9 +83,9 @@ export const TeacherInstitutionCard = ({
                 sx={{
                   width: 48,
                   height: 48,
-                  bgcolor: "rgba(6, 182, 212, 0.08)",
-                  color: "#06B6D4",
-                  border: "1px solid rgba(18, 35, 51, 0.08)",
+                  bgcolor: Colors.ACCENT_MINT,
+                  color: Colors.PRIMARY_DARK,
+                  border: `1px solid ${Colors.BORDER_STONE}`,
                   flexShrink: 0,
                   p:
                     teacherData.school?.logo ||
@@ -137,9 +137,9 @@ export const TeacherInstitutionCard = ({
                 sx={{
                   width: 48,
                   height: 48,
-                  bgcolor: "rgba(79, 70, 229, 0.08)",
-                  color: "#4F46E5",
-                  border: "1px solid rgba(18, 35, 51, 0.08)",
+                  bgcolor: Colors.ACCENT_MINT,
+                  color: Colors.PRIMARY_DARK,
+                  border: `1px solid ${Colors.BORDER_STONE}`,
                   flexShrink: 0,
                   p:
                     teacherData.board?.logo ||
@@ -219,9 +219,9 @@ export const TeacherInstitutionCard = ({
               sx={{
                 width: 48,
                 height: 48,
-                bgcolor: "rgba(244, 63, 94, 0.08)",
-                color: "#F43F5E",
-                border: "1px solid rgba(18, 35, 51, 0.08)",
+                bgcolor: Colors.ACCENT_MINT,
+                color: Colors.PRIMARY_DARK,
+                border: `1px solid ${Colors.BORDER_STONE}`,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",

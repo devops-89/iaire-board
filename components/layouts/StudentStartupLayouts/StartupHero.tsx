@@ -18,7 +18,7 @@ interface StartupHeroProps {
   growth: string;
   loading: boolean;
 }
-
+1 
 export const StartupHero: React.FC<StartupHeroProps> = ({
   total,
   activeProjects,
@@ -31,8 +31,8 @@ export const StartupHero: React.FC<StartupHeroProps> = ({
         elevation={0}
         sx={{
           p: { xs: 3, md: 5 },
-          borderRadius: "32px",
-          bgcolor: "#122333",
+          borderRadius: "24px",
+          bgcolor: Colors.PRIMARY_DARK,
           color: Colors.WHITE,
           position: "relative",
           overflow: "hidden",
@@ -41,10 +41,11 @@ export const StartupHero: React.FC<StartupHeroProps> = ({
           justifyContent: "space-between",
           minHeight: "180px",
           width: "100%",
-          boxShadow: "0 24px 48px rgba(18, 35, 51, 0.15)",
+          boxShadow: "0 10px 30px rgba(16, 18, 22, 0.08)",
+          border: `1px solid ${Colors.BORDER_STONE}`,
           transition: "transform 0.3s ease",
           "&:hover": {
-            transform: "translateY(-4px)",
+            transform: "translateY(-2px)",
           },
         }}
       >
@@ -58,26 +59,26 @@ export const StartupHero: React.FC<StartupHeroProps> = ({
         >
           <Box
             sx={{
-              width: 80,
-              height: 80,
-              borderRadius: "20px",
-              bgcolor: "rgba(0, 209, 193, 0.15)",
+              width: 72,
+              height: 72,
+              borderRadius: "18px",
+              bgcolor: Colors.ACCENT_MINT,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              color: "#00D1C1",
-              boxShadow: "0 8px 16px rgba(0, 209, 193, 0.1)",
+              color: Colors.PRIMARY_DARK,
+              boxShadow: "0 6px 16px rgba(0, 0, 0, 0.15)",
             }}
           >
-            <StartupIcon sx={{ fontSize: 40 }} />
+            <StartupIcon sx={{ fontSize: 36 }} />
           </Box>
           <Box>
             <Typography
               sx={{
-                fontSize: "14px",
+                fontSize: "13px",
                 fontWeight: 700,
-                opacity: 0.6,
-                letterSpacing: "1px",
+                opacity: 0.65,
+                letterSpacing: "0.8px",
                 textTransform: "uppercase",
                 mb: 0.5,
               }}
@@ -85,15 +86,18 @@ export const StartupHero: React.FC<StartupHeroProps> = ({
               Number of student startups
             </Typography>
             {loading ? (
-              <CircularProgress size={30} sx={{ color: "#00D1C1", mt: 1 }} />
+              <CircularProgress
+                size={28}
+                sx={{ color: Colors.ACCENT_MINT, mt: 1 }}
+              />
             ) : (
               <Typography
                 sx={{
-                  fontSize: { xs: "40px", md: "56px" },
+                  fontSize: { xs: "36px", md: "50px" },
                   fontWeight: 900,
                   lineHeight: 1,
-                  color: "#00D1C1",
-                  letterSpacing: "-2px",
+                  color: Colors.ACCENT_MINT,
+                  letterSpacing: "-1.5px",
                 }}
               >
                 {total}
@@ -139,7 +143,11 @@ export const StartupHero: React.FC<StartupHeroProps> = ({
               ECOSYSTEM GROWTH
             </Typography>
             <Typography
-              sx={{ fontSize: "28px", fontWeight: 900, color: "#10B981" }}
+              sx={{
+                fontSize: "28px",
+                fontWeight: 900,
+                color: Colors.ACCENT_MINT,
+              }}
             >
               {growth}
             </Typography>

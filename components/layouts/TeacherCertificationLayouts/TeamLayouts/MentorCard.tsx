@@ -23,10 +23,10 @@ export const MentorCard = ({ mentor, capitalizeWord }: MentorCardProps) => {
       elevation={0}
       sx={{
         p: { xs: 2.5, sm: 3 },
-        borderRadius: { xs: "16px", sm: "20px" },
+        borderRadius: "20px",
         bgcolor: "#fff",
-        border: "1px solid rgba(18, 35, 51, 0.05)",
-        boxShadow: "0 10px 30px rgba(18, 35, 51, 0.03)",
+        border: `1px solid ${Colors.BORDER_STONE}`,
+        boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
       }}
     >
       <Typography
@@ -55,8 +55,9 @@ export const MentorCard = ({ mentor, capitalizeWord }: MentorCardProps) => {
           sx={{
             width: { xs: 48, sm: 56 },
             height: { xs: 48, sm: 56 },
-            border: `2px solid ${Colors.PRIMARY}`,
-            boxShadow: "0 4px 12px rgba(32, 103, 106, 0.15)",
+            border: `2px solid ${Colors.BORDER_STONE}`,
+            bgcolor: Colors.ACCENT_MINT,
+            color: Colors.PRIMARY_DARK,
             flexShrink: 0,
           }}
         >
@@ -87,7 +88,7 @@ export const MentorCard = ({ mentor, capitalizeWord }: MentorCardProps) => {
 
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
         <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-          <EmailIcon sx={{ color: Colors.PRIMARY, fontSize: 20, flexShrink: 0 }} />
+          <EmailIcon sx={{ color: Colors.PRIMARY_DARK, fontSize: 20, flexShrink: 0 }} />
           <Typography
             sx={{
               fontSize: "13px",
@@ -100,7 +101,7 @@ export const MentorCard = ({ mentor, capitalizeWord }: MentorCardProps) => {
           </Typography>
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-          <PhoneIcon sx={{ color: Colors.PRIMARY, fontSize: 20, flexShrink: 0 }} />
+          <PhoneIcon sx={{ color: Colors.PRIMARY_DARK, fontSize: 20, flexShrink: 0 }} />
           <Typography
             sx={{
               fontSize: "13px",
@@ -114,7 +115,7 @@ export const MentorCard = ({ mentor, capitalizeWord }: MentorCardProps) => {
         </Box>
         {mentor.gender && (
           <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-            <GenderIcon sx={{ color: Colors.PRIMARY, fontSize: 20, flexShrink: 0 }} />
+            <GenderIcon sx={{ color: Colors.PRIMARY_DARK, fontSize: 20, flexShrink: 0 }} />
             <Typography
               sx={{
                 fontSize: "13px",
@@ -130,7 +131,7 @@ export const MentorCard = ({ mentor, capitalizeWord }: MentorCardProps) => {
         )}
         {mentor.experienceYears && (
           <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-            <ExpIcon sx={{ color: Colors.PRIMARY, fontSize: 20, flexShrink: 0 }} />
+            <ExpIcon sx={{ color: Colors.PRIMARY_DARK, fontSize: 20, flexShrink: 0 }} />
             <Typography
               sx={{
                 fontSize: "13px",
@@ -153,7 +154,7 @@ export const MentorCard = ({ mentor, capitalizeWord }: MentorCardProps) => {
           >
             <SubjectIcon
               sx={{
-                color: Colors.PRIMARY,
+                color: Colors.PRIMARY_DARK,
                 fontSize: 20,
                 mt: 0.2,
                 flexShrink: 0,

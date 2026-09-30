@@ -14,10 +14,10 @@ export const TeacherAdminsCard = ({ schoolAdmins }: TeacherAdminsCardProps) => {
       elevation={0}
       sx={{
         p: { xs: 2.5, sm: 3.5, md: 4 },
-        borderRadius: { xs: "18px", sm: "24px" },
-        border: "1px solid rgba(18, 35, 51, 0.05)",
+        borderRadius: "20px",
+        border: `1px solid ${Colors.BORDER_STONE}`,
         bgcolor: "#fff",
-        boxShadow: "0 10px 40px rgba(18, 35, 51, 0.03)",
+        boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: { xs: 2, sm: 3 } }}>
@@ -29,8 +29,9 @@ export const TeacherAdminsCard = ({ schoolAdmins }: TeacherAdminsCardProps) => {
             width: 32,
             height: 32,
             borderRadius: "8px",
-            bgcolor: "rgba(139, 92, 246, 0.08)",
-            color: "#8B5CF6",
+            bgcolor: Colors.ACCENT_MINT,
+            color: Colors.PRIMARY_DARK,
+            border: `1px solid ${Colors.BORDER_STONE}`,
             flexShrink: 0,
           }}
         >
@@ -74,12 +75,12 @@ export const TeacherAdminsCard = ({ schoolAdmins }: TeacherAdminsCardProps) => {
                   gap: 2,
                   p: { xs: 1.5, sm: 2 },
                   borderRadius: "16px",
-                  border: "1px solid rgba(18, 35, 51, 0.04)",
+                  border: `1px solid ${Colors.BORDER_STONE}`,
                   bgcolor: "rgba(18, 35, 51, 0.015)",
                   transition: "all 0.2s ease",
                   "&:hover": {
                     bgcolor: "#fff",
-                    borderColor: "rgba(18, 35, 51, 0.08)",
+                    borderColor: Colors.BORDER_STONE,
                     boxShadow: "0 8px 24px rgba(18, 35, 51, 0.04)",
                     transform: "translateX(2px)",
                   },
@@ -91,8 +92,9 @@ export const TeacherAdminsCard = ({ schoolAdmins }: TeacherAdminsCardProps) => {
                     height: 38,
                     fontSize: 13,
                     fontWeight: 700,
-                    bgcolor: "rgba(18, 35, 51, 0.05)",
+                    bgcolor: Colors.ACCENT_MINT,
                     color: Colors.PRIMARY_DARK,
+                    border: `1px solid ${Colors.BORDER_STONE}`,
                     flexShrink: 0,
                   }}
                 >

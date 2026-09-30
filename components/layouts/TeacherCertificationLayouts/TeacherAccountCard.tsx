@@ -25,10 +25,10 @@ export const TeacherAccountCard = ({
       elevation={0}
       sx={{
         p: { xs: 2.5, sm: 3.5, md: 4 },
-        borderRadius: { xs: "18px", sm: "24px" },
-        border: "1px solid rgba(18, 35, 51, 0.05)",
+        borderRadius: "20px",
+        border: `1px solid ${Colors.BORDER_STONE}`,
         bgcolor: "#fff",
-        boxShadow: "0 10px 40px rgba(18, 35, 51, 0.03)",
+        boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
       }}
     >
       <Typography
@@ -52,8 +52,9 @@ export const TeacherAccountCard = ({
               width: 34,
               height: 34,
               borderRadius: "8px",
-              bgcolor: "rgba(139, 92, 246, 0.08)",
-              color: "#8B5CF6",
+              bgcolor: Colors.ACCENT_MINT,
+              color: Colors.PRIMARY_DARK,
+              border: `1px solid ${Colors.BORDER_STONE}`,
               flexShrink: 0,
             }}
           >
@@ -95,8 +96,9 @@ export const TeacherAccountCard = ({
               width: 34,
               height: 34,
               borderRadius: "8px",
-              bgcolor: "rgba(100, 116, 139, 0.08)",
-              color: "#64748B",
+              bgcolor: Colors.ACCENT_MINT,
+              color: Colors.PRIMARY_DARK,
+              border: `1px solid ${Colors.BORDER_STONE}`,
               flexShrink: 0,
             }}
           >
@@ -139,8 +141,9 @@ export const TeacherAccountCard = ({
                   width: 34,
                   height: 34,
                   borderRadius: "8px",
-                  bgcolor: "rgba(16, 185, 129, 0.08)",
-                  color: "#10B981",
+                  bgcolor: Colors.ACCENT_MINT,
+                  color: Colors.PRIMARY_DARK,
+                  border: `1px solid ${Colors.BORDER_STONE}`,
                   flexShrink: 0,
                 }}
               >

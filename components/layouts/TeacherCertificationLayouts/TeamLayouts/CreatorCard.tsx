@@ -26,8 +26,8 @@ export const CreatorCard = ({
         p: 3,
         borderRadius: "20px",
         bgcolor: "#fff",
-        border: "1px solid rgba(18, 35, 51, 0.05)",
-        boxShadow: "0 10px 30px rgba(18, 35, 51, 0.03)",
+        border: `1px solid ${Colors.BORDER_STONE}`,
+        boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
       }}
     >
       <Typography

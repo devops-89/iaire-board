@@ -18,7 +18,7 @@ export const TeacherCertificationLayout = () => {
       sx={{
         display: "flex",
         minHeight: "100vh",
-        bgcolor: "#FAF7F0",
+        bgcolor: "#fafaf8",
         fontFamily: Poppins.style.fontFamily,
       }}
     >
@@ -33,7 +33,7 @@ export const TeacherCertificationLayout = () => {
           px: { xs: 1.5, sm: 2, md: 3 },
           pb: 3,
           position: "relative",
-          bgcolor: "#FAF7F0",
+          bgcolor: "#fafaf8",
           width: { xs: "100%", lg: "calc(100% - 250px)" },
         }}
       >

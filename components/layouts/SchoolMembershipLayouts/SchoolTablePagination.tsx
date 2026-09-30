@@ -35,9 +35,9 @@ export const SchoolTablePagination: React.FC<SchoolTablePaginationProps> = ({
         justifyContent: "space-between",
         alignItems: "center",
         px: { xs: 2, sm: 3 },
-        py: 2.5,
-        borderTop: "1px solid rgba(18, 35, 51, 0.05)",
-        bgcolor: "#FBF9F6",
+        py: 2.2,
+        borderTop: `1px solid ${Colors.BORDER_STONE}`,
+        bgcolor: "#FAFBFD",
         gap: 2,
       }}
     >
@@ -45,7 +45,7 @@ export const SchoolTablePagination: React.FC<SchoolTablePaginationProps> = ({
         sx={{
           fontSize: "13px",
           fontWeight: 600,
-          color: "rgba(18, 35, 51, 0.5)",
+          color: "#64748b",
           textAlign: { xs: "center", sm: "left" },
         }}
       >
@@ -59,13 +59,18 @@ export const SchoolTablePagination: React.FC<SchoolTablePaginationProps> = ({
           onClick={onPrevPage}
           disabled={currentPage === 1}
           sx={{
-            border: "1px solid rgba(18, 35, 51, 0.08)",
-            borderRadius: "8px",
+            border: `1px solid ${Colors.BORDER_STONE}`,
+            borderRadius: "10px",
             bgcolor: "#fff",
-            "&:hover": { bgcolor: "rgba(18, 35, 51, 0.04)" },
+            color: Colors.PRIMARY_DARK,
+            transition: "all 0.2s ease",
+            "&:hover": {
+              bgcolor: Colors.ACCENT_MINT,
+              borderColor: Colors.PRIMARY_DARK,
+            },
             width: 36,
             height: 36,
-            "&.Mui-disabled": { opacity: 0.4 },
+            "&.Mui-disabled": { opacity: 0.35 },
           }}
         >
           <PrevIcon sx={{ fontSize: 18 }} />
@@ -81,20 +86,21 @@ export const SchoolTablePagination: React.FC<SchoolTablePaginationProps> = ({
               sx={{
                 minWidth: 36,
                 height: 36,
-                borderRadius: "8px",
+                borderRadius: "10px",
                 fontSize: "13px",
-                fontWeight: isActive ? 800 : 600,
-                color: isActive ? "#fff" : Colors.PRIMARY_DARK,
+                fontWeight: isActive ? 800 : 700,
+                color: isActive ? Colors.ACCENT_MINT : Colors.PRIMARY_DARK,
                 bgcolor: isActive ? Colors.PRIMARY_DARK : "transparent",
                 border: isActive ? "none" : "1px solid transparent",
+                transition: "all 0.2s ease",
                 "&:hover": {
                   bgcolor: isActive
                     ? Colors.PRIMARY_DARK
-                    : "rgba(18, 35, 51, 0.04)",
-                  opacity: isActive ? 0.9 : 1,
+                    : "rgba(221, 255, 247, 0.4)",
+                  opacity: isActive ? 0.95 : 1,
                   borderColor: isActive
                     ? "transparent"
-                    : "rgba(18, 35, 51, 0.1)",
+                    : Colors.BORDER_STONE,
                 },
                 p: 0,
               }}
@@ -108,13 +114,18 @@ export const SchoolTablePagination: React.FC<SchoolTablePaginationProps> = ({
           onClick={onNextPage}
           disabled={currentPage === totalPages || totalPages === 0}
           sx={{
-            border: "1px solid rgba(18, 35, 51, 0.08)",
-            borderRadius: "8px",
+            border: `1px solid ${Colors.BORDER_STONE}`,
+            borderRadius: "10px",
             bgcolor: "#fff",
-            "&:hover": { bgcolor: "rgba(18, 35, 51, 0.04)" },
+            color: Colors.PRIMARY_DARK,
+            transition: "all 0.2s ease",
+            "&:hover": {
+              bgcolor: Colors.ACCENT_MINT,
+              borderColor: Colors.PRIMARY_DARK,
+            },
             width: 36,
             height: 36,
-            "&.Mui-disabled": { opacity: 0.4 },
+            "&.Mui-disabled": { opacity: 0.35 },
           }}
         >
           <NextIcon sx={{ fontSize: 18 }} />

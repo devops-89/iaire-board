@@ -7,6 +7,7 @@ import {
   Menu as MenuIcon,
 } from "@mui/icons-material";
 import { usePathname } from "next/navigation";
+import { Colors } from "@/utils/enum";
 
 const PAGE_CONFIG: any = {
   "/admin": {
@@ -87,12 +88,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
         position: ["-webkit-sticky", "sticky"],
         top: 0,
         zIndex: 1100,
-        bgcolor: "#FAF7F0",
+        bgcolor: Colors.APP_BACKGROUND,
         mx: hasContent ? { xs: -1.5, sm: -2 } : 0,
         px: hasContent ? { xs: 1.5, sm: 2 } : 0,
         height: hasContent ? { xs: "60px", sm: "72px" } : { xs: "48px", lg: 0 },
         mb: hasContent ? { xs: 2.5, sm: 4 } : 0,
-        borderBottom: hasContent ? "1px solid rgba(18, 35, 51, 0.1)" : "none",
+        borderBottom: hasContent ? `1px solid rgba(212, 210, 205, 0.45)` : "none",
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
@@ -101,11 +102,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
             onClick={onMenuClick}
             sx={{
               display: { xs: "flex", lg: "none" },
-              color: "#122333",
+              color: Colors.PRIMARY_DARK,
               p: 0.8,
               borderRadius: "10px",
-              bgcolor: "rgba(18, 35, 51, 0.05)",
-              "&:hover": { bgcolor: "rgba(18, 35, 51, 0.1)" },
+              bgcolor: "rgba(16, 18, 22, 0.05)",
+              "&:hover": { bgcolor: "rgba(16, 18, 22, 0.1)" },
             }}
             aria-label="open menu"
           >
@@ -150,17 +151,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
               <LiveIcon
                 sx={{
                   fontSize: "10px !important",
-                  color: "#00D1C1 !important",
+                  color: "#0D9488 !important",
                 }}
               />
             }
             label="Live Data"
             sx={{
-              bgcolor: "#E6F9F8",
-              color: "#008B81",
-              fontWeight: 700,
+              bgcolor: Colors.ACCENT_MINT,
+              color: Colors.PRIMARY_DARK,
+              fontWeight: 800,
               fontSize: "12px",
-              border: "1px solid rgba(0, 209, 193, 0.2)",
+              border: "1px solid rgba(13, 148, 136, 0.25)",
               display: { xs: "none", sm: "inline-flex" },
               "& .MuiChip-label": { px: 1.5 },
             }}
@@ -169,15 +170,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
             variant="contained"
             startIcon={<ExportIcon />}
             sx={{
-              bgcolor: "#122333",
-              color: "#fff",
+              bgcolor: Colors.PRIMARY_DARK,
+              color: Colors.ACCENT_MINT,
               textTransform: "none",
               borderRadius: "100px",
               px: { xs: 1.5, sm: 3 },
               py: 0.8,
               fontWeight: 700,
               fontSize: { xs: "12px", sm: "13px" },
-              "&:hover": { bgcolor: "#1A2B3B" },
+              boxShadow: "0 2px 8px rgba(16, 18, 22, 0.12)",
+              "&:hover": { bgcolor: Colors.PRIMARY_DARK, opacity: 0.9 },
             }}
           >
             Export

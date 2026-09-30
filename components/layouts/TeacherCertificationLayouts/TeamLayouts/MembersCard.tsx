@@ -28,10 +28,10 @@ export const MembersCard = ({
       elevation={0}
       sx={{
         p: { xs: 2.5, sm: 3 },
-        borderRadius: { xs: "16px", sm: "20px" },
+        borderRadius: "20px",
         bgcolor: "#fff",
-        border: "1px solid rgba(18, 35, 51, 0.05)",
-        boxShadow: "0 10px 30px rgba(18, 35, 51, 0.03)",
+        border: `1px solid ${Colors.BORDER_STONE}`,
+        boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
         maxHeight: { xs: "none", md: "calc(100vh - 160px)" },
         height: "auto",
         display: "flex",
@@ -149,8 +149,9 @@ export const MembersCard = ({
                       sx={{
                         width: { xs: 40, sm: 48 },
                         height: { xs: 40, sm: 48 },
-                        bgcolor: "rgba(32, 103, 106, 0.08)",
-                        color: Colors.PRIMARY,
+                        bgcolor: Colors.ACCENT_MINT,
+                        color: Colors.PRIMARY_DARK,
+                        border: `1px solid ${Colors.BORDER_STONE}`,
                         fontWeight: 700,
                         flexShrink: 0,
                       }}

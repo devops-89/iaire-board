@@ -192,9 +192,9 @@ export const SchoolStudentsTab = ({
                           label={student.grade || student.class || "Student"}
                           size="small"
                           sx={{
-                            bgcolor: "rgba(16, 185, 129, 0.06)",
-                            color: "#10B981",
-                            fontWeight: 800,
+                            bgcolor: Colors.ACCENT_MINT,
+                            color: Colors.PRIMARY_DARK,
+                            fontWeight: 700,
                             fontSize: "11px",
                             borderRadius: "6px",
                           }}
@@ -214,9 +214,9 @@ export const SchoolStudentsTab = ({
               justifyContent: "space-between",
               alignItems: "center",
               px: 4,
-              py: 2.5,
-              borderTop: "1px solid rgba(18, 35, 51, 0.05)",
-              bgcolor: "#FBF9F6",
+              py: 2.2,
+              borderTop: `1px solid ${Colors.BORDER_STONE}`,
+              bgcolor: "#FAFBFD",
               gap: 2,
               mt: 3,
               mx: -4,
@@ -228,7 +228,7 @@ export const SchoolStudentsTab = ({
               sx={{
                 fontSize: "12px",
                 fontWeight: 600,
-                color: "rgba(18, 35, 51, 0.5)",
+                color: "rgba(16, 18, 22, 0.55)",
               }}
             >
               Showing {(studentPage - 1) * itemsPerPage + 1} to{" "}
@@ -242,13 +242,13 @@ export const SchoolStudentsTab = ({
                 disabled={studentPage === 1}
                 size="small"
                 sx={{
-                  border: "1px solid rgba(18, 35, 51, 0.08)",
+                  border: `1px solid ${Colors.BORDER_STONE}`,
                   borderRadius: "8px",
                   bgcolor: "#fff",
-                  "&:hover": { bgcolor: "rgba(18, 35, 51, 0.04)" },
+                  color: Colors.PRIMARY_DARK,
+                  "&:hover:not(:disabled)": { bgcolor: Colors.ACCENT_MINT },
                   width: 34,
                   height: 34,
-                  "&.Mui-disabled": { opacity: 0.4 },
                 }}
               >
                 <PrevIcon sx={{ fontSize: 16 }} />
@@ -267,17 +267,18 @@ export const SchoolStudentsTab = ({
                       borderRadius: "8px",
                       fontSize: "12px",
                       fontWeight: isActive ? 800 : 600,
-                      color: isActive ? "#fff" : Colors.PRIMARY_DARK,
+                      color: isActive ? Colors.ACCENT_MINT : Colors.PRIMARY_DARK,
                       bgcolor: isActive ? Colors.PRIMARY_DARK : "transparent",
-                      border: isActive ? "none" : "1px solid transparent",
+                      border: isActive
+                        ? `1px solid ${Colors.PRIMARY_DARK}`
+                        : "1px solid transparent",
                       "&:hover": {
                         bgcolor: isActive
                           ? Colors.PRIMARY_DARK
-                          : "rgba(18, 35, 51, 0.04)",
-                        opacity: isActive ? 0.9 : 1,
-                        borderColor: isActive
-                          ? "transparent"
-                          : "rgba(18, 35, 51, 0.1)",
+                          : Colors.ACCENT_MINT,
+                        color: isActive
+                          ? Colors.ACCENT_MINT
+                          : Colors.PRIMARY_DARK,
                       },
                       p: 0,
                     }}
@@ -296,13 +297,13 @@ export const SchoolStudentsTab = ({
                 disabled={studentPage === totalStudentPages}
                 size="small"
                 sx={{
-                  border: "1px solid rgba(18, 35, 51, 0.08)",
+                  border: `1px solid ${Colors.BORDER_STONE}`,
                   borderRadius: "8px",
                   bgcolor: "#fff",
-                  "&:hover": { bgcolor: "rgba(18, 35, 51, 0.04)" },
+                  color: Colors.PRIMARY_DARK,
+                  "&:hover:not(:disabled)": { bgcolor: Colors.ACCENT_MINT },
                   width: 34,
                   height: 34,
-                  "&.Mui-disabled": { opacity: 0.4 },
                 }}
               >
                 <NextIcon sx={{ fontSize: 16 }} />

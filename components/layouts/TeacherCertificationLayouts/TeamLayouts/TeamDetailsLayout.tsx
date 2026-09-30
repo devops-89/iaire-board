@@ -84,11 +84,11 @@ export const TeamDetailsLayout = () => {
       s === "GRANTED" ||
       s === "PUBLISHED"
     )
-      return { bg: "#E6F4EA", text: "#137333" };
+      return { bg: Colors.ACCENT_MINT, text: Colors.PRIMARY_DARK };
     if (s === "ARCHIVED" || s === "INACTIVE" || s === "DRAFT")
       return { bg: "#F1F3F4", text: "#5F6368" };
-    if (s === "REJECTED") return { bg: "#FCE8E6", text: "#C5221F" };
-    return { bg: "#FEF7E0", text: "#B06000" };
+    if (s === "REJECTED") return { bg: "rgba(239, 68, 68, 0.08)", text: "#DC2626" };
+    return { bg: "rgba(245, 158, 11, 0.08)", text: "#D97706" };
   };
 
   if (loading) {
@@ -97,7 +97,7 @@ export const TeamDetailsLayout = () => {
         sx={{
           display: "flex",
           minHeight: "100vh",
-          bgcolor: "#FAF7F0",
+          bgcolor: "#fafaf8",
           fontFamily: Poppins.style.fontFamily,
         }}
       >
@@ -133,7 +133,7 @@ export const TeamDetailsLayout = () => {
         sx={{
           display: "flex",
           minHeight: "100vh",
-          bgcolor: "#FAF7F0",
+          bgcolor: "#fafaf8",
           fontFamily: Poppins.style.fontFamily,
         }}
       >
@@ -202,7 +202,7 @@ export const TeamDetailsLayout = () => {
       sx={{
         display: "flex",
         minHeight: "100vh",
-        bgcolor: "#FAF7F0",
+        bgcolor: "#fafaf8",
         fontFamily: Poppins.style.fontFamily,
       }}
     >
@@ -229,14 +229,14 @@ export const TeamDetailsLayout = () => {
               textTransform: "none",
               fontWeight: 700,
               fontSize: "14px",
-              borderRadius: "10px",
-              border: "1px solid rgba(18, 35, 51, 0.08)",
+              borderRadius: "12px",
+              border: `1px solid ${Colors.BORDER_STONE}`,
               bgcolor: "#fff",
               px: 2,
               py: 1,
               transition: "all 0.2s ease",
               "&:hover": {
-                bgcolor: "rgba(18, 35, 51, 0.04)",
+                bgcolor: Colors.ACCENT_MINT,
                 transform: "translateX(-2px)",
               },
             }}
@@ -251,8 +251,9 @@ export const TeamDetailsLayout = () => {
           sx={{
             p: { xs: 2.5, sm: 3.5, md: 4 },
             borderRadius: { xs: "18px", sm: "24px" },
-            background: "linear-gradient(135deg, #111E2E 0%, #0A1420 100%)",
-            boxShadow: "0 20px 40px rgba(18, 35, 51, 0.08)",
+            bgcolor: Colors.PRIMARY_DARK,
+            boxShadow: "0 10px 30px rgba(16, 18, 22, 0.08)",
+            border: `1px solid ${Colors.BORDER_STONE}`,
             position: "relative",
             overflow: "hidden",
             mb: { xs: 2.5, sm: 4 },
@@ -266,7 +267,7 @@ export const TeamDetailsLayout = () => {
               height: "300px",
               borderRadius: "50%",
               background:
-                "radial-gradient(circle, rgba(32, 103, 106, 0.2) 0%, transparent 70%)",
+                "radial-gradient(circle, rgba(221, 255, 247, 0.08) 0%, transparent 70%)",
             },
           }}
         >
@@ -277,11 +278,11 @@ export const TeamDetailsLayout = () => {
                   width: { xs: 64, sm: 80, md: 90 },
                   height: { xs: 64, sm: 80, md: 90 },
                   borderRadius: { xs: "16px", sm: "24px" },
-                  bgcolor: "rgba(255, 255, 255, 0.08)",
-                  color: Colors.PRIMARY,
+                  bgcolor: Colors.ACCENT_MINT,
+                  color: Colors.PRIMARY_DARK,
                   fontSize: { xs: "24px", sm: "28px", md: "32px" },
                   fontWeight: 800,
-                  border: `2px solid ${Colors.PRIMARY}`,
+                  border: `2px solid ${Colors.BORDER_STONE}`,
                   boxShadow: "0 8px 24px rgba(0, 0, 0, 0.2)",
                 }}
               >
@@ -315,10 +316,10 @@ export const TeamDetailsLayout = () => {
                     label={type || "GENERAL"}
                     size="small"
                     sx={{
-                      bgcolor: "rgba(32, 103, 106, 0.2)",
-                      color: "#00D1C1",
-                      border: "1px solid rgba(0, 209, 193, 0.3)",
-                      fontWeight: 700,
+                      bgcolor: Colors.ACCENT_MINT,
+                      color: Colors.PRIMARY_DARK,
+                      border: "1px solid rgba(13, 148, 136, 0.25)",
+                      fontWeight: 800,
                       fontSize: "11px",
                       borderRadius: "6px",
                       textTransform: "uppercase",

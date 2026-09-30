@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import { Sidebar } from "@/components/widgets/Sidebar";
 import { Navbar } from "@/components/widgets/Navbar";
 import { Poppins } from "@/utils/font";
+import { Colors } from "@/utils/enum";
 import { TopMetricsBar } from "./TopMetricsBar";
 
 export default function DashboardLayouts() {
@@ -18,7 +19,7 @@ export default function DashboardLayouts() {
       sx={{
         display: "flex",
         minHeight: "100vh",
-        bgcolor: "#FAF7F0",
+        bgcolor: Colors.APP_BACKGROUND,
         fontFamily: Poppins.style.fontFamily,
       }}
     >
@@ -33,7 +34,7 @@ export default function DashboardLayouts() {
           px: { xs: 1.5, sm: 2, md: 3 },
           pb: 3,
           position: "relative",
-          bgcolor: "#FAF7F0",
+          bgcolor: Colors.APP_BACKGROUND,
           width: { xs: "100%", lg: "calc(100% - 250px)" },
         }}
       >

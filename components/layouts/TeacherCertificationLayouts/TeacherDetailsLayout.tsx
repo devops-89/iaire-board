@@ -64,7 +64,7 @@ export const TeacherDetailsLayout = () => {
         sx={{
           display: "flex",
           minHeight: "100vh",
-          bgcolor: "#FAF7F0",
+          bgcolor: "#fafaf8",
           fontFamily: Poppins.style.fontFamily,
         }}
       >
@@ -100,7 +100,7 @@ export const TeacherDetailsLayout = () => {
         sx={{
           display: "flex",
           minHeight: "100vh",
-          bgcolor: "#FAF7F0",
+          bgcolor: "#fafaf8",
           fontFamily: Poppins.style.fontFamily,
         }}
       >
@@ -214,7 +214,7 @@ export const TeacherDetailsLayout = () => {
       sx={{
         display: "flex",
         minHeight: "100vh",
-        bgcolor: "#FAF7F0",
+        bgcolor: "#fafaf8",
         fontFamily: Poppins.style.fontFamily,
       }}
     >
@@ -229,7 +229,7 @@ export const TeacherDetailsLayout = () => {
           px: { xs: 1.5, sm: 2, md: 3 },
           pb: 3,
           position: "relative",
-          bgcolor: "#FAF7F0",
+          bgcolor: "#fafaf8",
           width: { xs: "100%", lg: "calc(100% - 250px)" },
         }}
       >
@@ -252,14 +252,14 @@ export const TeacherDetailsLayout = () => {
               textTransform: "none",
               fontWeight: 700,
               fontSize: "14px",
-              borderRadius: "10px",
-              border: "1px solid rgba(18, 35, 51, 0.08)",
+              borderRadius: "12px",
+              border: `1px solid ${Colors.BORDER_STONE}`,
               bgcolor: "#fff",
               px: 2,
               py: 1,
               transition: "all 0.2s ease",
               "&:hover": {
-                bgcolor: "rgba(18, 35, 51, 0.04)",
+                bgcolor: Colors.ACCENT_MINT,
                 transform: "translateX(-2px)",
               },
             }}

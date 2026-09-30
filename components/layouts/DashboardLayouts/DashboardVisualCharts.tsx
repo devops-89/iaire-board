@@ -13,6 +13,8 @@ import {
   ComposedChart,
   Bar,
   Line,
+  PieChart,
+  Pie,
   XAxis,
   YAxis,
   Tooltip,
@@ -22,6 +24,7 @@ import {
   AreaChart,
   Area,
   Cell,
+  LabelList,
 } from "recharts";
 import {
   ShowChart as TrendIcon,
@@ -124,45 +127,6 @@ export const DashboardVisualCharts: React.FC<DashboardVisualChartsProps> = ({
 
   if (!isMounted) return null;
 
-  // 1. Data for Active vs Inactive Segmented Progress Breakdown
-  const schoolsActive = data.activeSchools ?? 0;
-  const schoolsInactive = data.inactiveSchools ?? 0;
-  const schoolsTotal = data.totalSchools ?? 0;
-  const schoolsPct = schoolsTotal > 0 ? Math.round((schoolsActive / schoolsTotal) * 100) : 0;
-
-  const teachersActive = data.activeTeachers ?? 0;
-  const teachersInactive = data.inactiveTeachers ?? 0;
-  const teachersTotal = data.totalTeachers ?? 0;
-  const teachersPct = teachersTotal > 0 ? Math.round((teachersActive / teachersTotal) * 100) : 0;
-
-  const studentsActive = data.activeStudents ?? 0;
-  const studentsInactive = data.inactiveStudents ?? 0;
-  const studentsTotal = data.totalStudents ?? 0;
-  const studentsPct = studentsTotal > 0 ? Math.round((studentsActive / studentsTotal) * 100) : 0;
-
-  const engagementBreakdown = [
-    {
-      label: "Schools Engagement",
-      active: schoolsActive,
-      inactive: schoolsInactive,
-      total: schoolsTotal,
-      pct: schoolsPct,
-    },
-    {
-      label: "Teachers Active Ratio",
-      active: teachersActive,
-      inactive: teachersInactive,
-      total: teachersTotal,
-      pct: teachersPct,
-    },
-    {
-      label: "Students Development",
-      active: studentsActive,
-      inactive: studentsInactive,
-      total: studentsTotal,
-      pct: studentsPct,
-    },
-  ];
 
   // 2. Data for Combo Chart (Gradient Bars + Spline Curve)
   const comboTrendData = [
@@ -181,29 +145,6 @@ export const DashboardVisualCharts: React.FC<DashboardVisualChartsProps> = ({
     },
   ];
 
-  // 3. Data for Innovation & IP Metrics Bar Chart
-  const ipMetricsData = [
-    {
-      name: "Pending Innovations",
-      count: data.innovationsPendingCount ?? 0,
-      color: Colors.PRIMARY,
-    },
-    {
-      name: "Patents Granted",
-      count: data.patentGrantedCount ?? 0,
-      color: `${Colors.PRIMARY}CC`,
-    },
-    {
-      name: "Research Papers",
-      count: data.researchCount ?? 0,
-      color: `${Colors.PRIMARY}99`,
-    },
-    {
-      name: "Student Startups",
-      count: data.startupCount ?? 0,
-      color: `${Colors.PRIMARY}66`,
-    },
-  ];
 
   return (
     <Box sx={{ mb: 6 }}>
@@ -220,8 +161,8 @@ export const DashboardVisualCharts: React.FC<DashboardVisualChartsProps> = ({
           sx={{
             p: 1.2,
             borderRadius: "14px",
-            bgcolor: `${Colors.PRIMARY}12`,
-            color: Colors.PRIMARY,
+            bgcolor: Colors.ACCENT_MINT,
+            color: Colors.PRIMARY_DARK,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -234,7 +175,7 @@ export const DashboardVisualCharts: React.FC<DashboardVisualChartsProps> = ({
             sx={{
               fontSize: "20px",
               fontWeight: 800,
-              color: "#122333",
+              color: Colors.PRIMARY_DARK,
               letterSpacing: "-0.4px",
               lineHeight: 1.2,
             }}
@@ -244,254 +185,17 @@ export const DashboardVisualCharts: React.FC<DashboardVisualChartsProps> = ({
         </Box>
       </Box>
 
-      {/* ROW 1: 100% Segmented Progress Meters + Innovation Meters */}
-      <Grid container spacing={3} sx={{ mb: 3.5 }}>
-        {/* CHART 1: Innovation & IP Distribution Bar Chart (Left) */}
-        <Grid size={{ xs: 12, lg: 6 }}>
-          <Paper
-            elevation={0}
-            sx={{
-              p: { xs: 2, sm: 3 },
-              borderRadius: "20px",
-              bgcolor: "#FFFFFF",
-              border: "1px solid rgba(18, 35, 51, 0.08)",
-              boxShadow: "0 6px 20px rgba(18, 35, 51, 0.03)",
-              height: "100%",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-            }}
-          >
-            <Box>
-              <Typography
-                sx={{
-                  fontSize: { xs: "14px", sm: "15px" },
-                  fontWeight: 800,
-                  color: "#122333",
-                  mb: 2,
-                }}
-              >
-                Innovation & IP Metrics Distribution
-              </Typography>
-            </Box>
-
-            <ResponsiveContainer width="100%" height={240}>
-              <BarChart
-                layout="vertical"
-                data={ipMetricsData}
-                margin={{ top: 5, right: 15, left: -10, bottom: 5 }}
-              >
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                  horizontal={false}
-                  stroke="rgba(0,0,0,0.05)"
-                />
-                <XAxis
-                  type="number"
-                  tickLine={false}
-                  axisLine={{ stroke: "rgba(0,0,0,0.1)" }}
-                  tick={{ fill: "rgba(18, 35, 51, 0.5)", fontSize: 11 }}
-                />
-                <YAxis
-                  dataKey="name"
-                  type="category"
-                  tickLine={false}
-                  axisLine={{ stroke: "rgba(0,0,0,0.1)" }}
-                  tick={{ fill: "#122333", fontSize: 10, fontWeight: 700 }}
-                  width={110}
-                />
-                <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="count" radius={[0, 8, 8, 0]} maxBarSize={24}>
-                  {ipMetricsData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          </Paper>
-        </Grid>
-
-        {/* CHART 2: Active vs Inactive Segmented Meters (Right) */}
-        <Grid size={{ xs: 12, lg: 6 }}>
-          <Paper
-            elevation={0}
-            sx={{
-              p: { xs: 2, sm: 3 },
-              borderRadius: "20px",
-              bgcolor: "#FFFFFF",
-              border: "1px solid rgba(18, 35, 51, 0.08)",
-              boxShadow: "0 6px 20px rgba(18, 35, 51, 0.03)",
-              height: "100%",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-            }}
-          >
-            <Box>
-              <Typography
-                sx={{
-                  fontSize: { xs: "14px", sm: "15px" },
-                  fontWeight: 800,
-                  color: "#122333",
-                  mb: 2,
-                }}
-              >
-                Active-Inactive Ratio
-              </Typography>
-            </Box>
-
-            {/* Segmented Progress Meters */}
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 2.8 }}>
-              {engagementBreakdown.map((item, idx) => (
-                <Box key={idx}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: { xs: "column", sm: "row" },
-                      justifyContent: "space-between",
-                      alignItems: { xs: "flex-start", sm: "center" },
-                      mb: 0.8,
-                      gap: { xs: 0.5, sm: 0 },
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        fontSize: "13px",
-                        fontWeight: 700,
-                        color: "#122333",
-                      }}
-                    >
-                      {item.label}
-                    </Typography>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        flexWrap: "wrap",
-                        gap: { xs: 1, sm: 1.5 },
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          fontSize: "12px",
-                          fontWeight: 600,
-                          color: Colors.PRIMARY,
-                        }}
-                      >
-                        {item.active} Active
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontSize: "12px",
-                          fontWeight: 600,
-                          color: "#EF4444",
-                        }}
-                      >
-                        {item.inactive} Inactive
-                      </Typography>
-                      <Chip
-                        label={`${item.pct}%`}
-                        size="small"
-                        sx={{
-                          height: 20,
-                          fontSize: "11px",
-                          fontWeight: 800,
-                          bgcolor: `${Colors.PRIMARY}14`,
-                          color: Colors.PRIMARY,
-                        }}
-                      />
-                    </Box>
-                  </Box>
-
-                  {/* Dual Bar Track */}
-                  <Box
-                    sx={{
-                      height: 6,
-                      width: "100%",
-                      bgcolor: "#EF444425",
-                      borderRadius: 3,
-                      overflow: "hidden",
-                      display: "flex",
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        width: `${item.pct}%`,
-                        height: "100%",
-                        bgcolor: Colors.PRIMARY,
-                        borderRadius: "3px 0 0 3px",
-                        transition: "width 0.6s ease",
-                      }}
-                    />
-                  </Box>
-                </Box>
-              ))}
-            </Box>
-
-            <Box
-              sx={{
-                mt: 2.5,
-                pt: 2,
-                borderTop: "1px solid rgba(18, 35, 51, 0.06)",
-                display: "flex",
-                flexWrap: "wrap",
-                gap: { xs: 2, sm: 3 },
-              }}
-            >
-              <Box sx={{ display: "flex", alignItems: "center", gap: 0.8 }}>
-                <Box
-                  sx={{
-                    width: 8,
-                    height: 8,
-                    borderRadius: "50%",
-                    bgcolor: Colors.PRIMARY,
-                  }}
-                />
-                <Typography
-                  sx={{
-                    fontSize: "12px",
-                    color: "rgba(18, 35, 51, 0.6)",
-                    fontWeight: 600,
-                  }}
-                >
-                  Active Members
-                </Typography>
-              </Box>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 0.8 }}>
-                <Box
-                  sx={{
-                    width: 8,
-                    height: 8,
-                    borderRadius: "50%",
-                    bgcolor: "#EF4444",
-                  }}
-                />
-                <Typography
-                  sx={{
-                    fontSize: "12px",
-                    color: "rgba(18, 35, 51, 0.6)",
-                    fontWeight: 600,
-                  }}
-                >
-                  Inactive Members
-                </Typography>
-              </Box>
-            </Box>
-          </Paper>
-        </Grid>
-      </Grid>
-
-      {/* ROW 2: Composed Combo Chart (Gradient Columns + Spline Curve) */}
+      {/* Platform Growth & Engagement Timeline (Full Width) */}
       <Grid container spacing={3}>
         <Grid size={{ xs: 12 }}>
           <Paper
             elevation={0}
             sx={{
-              p: { xs: 2, sm: 3, md: 3.5 },
+              p: { xs: 2.5, sm: 3.5 },
               borderRadius: "20px",
               bgcolor: "#FFFFFF",
-              border: "1px solid rgba(18, 35, 51, 0.08)",
-              boxShadow: "0 6px 20px rgba(18, 35, 51, 0.03)",
+              border: `1px solid ${Colors.BORDER_STONE}`,
+              boxShadow: "0 4px 16px rgba(16, 18, 22, 0.04)",
             }}
           >
             <Box
@@ -499,85 +203,87 @@ export const DashboardVisualCharts: React.FC<DashboardVisualChartsProps> = ({
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                mb: 2,
+                mb: 2.5,
               }}
             >
               <Typography
                 sx={{
-                  fontSize: "16px",
+                  fontSize: { xs: "15px", sm: "16px" },
                   fontWeight: 800,
-                  color: "#122333",
+                  color: Colors.PRIMARY_DARK,
                 }}
               >
                 Platform Growth & Engagement Timeline
               </Typography>
             </Box>
 
-            <ResponsiveContainer width="100%" height={280}>
-              <ComposedChart
-                data={comboTrendData}
-                margin={{ top: 15, right: 20, left: -10, bottom: 0 }}
-              >
-                <defs>
-                  <linearGradient id="schoolCol" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor={Colors.PRIMARY} />
-                    <stop offset="100%" stopColor="#113A3C" />
-                  </linearGradient>
-                  <linearGradient id="teacherCol" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#0284C7" />
-                    <stop offset="100%" stopColor="#0369A1" />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                  vertical={false}
-                  stroke="rgba(0,0,0,0.05)"
-                />
-                <XAxis
-                  dataKey="month"
-                  tickLine={false}
-                  axisLine={{ stroke: "rgba(0,0,0,0.1)" }}
-                  tick={{ fill: "#122333", fontSize: 11, fontWeight: 700 }}
-                />
-                <YAxis
-                  tickLine={false}
-                  axisLine={{ stroke: "rgba(0,0,0,0.1)" }}
-                  tick={{ fill: "rgba(18, 35, 51, 0.5)", fontSize: 11 }}
-                />
-                <Tooltip content={<CustomTooltip />} />
-                <Legend
-                  wrapperStyle={{
-                    paddingTop: "12px",
-                    fontSize: "12px",
-                    fontWeight: 700,
-                  }}
-                />
-                <Bar
-                  dataKey="Schools"
-                  fill="url(#schoolCol)"
-                  radius={[6, 6, 0, 0]}
-                  maxBarSize={28}
-                />
-                <Bar
-                  dataKey="Teachers"
-                  fill="url(#teacherCol)"
-                  radius={[6, 6, 0, 0]}
-                  maxBarSize={28}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="Startups"
-                  stroke="#0D9488"
-                  strokeWidth={3.5}
-                  dot={{
-                    r: 5,
-                    fill: "#0D9488",
-                    stroke: "#fff",
-                    strokeWidth: 2,
-                  }}
-                />
-              </ComposedChart>
-            </ResponsiveContainer>
+            <Box sx={{ width: "100%", height: 300 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <ComposedChart
+                  data={comboTrendData}
+                  margin={{ top: 15, right: 20, left: -10, bottom: 0 }}
+                >
+                  <defs>
+                    <linearGradient id="schoolCol" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#101216" />
+                      <stop offset="100%" stopColor="#2b313d" />
+                    </linearGradient>
+                    <linearGradient id="teacherCol" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#0D9488" />
+                      <stop offset="100%" stopColor="#14B8A6" />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    vertical={false}
+                    stroke="rgba(0,0,0,0.05)"
+                  />
+                  <XAxis
+                    dataKey="month"
+                    tickLine={false}
+                    axisLine={{ stroke: "rgba(0,0,0,0.1)" }}
+                    tick={{ fill: Colors.PRIMARY_DARK, fontSize: 12, fontWeight: 700 }}
+                  />
+                  <YAxis
+                    tickLine={false}
+                    axisLine={{ stroke: "rgba(0,0,0,0.1)" }}
+                    tick={{ fill: "rgba(18, 35, 51, 0.5)", fontSize: 11 }}
+                  />
+                  <Tooltip content={<CustomTooltip />} />
+                  <Legend
+                    wrapperStyle={{
+                      paddingTop: "12px",
+                      fontSize: "12px",
+                      fontWeight: 700,
+                    }}
+                  />
+                  <Bar
+                    dataKey="Schools"
+                    fill="url(#schoolCol)"
+                    radius={[6, 6, 0, 0]}
+                    maxBarSize={32}
+                  />
+                  <Bar
+                    dataKey="Teachers"
+                    fill="url(#teacherCol)"
+                    radius={[6, 6, 0, 0]}
+                    maxBarSize={32}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="Startups"
+                    stroke="#F59E0B"
+                    strokeWidth={3}
+                    dot={{
+                      r: 5,
+                      fill: Colors.ACCENT_MINT,
+                      stroke: "#F59E0B",
+                      strokeWidth: 2,
+                    }}
+                  />
+                </ComposedChart>
+              </ResponsiveContainer>
+            </Box>
           </Paper>
         </Grid>
       </Grid>

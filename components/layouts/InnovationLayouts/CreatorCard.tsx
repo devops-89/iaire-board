@@ -36,9 +36,9 @@ export const CreatorCard: React.FC<CreatorCardProps> = ({ creator }) => {
       elevation={0}
       sx={{
         p: { xs: 2.5, sm: 4 },
-        borderRadius: "24px",
-        border: "1px solid rgba(18, 35, 51, 0.05)",
-        boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
+        borderRadius: "20px",
+        border: `1px solid ${Colors.BORDER_STONE}`,
+        boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
         bgcolor: "#fff",
       }}
     >
@@ -62,8 +62,8 @@ export const CreatorCard: React.FC<CreatorCardProps> = ({ creator }) => {
             sx={{
               width: 56,
               height: 56,
-              border: "2px solid #fff",
-              boxShadow: "0 4px 10px rgba(18,35,51,0.08)",
+              border: `1px solid ${Colors.BORDER_STONE}`,
+              boxShadow: "0 4px 10px rgba(16, 18, 22, 0.08)",
             }}
           />
         ) : (
@@ -71,8 +71,9 @@ export const CreatorCard: React.FC<CreatorCardProps> = ({ creator }) => {
             sx={{
               width: 56,
               height: 56,
-              bgcolor: "rgba(18,35,51,0.05)",
+              bgcolor: Colors.ACCENT_MINT,
               color: Colors.PRIMARY_DARK,
+              border: `1px solid ${Colors.BORDER_STONE}`,
             }}
           >
             <PersonIcon />

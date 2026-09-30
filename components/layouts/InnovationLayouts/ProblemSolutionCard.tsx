@@ -22,9 +22,9 @@ export const ProblemSolutionCard: React.FC<ProblemSolutionCardProps> = ({
         elevation={0}
         sx={{
           p: { xs: 2.5, sm: 4 },
-          borderRadius: "24px",
-          border: "1px solid rgba(18, 35, 51, 0.05)",
-          boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
+          borderRadius: "20px",
+          border: `1px solid ${Colors.BORDER_STONE}`,
+          boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
           bgcolor: "#fff",
         }}
       >
@@ -33,7 +33,7 @@ export const ProblemSolutionCard: React.FC<ProblemSolutionCardProps> = ({
           spacing={1.5}
           sx={{ mb: 2, alignItems: "center" }}
         >
-          <ProblemIcon sx={{ color: "#FF9800", fontSize: 24 }} />
+          <ProblemIcon sx={{ color: "#D97706", fontSize: 24 }} />
           <Typography
             sx={{
               fontSize: "16px",
@@ -47,7 +47,7 @@ export const ProblemSolutionCard: React.FC<ProblemSolutionCardProps> = ({
         <Typography
           sx={{
             fontSize: "14px",
-            color: "rgba(18, 35, 51, 0.7)",
+            color: "rgba(16, 18, 22, 0.7)",
             fontWeight: 500,
             lineHeight: 1.6,
           }}
@@ -61,9 +61,9 @@ export const ProblemSolutionCard: React.FC<ProblemSolutionCardProps> = ({
         elevation={0}
         sx={{
           p: { xs: 2.5, sm: 4 },
-          borderRadius: "24px",
-          border: "1px solid rgba(18, 35, 51, 0.05)",
-          boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
+          borderRadius: "20px",
+          border: `1px solid ${Colors.BORDER_STONE}`,
+          boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
           bgcolor: "#fff",
         }}
       >
@@ -72,7 +72,7 @@ export const ProblemSolutionCard: React.FC<ProblemSolutionCardProps> = ({
           spacing={1.5}
           sx={{ mb: 2, alignItems: "center" }}
         >
-          <SolutionIcon sx={{ color: "#4CAF50", fontSize: 24 }} />
+          <SolutionIcon sx={{ color: "#0D9488", fontSize: 24 }} />
           <Typography
             sx={{
               fontSize: "16px",
@@ -86,7 +86,7 @@ export const ProblemSolutionCard: React.FC<ProblemSolutionCardProps> = ({
         <Typography
           sx={{
             fontSize: "14px",
-            color: "rgba(18, 35, 51, 0.7)",
+            color: "rgba(16, 18, 22, 0.7)",
             fontWeight: 500,
             lineHeight: 1.6,
           }}

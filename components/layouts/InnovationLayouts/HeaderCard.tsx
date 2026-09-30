@@ -10,12 +10,12 @@ const getStatusColor = (status: string) => {
     s === "PATENT_GRANTED" ||
     s === "PUBLISHED"
   ) {
-    return { bg: "rgba(15, 157, 88, 0.08)", text: "#0F9D58" };
+    return { bg: Colors.ACCENT_MINT, text: Colors.PRIMARY_DARK, isMint: true };
   }
   if (s === "REJECTED" || s === "INACTIVE" || s === "CLOSED") {
-    return { bg: "rgba(219, 68, 85, 0.08)", text: "#DB4437" };
+    return { bg: "rgba(219, 68, 85, 0.08)", text: "#DB4437", isMint: false };
   }
-  return { bg: "rgba(244, 180, 0, 0.08)", text: "#F4B400" };
+  return { bg: "#F4F2EE", text: "#735B29", isMint: false };
 };
 
 const formatText = (text: string) => {
@@ -67,9 +67,9 @@ export const HeaderCard: React.FC<HeaderCardProps> = ({
       elevation={0}
       sx={{
         p: { xs: 2.5, sm: 4 },
-        borderRadius: "24px",
-        border: "1px solid rgba(18, 35, 51, 0.05)",
-        boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
+        borderRadius: "20px",
+        border: `1px solid ${Colors.BORDER_STONE}`,
+        boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
         bgcolor: "#fff",
       }}
     >
@@ -103,7 +103,7 @@ export const HeaderCard: React.FC<HeaderCardProps> = ({
             <Typography
               sx={{
                 fontSize: "13px",
-                color: "rgba(18, 35, 51, 0.4)",
+                color: "rgba(16, 18, 22, 0.5)",
                 fontWeight: 600,
               }}
             >
@@ -112,6 +112,19 @@ export const HeaderCard: React.FC<HeaderCardProps> = ({
           </Stack>
         </Box>
         <Chip
+          icon={
+            statusStyle.isMint ? (
+              <Box
+                sx={{
+                  width: 6,
+                  height: 6,
+                  borderRadius: "50%",
+                  bgcolor: "#0D9488",
+                  mr: -0.5,
+                }}
+              />
+            ) : undefined
+          }
           label={formatStatus(status || "PENDING")}
           sx={{
             bgcolor: statusStyle.bg,
@@ -121,6 +134,9 @@ export const HeaderCard: React.FC<HeaderCardProps> = ({
             px: 1,
             py: 2,
             borderRadius: "8px",
+            border: `1px solid ${
+              statusStyle.isMint ? "rgba(13, 148, 136, 0.25)" : "transparent"
+            }`,
           }}
         />
       </Stack>

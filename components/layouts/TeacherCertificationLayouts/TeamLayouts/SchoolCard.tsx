@@ -30,8 +30,8 @@ export const SchoolCard = ({
         p: 3,
         borderRadius: "20px",
         bgcolor: "#fff",
-        border: "1px solid rgba(18, 35, 51, 0.05)",
-        boxShadow: "0 10px 30px rgba(18, 35, 51, 0.03)",
+        border: `1px solid ${Colors.BORDER_STONE}`,
+        boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
       }}
     >
       <Typography
@@ -59,11 +59,13 @@ export const SchoolCard = ({
           sx={{
             width: 56,
             height: 56,
-            bgcolor: "rgba(32, 103, 106, 0.05)",
-            border: "1px solid rgba(18, 35, 51, 0.05)",
+            bgcolor: Colors.ACCENT_MINT,
+            color: Colors.PRIMARY_DARK,
+            border: `1px solid ${Colors.BORDER_STONE}`,
+            borderRadius: "12px",
           }}
         >
-          <SchoolIcon sx={{ color: Colors.PRIMARY }} />
+          <SchoolIcon sx={{ color: Colors.PRIMARY_DARK }} />
         </Avatar>
         <Box>
           <Typography
@@ -98,7 +100,7 @@ export const SchoolCard = ({
             }}
           >
             <AddressIcon
-              sx={{ color: Colors.PRIMARY, fontSize: 20, mt: 0.2 }}
+              sx={{ color: Colors.PRIMARY_DARK, fontSize: 20, mt: 0.2 }}
             />
             <Box>
               <Typography
@@ -125,7 +127,7 @@ export const SchoolCard = ({
             gap: 1.5,
           }}
         >
-          <LocationIcon sx={{ color: Colors.PRIMARY, fontSize: 20, mt: 0.2 }} />
+          <LocationIcon sx={{ color: Colors.PRIMARY_DARK, fontSize: 20, mt: 0.2 }} />
           <Box>
             <Typography
               sx={{
@@ -158,7 +160,7 @@ export const SchoolCard = ({
               gap: 1.5,
             }}
           >
-            <WebsiteIcon sx={{ color: Colors.PRIMARY, fontSize: 20 }} />
+            <WebsiteIcon sx={{ color: Colors.PRIMARY_DARK, fontSize: 20 }} />
             <Typography
               component="a"
               href={school.website}
@@ -166,7 +168,7 @@ export const SchoolCard = ({
               rel="noopener noreferrer"
               sx={{
                 fontSize: "13px",
-                color: Colors.PRIMARY,
+                color: Colors.PRIMARY_DARK,
                 fontWeight: 600,
                 textDecoration: "none",
                 "&:hover": { textDecoration: "underline" },
@@ -186,7 +188,7 @@ export const SchoolCard = ({
               mt: 1,
             }}
           >
-            <BoardIcon sx={{ color: Colors.PRIMARY, fontSize: 20, mt: 0.2 }} />
+            <BoardIcon sx={{ color: Colors.PRIMARY_DARK, fontSize: 20, mt: 0.2 }} />
             <Box>
               <Typography
                 sx={{

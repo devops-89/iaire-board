@@ -38,12 +38,27 @@ const getStatusColor = (status: string) => {
     s === "PATENT_GRANTED" ||
     s === "PUBLISHED"
   ) {
-    return { bg: "rgba(15, 157, 88, 0.08)", text: "#0F9D58" };
+    return {
+      bg: Colors.ACCENT_MINT,
+      text: Colors.PRIMARY_DARK,
+      border: "1px solid rgba(13, 148, 136, 0.25)",
+      dot: "#0D9488",
+    };
   }
   if (s === "REJECTED" || s === "INACTIVE" || s === "CLOSED") {
-    return { bg: "rgba(219, 68, 85, 0.08)", text: "#DB4437" };
+    return {
+      bg: "rgba(239, 68, 68, 0.08)",
+      text: "#DC2626",
+      border: "1px solid rgba(239, 68, 68, 0.2)",
+      dot: "#DC2626",
+    };
   }
-  return { bg: "rgba(244, 180, 0, 0.08)", text: "#F4B400" };
+  return {
+    bg: "rgba(245, 158, 11, 0.08)",
+    text: "#D97706",
+    border: "1px solid rgba(245, 158, 11, 0.2)",
+    dot: "#D97706",
+  };
 };
 
 const formatText = (text: string) => {
@@ -115,7 +130,7 @@ export const StartupDetailsLayout = () => {
         sx={{
           display: "flex",
           minHeight: "100vh",
-          bgcolor: "#FAF7F0",
+          bgcolor: "#fafaf8",
           fontFamily: Poppins.style.fontFamily,
         }}
       >
@@ -143,7 +158,7 @@ export const StartupDetailsLayout = () => {
         sx={{
           display: "flex",
           minHeight: "100vh",
-          bgcolor: "#FAF7F0",
+          bgcolor: "#fafaf8",
           fontFamily: Poppins.style.fontFamily,
         }}
       >
@@ -204,7 +219,7 @@ export const StartupDetailsLayout = () => {
       sx={{
         display: "flex",
         minHeight: "100vh",
-        bgcolor: "#FAF7F0",
+        bgcolor: "#fafaf8",
         fontFamily: Poppins.style.fontFamily,
       }}
     >
@@ -219,7 +234,7 @@ export const StartupDetailsLayout = () => {
           px: { xs: 1.5, sm: 2, md: 3 },
           pb: 3,
           position: "relative",
-          bgcolor: "#FAF7F0",
+          bgcolor: "#fafaf8",
           width: { xs: "100%", lg: "calc(100% - 250px)" },
         }}
       >
@@ -235,14 +250,14 @@ export const StartupDetailsLayout = () => {
               textTransform: "none",
               fontWeight: 700,
               fontSize: "14px",
-              borderRadius: "10px",
-              border: "1px solid rgba(18, 35, 51, 0.08)",
+              borderRadius: "12px",
+              border: `1px solid ${Colors.BORDER_STONE}`,
               bgcolor: "#fff",
               px: 2,
               py: 1,
               transition: "all 0.2s ease",
               "&:hover": {
-                bgcolor: "rgba(18, 35, 51, 0.04)",
+                bgcolor: Colors.ACCENT_MINT,
                 transform: "translateX(-2px)",
               },
             }}
@@ -259,9 +274,9 @@ export const StartupDetailsLayout = () => {
               elevation={0}
               sx={{
                 p: { xs: 2.5, sm: 4 },
-                borderRadius: "24px",
-                border: "1px solid rgba(18, 35, 51, 0.05)",
-                boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
+                borderRadius: "20px",
+                border: `1px solid ${Colors.BORDER_STONE}`,
+                boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
                 bgcolor: "#fff",
               }}
             >
@@ -310,8 +325,9 @@ export const StartupDetailsLayout = () => {
                         label={formatStatus(startup.sector)}
                         size="small"
                         sx={{
-                          bgcolor: "rgba(33, 150, 243, 0.08)",
-                          color: "#2196F3",
+                          bgcolor: Colors.ACCENT_MINT,
+                          color: Colors.PRIMARY_DARK,
+                          border: `1px solid ${Colors.BORDER_STONE}`,
                           fontWeight: 700,
                           fontSize: "11px",
                           borderRadius: "6px",
@@ -345,15 +361,27 @@ export const StartupDetailsLayout = () => {
                   </Box>
                 </Box>
                 <Chip
+                  icon={
+                    <Box
+                      sx={{
+                        width: 7,
+                        height: 7,
+                        borderRadius: "50%",
+                        bgcolor: statusStyle.dot || "#0D9488",
+                        ml: 1,
+                      }}
+                    />
+                  }
                   label={formatStatus(startup.status || "PENDING")}
                   sx={{
                     bgcolor: statusStyle.bg,
                     color: statusStyle.text,
+                    border: statusStyle.border,
                     fontWeight: 800,
                     fontSize: "12px",
                     px: 1,
                     py: 2,
-                    borderRadius: "8px",
+                    borderRadius: "10px",
                   }}
                 />
               </Stack>
@@ -368,9 +396,9 @@ export const StartupDetailsLayout = () => {
                 elevation={0}
                 sx={{
                   p: { xs: 2.5, sm: 4 },
-                  borderRadius: "24px",
-                  border: "1px solid rgba(18, 35, 51, 0.05)",
-                  boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
+                  borderRadius: "20px",
+                  border: `1px solid ${Colors.BORDER_STONE}`,
+                  boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
                   bgcolor: "#fff",
                 }}
               >
@@ -379,7 +407,21 @@ export const StartupDetailsLayout = () => {
                   spacing={1.5}
                   sx={{ mb: 2, alignItems: "center" }}
                 >
-                  <IdeaIcon sx={{ color: "#FFC107", fontSize: 24 }} />
+                  <Box
+                    sx={{
+                      width: 36,
+                      height: 36,
+                      borderRadius: "10px",
+                      bgcolor: Colors.ACCENT_MINT,
+                      color: Colors.PRIMARY_DARK,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      border: `1px solid ${Colors.BORDER_STONE}`,
+                    }}
+                  >
+                    <IdeaIcon sx={{ fontSize: 20 }} />
+                  </Box>
                   <Typography
                     sx={{
                       fontSize: "16px",
@@ -408,9 +450,9 @@ export const StartupDetailsLayout = () => {
                   elevation={0}
                   sx={{
                     p: { xs: 2.5, sm: 4 },
-                    borderRadius: "24px",
-                    border: "1px solid rgba(18, 35, 51, 0.05)",
-                    boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
+                    borderRadius: "20px",
+                    border: `1px solid ${Colors.BORDER_STONE}`,
+                    boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
                     bgcolor: "#fff",
                   }}
                 >
@@ -419,7 +461,21 @@ export const StartupDetailsLayout = () => {
                     spacing={1.5}
                     sx={{ mb: 2, alignItems: "center" }}
                   >
-                    <ProblemIcon sx={{ color: "#F44336", fontSize: 24 }} />
+                    <Box
+                      sx={{
+                        width: 36,
+                        height: 36,
+                        borderRadius: "10px",
+                        bgcolor: Colors.ACCENT_MINT,
+                        color: Colors.PRIMARY_DARK,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        border: `1px solid ${Colors.BORDER_STONE}`,
+                      }}
+                    >
+                      <ProblemIcon sx={{ fontSize: 20 }} />
+                    </Box>
                     <Typography
                       sx={{
                         fontSize: "16px",
@@ -449,9 +505,9 @@ export const StartupDetailsLayout = () => {
                   elevation={0}
                   sx={{
                     p: { xs: 2.5, sm: 4 },
-                    borderRadius: "24px",
-                    border: "1px solid rgba(18, 35, 51, 0.05)",
-                    boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
+                    borderRadius: "20px",
+                    border: `1px solid ${Colors.BORDER_STONE}`,
+                    boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
                     bgcolor: "#fff",
                   }}
                 >
@@ -460,9 +516,21 @@ export const StartupDetailsLayout = () => {
                     spacing={1.5}
                     sx={{ mb: 3, alignItems: "center" }}
                   >
-                    <PersonIcon
-                      sx={{ color: Colors.PRIMARY_DARK, fontSize: 24 }}
-                    />
+                    <Box
+                      sx={{
+                        width: 36,
+                        height: 36,
+                        borderRadius: "10px",
+                        bgcolor: Colors.ACCENT_MINT,
+                        color: Colors.PRIMARY_DARK,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        border: `1px solid ${Colors.BORDER_STONE}`,
+                      }}
+                    >
+                      <PersonIcon sx={{ fontSize: 20 }} />
+                    </Box>
                     <Typography
                       sx={{
                         fontSize: "16px",
@@ -488,7 +556,7 @@ export const StartupDetailsLayout = () => {
                         sx={{
                           width: 56,
                           height: 56,
-                          border: "2px solid #fff",
+                          border: `2px solid ${Colors.BORDER_STONE}`,
                           boxShadow: "0 4px 10px rgba(18,35,51,0.08)",
                         }}
                       />
@@ -497,8 +565,9 @@ export const StartupDetailsLayout = () => {
                         sx={{
                           width: 56,
                           height: 56,
-                          bgcolor: "rgba(18,35,51,0.05)",
+                          bgcolor: Colors.ACCENT_MINT,
                           color: Colors.PRIMARY_DARK,
+                          border: `1px solid ${Colors.BORDER_STONE}`,
                         }}
                       >
                         <PersonIcon />
@@ -545,14 +614,9 @@ export const StartupDetailsLayout = () => {
                         label={formatStatus(creator.role)}
                         size="small"
                         sx={{
-                          bgcolor:
-                            creator.role?.toUpperCase() === "STUDENT"
-                              ? "rgba(33, 150, 243, 0.08)"
-                              : "rgba(15, 157, 88, 0.08)",
-                          color:
-                            creator.role?.toUpperCase() === "STUDENT"
-                              ? "#2196F3"
-                              : "#0F9D58",
+                          bgcolor: Colors.ACCENT_MINT,
+                          color: Colors.PRIMARY_DARK,
+                          border: `1px solid ${Colors.BORDER_STONE}`,
                           fontWeight: 700,
                           fontSize: "11px",
                           borderRadius: "6px",
@@ -1027,9 +1091,9 @@ export const StartupDetailsLayout = () => {
                   elevation={0}
                   sx={{
                     p: { xs: 2.5, sm: 4 },
-                    borderRadius: "24px",
-                    border: "1px solid rgba(18, 35, 51, 0.05)",
-                    boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
+                    borderRadius: "20px",
+                    border: `1px solid ${Colors.BORDER_STONE}`,
+                    boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
                     bgcolor: "#fff",
                   }}
                 >
@@ -1038,7 +1102,21 @@ export const StartupDetailsLayout = () => {
                     spacing={1.5}
                     sx={{ mb: 3, alignItems: "center" }}
                   >
-                    <SchoolIcon sx={{ color: "#2196F3", fontSize: 24 }} />
+                    <Box
+                      sx={{
+                        width: 36,
+                        height: 36,
+                        borderRadius: "10px",
+                        bgcolor: Colors.ACCENT_MINT,
+                        color: Colors.PRIMARY_DARK,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        border: `1px solid ${Colors.BORDER_STONE}`,
+                      }}
+                    >
+                      <SchoolIcon sx={{ fontSize: 20 }} />
+                    </Box>
                     <Typography
                       sx={{
                         fontSize: "16px",
@@ -1081,9 +1159,10 @@ export const StartupDetailsLayout = () => {
                           sx={{
                             width: 64,
                             height: 64,
-                            border: "1px solid rgba(18,35,51,0.08)",
+                            border: `1px solid ${Colors.BORDER_STONE}`,
                             bgcolor: "#fafafa",
                             flexShrink: 0,
+                            borderRadius: "12px",
                           }}
                         />
                       ) : (
@@ -1092,9 +1171,11 @@ export const StartupDetailsLayout = () => {
                           sx={{
                             width: 64,
                             height: 64,
-                            bgcolor: "rgba(33, 150, 243, 0.1)",
-                            color: "#2196F3",
+                            bgcolor: Colors.ACCENT_MINT,
+                            color: Colors.PRIMARY_DARK,
+                            border: `1px solid ${Colors.BORDER_STONE}`,
                             flexShrink: 0,
+                            borderRadius: "12px",
                           }}
                         >
                           <SchoolIcon sx={{ fontSize: 32 }} />
@@ -1225,7 +1306,7 @@ export const StartupDetailsLayout = () => {
                             textTransform: "none",
                             fontSize: "13px",
                             fontWeight: 700,
-                            color: "#2196F3",
+                            color: Colors.PRIMARY_DARK,
                             p: 0,
                             minWidth: 0,
                             "&:hover": {
@@ -1247,9 +1328,9 @@ export const StartupDetailsLayout = () => {
                 elevation={0}
                 sx={{
                   p: { xs: 2.5, sm: 4 },
-                  borderRadius: "24px",
-                  border: "1px solid rgba(18, 35, 51, 0.05)",
-                  boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
+                  borderRadius: "20px",
+                  border: `1px solid ${Colors.BORDER_STONE}`,
+                  boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
                   bgcolor: "#fff",
                 }}
               >
@@ -1258,9 +1339,21 @@ export const StartupDetailsLayout = () => {
                   spacing={1.5}
                   sx={{ mb: 3, alignItems: "center" }}
                 >
-                  <StageIcon
-                    sx={{ color: Colors.PRIMARY_DARK, fontSize: 24 }}
-                  />
+                  <Box
+                    sx={{
+                      width: 36,
+                      height: 36,
+                      borderRadius: "10px",
+                      bgcolor: Colors.ACCENT_MINT,
+                      color: Colors.PRIMARY_DARK,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      border: `1px solid ${Colors.BORDER_STONE}`,
+                    }}
+                  >
+                    <StageIcon sx={{ fontSize: 20 }} />
+                  </Box>
                   <Typography
                     sx={{
                       fontSize: "16px",
@@ -1336,13 +1429,15 @@ export const StartupDetailsLayout = () => {
                           fontSize: "12px",
                           fontWeight: 700,
                           bgcolor: Colors.PRIMARY_DARK,
-                          color: "#fff",
+                          color: Colors.ACCENT_MINT,
                           borderRadius: "10px",
                           py: 1,
                           width: "100%",
                           boxShadow: "none",
+                          border: `1px solid ${Colors.BORDER_STONE}`,
                           "&:hover": {
-                            bgcolor: "rgba(18,35,51,0.9)",
+                            bgcolor: Colors.PRIMARY_DARK,
+                            opacity: 0.9,
                             boxShadow: "none",
                           },
                         }}
@@ -1380,14 +1475,14 @@ export const StartupDetailsLayout = () => {
                               fontSize: "12px",
                               fontWeight: 700,
                               color: Colors.PRIMARY_DARK,
-                              borderColor: "rgba(18, 35, 51, 0.1)",
+                              borderColor: Colors.BORDER_STONE,
                               borderRadius: "10px",
                               py: 1,
                               px: 2,
                               width: "100%",
                               "&:hover": {
-                                borderColor: Colors.PRIMARY_DARK,
-                                bgcolor: "rgba(18, 35, 51, 0.02)",
+                                borderColor: Colors.BORDER_STONE,
+                                bgcolor: Colors.ACCENT_MINT,
                               },
                             }}
                           >

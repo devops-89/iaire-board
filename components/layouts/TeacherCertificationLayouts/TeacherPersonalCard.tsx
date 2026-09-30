@@ -29,10 +29,10 @@ export const TeacherPersonalCard = ({
       elevation={0}
       sx={{
         p: { xs: 2.5, sm: 3.5, md: 4 },
-        borderRadius: { xs: "18px", sm: "24px" },
-        border: "1px solid rgba(18, 35, 51, 0.05)",
+        borderRadius: "20px",
+        border: `1px solid ${Colors.BORDER_STONE}`,
         bgcolor: "#fff",
-        boxShadow: "0 10px 40px rgba(18, 35, 51, 0.03)",
+        boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
       }}
     >
       <Typography
@@ -75,8 +75,9 @@ export const TeacherPersonalCard = ({
                 width: 38,
                 height: 38,
                 borderRadius: "10px",
-                bgcolor: "rgba(59, 130, 246, 0.08)",
-                color: "#3B82F6",
+                bgcolor: Colors.ACCENT_MINT,
+                color: Colors.PRIMARY_DARK,
+                border: `1px solid ${Colors.BORDER_STONE}`,
                 flexShrink: 0,
               }}
             >
@@ -136,8 +137,9 @@ export const TeacherPersonalCard = ({
                 width: 38,
                 height: 38,
                 borderRadius: "10px",
-                bgcolor: "rgba(139, 92, 246, 0.08)",
-                color: "#8B5CF6",
+                bgcolor: Colors.ACCENT_MINT,
+                color: Colors.PRIMARY_DARK,
+                border: `1px solid ${Colors.BORDER_STONE}`,
                 flexShrink: 0,
               }}
             >
@@ -197,8 +199,9 @@ export const TeacherPersonalCard = ({
                 width: 38,
                 height: 38,
                 borderRadius: "10px",
-                bgcolor: "rgba(16, 185, 129, 0.08)",
-                color: "#10B981",
+                bgcolor: Colors.ACCENT_MINT,
+                color: Colors.PRIMARY_DARK,
+                border: `1px solid ${Colors.BORDER_STONE}`,
                 flexShrink: 0,
               }}
             >
@@ -258,8 +261,9 @@ export const TeacherPersonalCard = ({
                 width: 38,
                 height: 38,
                 borderRadius: "10px",
-                bgcolor: "rgba(236, 72, 153, 0.08)",
-                color: "#EC4899",
+                bgcolor: Colors.ACCENT_MINT,
+                color: Colors.PRIMARY_DARK,
+                border: `1px solid ${Colors.BORDER_STONE}`,
                 flexShrink: 0,
               }}
             >
@@ -320,8 +324,9 @@ export const TeacherPersonalCard = ({
                 width: 38,
                 height: 38,
                 borderRadius: "10px",
-                bgcolor: "rgba(245, 158, 11, 0.08)",
-                color: "#F59E0B",
+                bgcolor: Colors.ACCENT_MINT,
+                color: Colors.PRIMARY_DARK,
+                border: `1px solid ${Colors.BORDER_STONE}`,
                 flexShrink: 0,
               }}
             >
@@ -381,8 +386,9 @@ export const TeacherPersonalCard = ({
                 width: 38,
                 height: 38,
                 borderRadius: "10px",
-                bgcolor: "rgba(20, 184, 166, 0.08)",
-                color: "#14B8A6",
+                bgcolor: Colors.ACCENT_MINT,
+                color: Colors.PRIMARY_DARK,
+                border: `1px solid ${Colors.BORDER_STONE}`,
                 flexShrink: 0,
               }}
             >

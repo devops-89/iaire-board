@@ -22,9 +22,9 @@ export const SubmissionDetailsCard: React.FC<SubmissionDetailsCardProps> = ({
       elevation={0}
       sx={{
         p: { xs: 2.5, sm: 4 },
-        borderRadius: "24px",
-        border: "1px solid rgba(18, 35, 51, 0.05)",
-        boxShadow: "0 10px 40px rgba(18, 35, 51, 0.02)",
+        borderRadius: "20px",
+        border: `1px solid ${Colors.BORDER_STONE}`,
+        boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
         bgcolor: "#fff",
       }}
     >
@@ -47,7 +47,7 @@ export const SubmissionDetailsCard: React.FC<SubmissionDetailsCardProps> = ({
             sx={{
               fontSize: "11px",
               fontWeight: 700,
-              color: "rgba(18, 35, 51, 0.4)",
+              color: "rgba(16, 18, 22, 0.5)",
               textTransform: "uppercase",
               mb: 0.5,
             }}
@@ -70,7 +70,7 @@ export const SubmissionDetailsCard: React.FC<SubmissionDetailsCardProps> = ({
               sx={{
                 fontSize: "12px",
                 fontWeight: 600,
-                color: "rgba(18, 35, 51, 0.5)",
+                color: "rgba(16, 18, 22, 0.6)",
                 mt: 0.5,
               }}
             >
@@ -85,7 +85,7 @@ export const SubmissionDetailsCard: React.FC<SubmissionDetailsCardProps> = ({
               sx={{
                 fontSize: "11px",
                 fontWeight: 700,
-                color: "rgba(18, 35, 51, 0.4)",
+                color: "rgba(16, 18, 22, 0.5)",
                 textTransform: "uppercase",
                 mb: 1,
               }}
@@ -103,13 +103,15 @@ export const SubmissionDetailsCard: React.FC<SubmissionDetailsCardProps> = ({
                 fontSize: "12px",
                 fontWeight: 700,
                 bgcolor: Colors.PRIMARY_DARK,
-                color: "#fff",
+                color: Colors.ACCENT_MINT,
+                border: `1px solid ${Colors.BORDER_STONE}`,
                 borderRadius: "10px",
                 py: 1,
                 width: "100%",
                 boxShadow: "none",
                 "&:hover": {
-                  bgcolor: "rgba(18,35,51,0.9)",
+                  bgcolor: Colors.PRIMARY_DARK,
+                  opacity: 0.9,
                   boxShadow: "none",
                 },
               }}

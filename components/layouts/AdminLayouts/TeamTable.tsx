@@ -19,6 +19,8 @@ import {
   PersonAdd as AddIcon,
 } from "@mui/icons-material";
 
+import { Colors } from "@/utils/enum";
+
 const team = [
   {
     id: "ADM-001",
@@ -58,15 +60,15 @@ export const TeamTable = () => {
         }}
       >
         <Typography
-          sx={{ fontSize: "18px", fontWeight: 800, color: "#122333" }}
+          sx={{ fontSize: "18px", fontWeight: 800, color: Colors.PRIMARY_DARK }}
         >
           Administrative Team
         </Typography>
         <IconButton
           sx={{
-            bgcolor: "#122333",
-            color: "#fff",
-            "&:hover": { bgcolor: "#1A2B3B" },
+            bgcolor: Colors.PRIMARY_DARK,
+            color: Colors.ACCENT_MINT,
+            "&:hover": { bgcolor: Colors.PRIMARY_DARK, opacity: 0.9 },
           }}
         >
           <AddIcon />
@@ -74,31 +76,37 @@ export const TeamTable = () => {
       </Box>
       <TableContainer
         component={Paper}
+        elevation={0}
         sx={{
-          borderRadius: "24px",
-          boxShadow: "0 4px 20px rgba(0,0,0,0.03)",
-          border: "1px solid rgba(0,0,0,0.04)",
+          borderRadius: "20px",
+          boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
+          border: `1px solid ${Colors.BORDER_STONE}`,
           overflowX: "auto",
         }}
       >
         <Table sx={{ minWidth: 650 }}>
-          <TableHead sx={{ bgcolor: "#F8F9FA" }}>
+          <TableHead
+            sx={{
+              bgcolor: "#FAFBFD",
+              borderBottom: `1px solid ${Colors.BORDER_STONE}`,
+            }}
+          >
             <TableRow>
-              <TableCell sx={{ fontWeight: 700, color: "#122333" }}>
+              <TableCell sx={{ fontWeight: 800, fontSize: "11px", color: Colors.PRIMARY_DARK, textTransform: "uppercase", letterSpacing: "0.5px" }}>
                 User
               </TableCell>
-              <TableCell sx={{ fontWeight: 700, color: "#122333" }}>
+              <TableCell sx={{ fontWeight: 800, fontSize: "11px", color: Colors.PRIMARY_DARK, textTransform: "uppercase", letterSpacing: "0.5px" }}>
                 Email
               </TableCell>
-              <TableCell sx={{ fontWeight: 700, color: "#122333" }}>
+              <TableCell sx={{ fontWeight: 800, fontSize: "11px", color: Colors.PRIMARY_DARK, textTransform: "uppercase", letterSpacing: "0.5px" }}>
                 Role
               </TableCell>
-              <TableCell sx={{ fontWeight: 700, color: "#122333" }}>
+              <TableCell sx={{ fontWeight: 800, fontSize: "11px", color: Colors.PRIMARY_DARK, textTransform: "uppercase", letterSpacing: "0.5px" }}>
                 Status
               </TableCell>
               <TableCell
                 align="right"
-                sx={{ fontWeight: 700, color: "#122333" }}
+                sx={{ fontWeight: 800, fontSize: "11px", color: Colors.PRIMARY_DARK, textTransform: "uppercase", letterSpacing: "0.5px" }}
               >
                 Action
               </TableCell>
@@ -108,15 +116,26 @@ export const TeamTable = () => {
             {team.map((user) => (
               <TableRow
                 key={user.id}
-                sx={{ "&:hover": { bgcolor: "#FAF7F0" } }}
+                sx={{
+                  borderBottom: `1px solid rgba(212, 210, 205, 0.45)`,
+                  "&:last-child": { borderBottom: "none" },
+                  "&:hover": {
+                    bgcolor: "rgba(221, 255, 247, 0.14)",
+                    transform: "translateY(-1px)",
+                    boxShadow: "0 4px 16px rgba(16, 18, 22, 0.03)",
+                  },
+                }}
               >
                 <TableCell>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                     <Avatar
                       sx={{
-                        bgcolor: "#122333",
+                        bgcolor: Colors.ACCENT_MINT,
+                        color: Colors.PRIMARY_DARK,
                         fontSize: "14px",
-                        fontWeight: 700,
+                        fontWeight: 800,
+                        borderRadius: "10px",
+                        border: `1px solid ${Colors.BORDER_STONE}`,
                       }}
                     >
                       {user.avatar}
@@ -125,7 +144,7 @@ export const TeamTable = () => {
                       sx={{
                         fontSize: "14px",
                         fontWeight: 700,
-                        color: "#122333",
+                        color: Colors.PRIMARY_DARK,
                       }}
                     >
                       {user.name}
@@ -134,33 +153,56 @@ export const TeamTable = () => {
                 </TableCell>
                 <TableCell>
                   <Typography
-                    sx={{ fontSize: "14px", color: "rgba(18, 35, 51, 0.6)" }}
+                    sx={{ fontSize: "13px", color: "rgba(16, 18, 22, 0.65)" }}
                   >
                     {user.email}
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography sx={{ fontSize: "13px", fontWeight: 600 }}>
+                  <Typography sx={{ fontSize: "13px", fontWeight: 600, color: Colors.PRIMARY_DARK }}>
                     {user.role}
                   </Typography>
                 </TableCell>
                 <TableCell>
                   <Chip
+                    icon={
+                      user.status === "Active" ? (
+                        <Box
+                          sx={{
+                            width: 6,
+                            height: 6,
+                            borderRadius: "50%",
+                            bgcolor: "#0D9488",
+                            mr: -0.5,
+                          }}
+                        />
+                      ) : undefined
+                    }
                     label={user.status}
                     size="small"
                     sx={{
-                      bgcolor: user.status === "Active" ? "#E6F9F8" : "#F1F2F4",
-                      color: user.status === "Active" ? "#008B81" : "#122333",
-                      fontWeight: 700,
+                      bgcolor: user.status === "Active" ? Colors.ACCENT_MINT : "#FAFBFD",
+                      color: Colors.PRIMARY_DARK,
+                      fontWeight: 800,
                       fontSize: "11px",
+                      borderRadius: "8px",
+                      border: `1px solid ${user.status === "Active" ? "rgba(13, 148, 136, 0.25)" : Colors.BORDER_STONE}`,
+                      px: 0.5,
                     }}
                   />
                 </TableCell>
                 <TableCell align="right">
-                  <IconButton size="small">
-                    <MoreIcon
-                      sx={{ fontSize: "20px", color: "rgba(18, 35, 51, 0.4)" }}
-                    />
+                  <IconButton
+                    size="small"
+                    sx={{
+                      color: "rgba(16, 18, 22, 0.4)",
+                      "&:hover": {
+                        bgcolor: Colors.ACCENT_MINT,
+                        color: Colors.PRIMARY_DARK,
+                      },
+                    }}
+                  >
+                    <MoreIcon sx={{ fontSize: "20px" }} />
                   </IconButton>
                 </TableCell>
               </TableRow>

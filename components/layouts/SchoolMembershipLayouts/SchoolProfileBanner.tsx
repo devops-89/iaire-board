@@ -6,6 +6,7 @@ import {
   CalendarTodayOutlined as CalendarIcon,
   Language as WebIcon,
 } from "@mui/icons-material";
+import { Colors } from "@/utils/enum";
 
 interface SchoolProfileBannerProps {
   school: any;
@@ -24,8 +25,9 @@ export const SchoolProfileBanner = ({
       sx={{
         p: { xs: 2.5, sm: 4 },
         borderRadius: "24px",
-        background: "linear-gradient(135deg, #111E2E 0%, #0A1420 100%)",
-        boxShadow: "0 20px 40px rgba(18, 35, 51, 0.08)",
+        bgcolor: Colors.PRIMARY_DARK,
+        boxShadow: "0 10px 30px rgba(16, 18, 22, 0.08)",
+        border: `1px solid ${Colors.BORDER_STONE}`,
         position: "relative",
         overflow: "hidden",
         mb: 4,
@@ -39,7 +41,7 @@ export const SchoolProfileBanner = ({
           height: "300px",
           borderRadius: "50%",
           background:
-            "radial-gradient(circle, rgba(0, 209, 193, 0.12) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(221, 255, 247, 0.08) 0%, transparent 70%)",
         },
       }}
     >
@@ -59,11 +61,11 @@ export const SchoolProfileBanner = ({
               width: { xs: 48, sm: 80 },
               height: { xs: 48, sm: 80 },
               borderRadius: { xs: "14px", sm: "20px" },
-              bgcolor: "rgba(255, 255, 255, 0.08)",
-              color: "#00D1C1",
+              bgcolor: Colors.ACCENT_MINT,
+              color: Colors.PRIMARY_DARK,
               fontSize: { xs: "20px", sm: "32px" },
               fontWeight: 800,
-              border: "2px solid rgba(0, 209, 193, 0.3)",
+              border: `2px solid ${Colors.BORDER_STONE}`,
               boxShadow: "0 8px 24px rgba(0, 0, 0, 0.2)",
               flexShrink: 0,
             }}
@@ -96,25 +98,24 @@ export const SchoolProfileBanner = ({
                     width: 6,
                     height: 6,
                     borderRadius: "50%",
-                    bgcolor: "#10B981",
+                    bgcolor: "#0D9488",
                     ml: 1,
-                    boxShadow: "0 0 8px #10B981",
                   }}
                 />
               ) : undefined
             }
             sx={{
               bgcolor: school.isActive
-                ? "rgba(16, 185, 129, 0.15)"
+                ? Colors.ACCENT_MINT
                 : "rgba(255, 255, 255, 0.1)",
-              color: school.isActive ? "#10B981" : "rgba(255, 255, 255, 0.65)",
+              color: school.isActive ? Colors.PRIMARY_DARK : "rgba(255, 255, 255, 0.65)",
               fontWeight: 800,
               fontSize: "11px",
               borderRadius: "8px",
               height: "26px",
               border: `1px solid ${
                 school.isActive
-                  ? "rgba(16, 185, 129, 0.3)"
+                  ? "rgba(13, 148, 136, 0.25)"
                   : "rgba(255, 255, 255, 0.2)"
               }`,
               pl: school.isActive ? 0.5 : 0,
@@ -193,8 +194,8 @@ export const SchoolProfileBanner = ({
                 rel="noopener noreferrer"
                 sx={{
                   fontSize: { xs: "12px", sm: "13px" },
-                  fontWeight: 600,
-                  color: "#00D1C1",
+                  fontWeight: 700,
+                  color: Colors.ACCENT_MINT,
                   textDecoration: "none",
                   "&:hover": { textDecoration: "underline" },
                 }}
