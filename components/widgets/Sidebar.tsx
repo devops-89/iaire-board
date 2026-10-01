@@ -9,7 +9,6 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Avatar,
   IconButton,
 } from "@mui/material";
 import {
@@ -24,10 +23,9 @@ import { Colors } from "@/utils/enum";
 import { FontSizes, FontWeights } from "@/utils/style";
 import { Poppins } from "@/utils/font";
 import { useRouter, usePathname } from "next/navigation";
-import { Logout } from "./Logout";
-import { useAuth } from "@/hooks/auth/useAuth";
 
-const drawerWidth = 250;
+export const DRAWER_WIDTH = 270;
+const drawerWidth = DRAWER_WIDTH;
 
 const menuGroups = [
   {
@@ -72,33 +70,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const { user } = useAuth();
-
-  const userName = user?.fullName || user?.name || "CISCE Admin";
-  const userRole = user?.role || "SUPER_ADMIN";
-  const userAvatar =
-    user?.profileImageDownloadUrl || user?.profileImage || user?.avatar || "";
-
-  const getInitials = (name: string) => {
-    if (!name) return "AD";
-    return name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase()
-      .slice(0, 2);
-  };
-
-  const formatRoleName = (role: string) => {
-    if (!role) return "Administrator";
-    return role
-      .replace(/_/g, " ")
-      .toLowerCase()
-      .split(" ")
-      .filter(Boolean)
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
-  };
 
   const drawerContent = (
     <Box
@@ -163,7 +134,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </Typography>
             <List disablePadding>
               {group.items.map((item) => {
-                const isActive = pathname === item.path;
+                const isActive =
+                  pathname === item.path ||
+                  pathname?.startsWith(`${item.path}/`);
                 return (
                   <ListItem key={item.text} disablePadding sx={{ mb: 0.5 }}>
                     <ListItemButton
@@ -172,21 +145,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         if (onMobileClose) onMobileClose();
                       }}
                       sx={{
-                        borderRadius: "8px",
-                        bgcolor: isActive
-                          ? "rgba(221, 255, 247, 0.12)"
-                          : "transparent",
-                        borderLeft: isActive
-                          ? `4px solid ${Colors.ACCENT_MINT}`
-                          : "4px solid transparent",
-                        "&:hover": { bgcolor: "rgba(255,255,255,0.06)" },
+                        borderRadius: "10px",
+                        bgcolor: isActive ? Colors.ACCENT_MINT : "transparent",
+                        "&:hover": {
+                          bgcolor: isActive
+                            ? Colors.ACCENT_MINT
+                            : "rgba(255,255,255,0.06)",
+                        },
                         py: 1,
+                        px: 1.5,
+                        transition: "all 0.2s ease",
                       }}
                     >
                       <ListItemIcon
                         sx={{
                           color: isActive
-                            ? Colors.ACCENT_MINT
+                            ? Colors.PRIMARY_DARK
                             : Colors.BORDER_STONE,
                           minWidth: 38,
                           "& svg": { fontSize: 20 },
@@ -201,7 +175,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                               fontSize: "13px",
                               fontWeight: isActive ? 700 : 500,
                               color: isActive
-                                ? Colors.ACCENT_MINT
+                                ? Colors.PRIMARY_DARK
                                 : Colors.BORDER_STONE,
                               fontFamily: Poppins.style.fontFamily,
                             }}
@@ -217,74 +191,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </List>
           </Box>
         ))}
-      </Box>
-
-      {/* Footer Profile */}
-      <Box
-        onClick={() => {
-          router.push("/admin");
-          if (onMobileClose) onMobileClose();
-        }}
-        sx={{
-          mt: "auto",
-          p: 2,
-          bgcolor: "rgba(0,0,0,0.2)",
-          cursor: "pointer",
-          transition: "all 0.2s",
-          "&:hover": { bgcolor: "rgba(255,255,255,0.05)" },
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1.5,
-              flex: 1,
-              minWidth: 0,
-            }}
-          >
-            <Avatar
-              src={userAvatar}
-              sx={{
-                bgcolor: Colors.ACCENT_MINT,
-                color: Colors.PRIMARY_DARK,
-                width: 32,
-                height: 32,
-                fontSize: "12px",
-                fontWeight: 700,
-                flexShrink: 0,
-              }}
-            >
-              {getInitials(userName)}
-            </Avatar>
-            <Box sx={{ minWidth: 0 }}>
-              <Typography
-                noWrap
-                sx={{
-                  fontSize: FontSizes.SMALL,
-                  fontWeight: FontWeights.MEDIUM,
-                  color: Colors.WHITE,
-                }}
-              >
-                {userName}
-              </Typography>
-              <Typography
-                noWrap
-                sx={{ fontSize: "11px", color: "rgba(255,255,255,0.5)" }}
-              >
-                {formatRoleName(userRole)}
-              </Typography>
-            </Box>
-          </Box>
-          <Logout />
-        </Box>
       </Box>
     </Box>
   );

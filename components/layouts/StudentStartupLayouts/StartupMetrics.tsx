@@ -7,7 +7,6 @@ import {
 } from "@mui/icons-material";
 import { IndividualDistributionCard } from "@/components/layouts/TeacherCertificationLayouts/IndividualDistributionCard";
 
-// Icon mapping for Startup Metrics
 const IconMap: any = {
   startup: StartupIcon,
   money: MoneyIcon,

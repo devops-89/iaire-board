@@ -74,7 +74,7 @@ export const InnovationDetailsLayout = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            width: { xs: "100%", lg: "calc(100% - 250px)" },
+            width: { xs: "100%", lg: "calc(100% - 270px)" },
           }}
         >
           <CircularProgress sx={{ color: Colors.PRIMARY_DARK }} />
@@ -100,7 +100,7 @@ export const InnovationDetailsLayout = () => {
             flexGrow: 1,
             height: "100vh",
             p: 4,
-            width: { xs: "100%", lg: "calc(100% - 250px)" },
+            width: { xs: "100%", lg: "calc(100% - 270px)" },
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
@@ -144,7 +144,7 @@ export const InnovationDetailsLayout = () => {
           pb: 3,
           position: "relative",
           bgcolor: "#fafaf8",
-          width: { xs: "100%", lg: "calc(100% - 250px)" },
+          width: { xs: "100%", lg: "calc(100% - 270px)" },
         }}
       >
         <Navbar onMenuClick={handleDrawerToggle} />

@@ -52,7 +52,6 @@ interface DashboardVisualChartsProps {
   };
 }
 
-// Custom Glassmorphic Tooltip
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
@@ -127,8 +126,6 @@ export const DashboardVisualCharts: React.FC<DashboardVisualChartsProps> = ({
 
   if (!isMounted) return null;
 
-
-  // 2. Data for Combo Chart (Gradient Bars + Spline Curve)
   const comboTrendData = [
     { month: "Jan", Schools: 12, Teachers: 6, Startups: 1, Research: 1 },
     { month: "Feb", Schools: 15, Teachers: 8, Startups: 1, Research: 2 },
@@ -144,7 +141,6 @@ export const DashboardVisualCharts: React.FC<DashboardVisualChartsProps> = ({
       Research: data.researchCount ?? 0,
     },
   ];
-
 
   return (
     <Box sx={{ mb: 6 }}>
@@ -242,7 +238,11 @@ export const DashboardVisualCharts: React.FC<DashboardVisualChartsProps> = ({
                     dataKey="month"
                     tickLine={false}
                     axisLine={{ stroke: "rgba(0,0,0,0.1)" }}
-                    tick={{ fill: Colors.PRIMARY_DARK, fontSize: 12, fontWeight: 700 }}
+                    tick={{
+                      fill: Colors.PRIMARY_DARK,
+                      fontSize: 12,
+                      fontWeight: 700,
+                    }}
                   />
                   <YAxis
                     tickLine={false}

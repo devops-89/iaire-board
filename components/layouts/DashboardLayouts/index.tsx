@@ -6,6 +6,7 @@ import { Navbar } from "@/components/widgets/Navbar";
 import { Poppins } from "@/utils/font";
 import { Colors } from "@/utils/enum";
 import { TopMetricsBar } from "./TopMetricsBar";
+import { BoardAdminStats } from "./BoardAdminStats";
 
 export default function DashboardLayouts() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -35,11 +36,12 @@ export default function DashboardLayouts() {
           pb: 3,
           position: "relative",
           bgcolor: Colors.APP_BACKGROUND,
-          width: { xs: "100%", lg: "calc(100% - 250px)" },
+          width: { xs: "100%", lg: "calc(100% - 270px)" },
         }}
       >
         <Navbar onMenuClick={handleDrawerToggle} />
         <TopMetricsBar />
+        <BoardAdminStats />
       </Box>
     </Box>
   );

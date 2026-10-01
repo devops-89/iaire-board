@@ -171,7 +171,7 @@ export const StartupTable = () => {
       <Box
         sx={{
           display: "flex",
-          justifyContent: "flex-end",
+          justifyContent: "flex-start",
           alignItems: "center",
           mb: 3,
         }}

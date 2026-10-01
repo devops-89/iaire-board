@@ -230,7 +230,7 @@ export const TeacherDetailsLayout = () => {
           pb: 3,
           position: "relative",
           bgcolor: "#fafaf8",
-          width: { xs: "100%", lg: "calc(100% - 250px)" },
+          width: { xs: "100%", lg: "calc(100% - 270px)" },
         }}
       >
         <Navbar onMenuClick={handleDrawerToggle} />

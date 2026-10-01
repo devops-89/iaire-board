@@ -18,7 +18,7 @@ interface StartupHeroProps {
   growth: string;
   loading: boolean;
 }
-1 
+
 export const StartupHero: React.FC<StartupHeroProps> = ({
   total,
   activeProjects,

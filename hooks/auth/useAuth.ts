@@ -1,5 +1,4 @@
-"use client";
-
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import {
@@ -17,6 +16,14 @@ export const useAuth = () => {
     (state: any) =>
       state.auth || { user: null, isAuthenticated: false, token: null },
   );
+
+  useEffect(() => {
+    const storedToken =
+      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    if (storedToken && !user) {
+      fetchUserDetails();
+    }
+  }, [user]);
 
   const login = async (values: any) => {
     const response = await authControllers.login({
@@ -76,14 +83,32 @@ export const useAuth = () => {
       const response = await authControllers.getUserDetails();
       if (response?.data && response.data.success) {
         const userData = response.data.data;
-        const name = userData.fullName || `${userData.firstName || ""} ${userData.lastName || ""}`.trim() || "User";
+        const name =
+          userData.fullName ||
+          `${userData.firstName || ""} ${userData.lastName || ""}`.trim() ||
+          "User";
+        const avatarUrl =
+          userData.profileImageDownloadUrl ||
+          userData.profile_image_download_url ||
+          userData.profileImageDownloadPath ||
+          userData.profile_image_download_path ||
+          userData.avatar ||
+          (typeof userData.profileImage === "string"
+            ? userData.profileImage
+            : "") ||
+          "";
         const mappedUser = {
           ...userData,
           id: String(userData.id),
           name: name,
-          avatar: userData.profileImageDownloadUrl || userData.profileImage || "",
+          avatar: avatarUrl,
         };
-        dispatch(loginAction({ user: mappedUser, token: localStorage.getItem("token") || "" }));
+        dispatch(
+          loginAction({
+            user: mappedUser,
+            token: localStorage.getItem("token") || "",
+          }),
+        );
         return { success: true, user: mappedUser };
       }
     } catch (error) {

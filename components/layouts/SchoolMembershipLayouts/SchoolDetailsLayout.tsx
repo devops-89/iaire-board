@@ -107,7 +107,7 @@ export const SchoolDetailsLayout = () => {
             display: "flex",
             flexDirection: "column",
             overflowX: "hidden",
-            width: { xs: "100%", lg: "calc(100% - 250px)" },
+            width: { xs: "100%", lg: "calc(100% - 270px)" },
           }}
         >
           <Navbar onMenuClick={handleDrawerToggle} />
@@ -145,7 +145,7 @@ export const SchoolDetailsLayout = () => {
             display: "flex",
             flexDirection: "column",
             overflowX: "hidden",
-            width: { xs: "100%", lg: "calc(100% - 250px)" },
+            width: { xs: "100%", lg: "calc(100% - 270px)" },
           }}
         >
           <Navbar onMenuClick={handleDrawerToggle} />
@@ -230,7 +230,7 @@ export const SchoolDetailsLayout = () => {
           pb: 3,
           position: "relative",
           bgcolor: "#fafaf8",
-          width: { xs: "100%", lg: "calc(100% - 250px)" },
+          width: { xs: "100%", lg: "calc(100% - 270px)" },
         }}
       >
         <Navbar onMenuClick={handleDrawerToggle} />

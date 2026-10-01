@@ -331,9 +331,31 @@ export const TopMetricsBar = () => {
   const data = stats || defaultStats;
 
   return (
-    <Box sx={{ mb: 6 }}>
+    <Box sx={{ mb: 4 }}>
+      {/* Institutional Overview Heading */}
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 2 }}>
+        <Box
+          sx={{
+            width: 4,
+            height: 22,
+            bgcolor: Colors.PRIMARY_DARK,
+            borderRadius: 2,
+          }}
+        />
+        <Typography
+          sx={{
+            fontSize: { xs: "17px", sm: "19px" },
+            fontWeight: 800,
+            color: Colors.PRIMARY_DARK,
+            letterSpacing: "-0.3px",
+          }}
+        >
+          Institutional Overview
+        </Typography>
+      </Box>
+
       {/* Row 1: 3 Grouped Cards */}
-      <Grid container spacing={3} sx={{ mb: 3 }}>
+      <Grid container spacing={3}>
         <GroupedMetricCard
           title="Schools Overview"
           value={data.totalSchools}
@@ -358,34 +380,6 @@ export const TopMetricsBar = () => {
           activeValue={data.activeStudents}
           inactiveValue={data.inactiveStudents}
           icon={<StudentsIcon sx={{ fontSize: 22 }} />}
-          loading={loading}
-        />
-      </Grid>
-
-      {/* Row 2: 4 Standalone Cards */}
-      <Grid container spacing={3} sx={{ mb: 4 }}>
-        <SingleMetricCard
-          title="Pending Innovations"
-          value={data.innovationsPendingCount}
-          icon={<PendingIcon sx={{ fontSize: 20 }} />}
-          loading={loading}
-        />
-        <SingleMetricCard
-          title="Patents Granted"
-          value={data.patentGrantedCount}
-          icon={<PatentsIcon sx={{ fontSize: 20 }} />}
-          loading={loading}
-        />
-        <SingleMetricCard
-          title="Research Papers"
-          value={data.researchCount}
-          icon={<ResearchIcon sx={{ fontSize: 20 }} />}
-          loading={loading}
-        />
-        <SingleMetricCard
-          title="Student Startups"
-          value={data.startupCount}
-          icon={<StartupsIcon sx={{ fontSize: 20 }} />}
           loading={loading}
         />
       </Grid>
