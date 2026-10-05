@@ -110,13 +110,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
   const userName = user?.fullName || user?.name || "CISCE Admin";
   const userRole = user?.role || "SUPER_ADMIN";
   const userAvatar =
-    user?.avatar ||
     user?.profileImageDownloadUrl ||
     user?.profile_image_download_url ||
     user?.profileImageDownloadPath ||
     user?.profile_image_download_path ||
+    user?.avatar ||
     (typeof user?.profileImage === "string" ? user?.profileImage : "") ||
     "";
+
+  const displayAvatar = userAvatar || "/images/default-avatar.svg";
 
   const getInitials = (name: string) => {
     if (!name) return "CA";
@@ -289,7 +291,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
           }}
         >
           <Avatar
-            src={userAvatar || undefined}
+            src={displayAvatar}
+            alt={userName}
             sx={{
               bgcolor: Colors.ACCENT_MINT,
               color: Colors.PRIMARY_DARK,
@@ -298,9 +301,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
               width: 36,
               height: 36,
               border: "1px solid rgba(13, 148, 136, 0.25)",
+              "& img": {
+                objectFit: "cover",
+              },
             }}
           >
-            {getInitials(userName)}
+            <PersonIcon sx={{ fontSize: 20, color: Colors.PRIMARY_DARK }} />
           </Avatar>
 
           <Box
@@ -382,7 +388,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
             }}
           >
             <Avatar
-              src={userAvatar || undefined}
+              src={displayAvatar}
+              alt={userName}
               sx={{
                 bgcolor: Colors.ACCENT_MINT,
                 color: Colors.PRIMARY_DARK,
@@ -391,9 +398,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
                 width: 36,
                 height: 36,
                 border: "1px solid rgba(13, 148, 136, 0.25)",
+                "& img": {
+                  objectFit: "cover",
+                },
               }}
             >
-              {getInitials(userName)}
+              <PersonIcon sx={{ fontSize: 20, color: Colors.PRIMARY_DARK }} />
             </Avatar>
             <Box sx={{ minWidth: 0 }}>
               <Typography

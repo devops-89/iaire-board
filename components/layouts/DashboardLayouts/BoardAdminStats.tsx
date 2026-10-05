@@ -1,12 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Typography,
-  Paper,
-  Grid,
-  Skeleton,
-} from "@mui/material";
+import { Box, Typography, Paper, Grid, Skeleton } from "@mui/material";
 import {
   WorkspacePremium as PatentIcon,
   Public as GlobalPatentIcon,
@@ -127,8 +121,10 @@ const getItemIcon = (title: string, category: string) => {
   }
 
   if (category === "mentors") {
-    if (t.includes("schools")) return <TeacherSchoolIcon sx={{ fontSize: 20 }} />;
-    if (t.includes("member")) return <MemberTeacherIcon sx={{ fontSize: 20 }} />;
+    if (t.includes("schools"))
+      return <TeacherSchoolIcon sx={{ fontSize: 20 }} />;
+    if (t.includes("member"))
+      return <MemberTeacherIcon sx={{ fontSize: 20 }} />;
     if (t.includes("innovation"))
       return <TrainedInnovationIcon sx={{ fontSize: 20 }} />;
     return <TrainedResearchIcon sx={{ fontSize: 20 }} />;
@@ -242,7 +238,7 @@ const SingleMetricCard: React.FC<MetricCardProps> = ({
               lineHeight: 1,
             }}
           >
-            {count ?? 0}
+            {count !== null && count !== undefined ? count : "--"}
           </Typography>
         )}
       </Paper>

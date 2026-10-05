@@ -12,7 +12,14 @@ interface SectionHeaderProps {
 
 export const SectionHeader = ({ title, badge, color }: SectionHeaderProps) => (
   <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 3 }}>
-    <Box sx={{ width: 4, height: 24, bgcolor: color || Colors.PRIMARY_DARK, borderRadius: 2 }} />
+    <Box
+      sx={{
+        width: 4,
+        height: 24,
+        bgcolor: color || Colors.PRIMARY_DARK,
+        borderRadius: 2,
+      }}
+    />
     <Typography
       sx={{
         fontSize: "18px",

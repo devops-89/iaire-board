@@ -80,7 +80,7 @@ function VerifyOtpContent() {
                     name: decoded.name || "User",
                     email: decoded.email || email,
                     role: decoded.role || "admin",
-                    avatar: decoded.avatar || "/images/profile.png",
+                    avatar: decoded.avatar || "/images/default-avatar.svg",
                   };
                 } catch (e) {
                   console.error("Token decoding failed", e);

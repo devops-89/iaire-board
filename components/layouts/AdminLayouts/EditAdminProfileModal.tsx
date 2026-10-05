@@ -202,7 +202,7 @@ export const EditAdminProfileModal = ({
     "image/avif",
     "image/svg+xml",
   ];
-  const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024; // 5MB
+  const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
 
   const isAllowedImageType = (file: File) => {
     if (ALLOWED_IMAGE_TYPES.includes(file.type)) return true;

@@ -10,11 +10,11 @@ const GRID_5_COL = {
   gridTemplateColumns: {
     xs: "1fr",
     sm: "repeat(2, 1fr)",
-    md: "repeat(5, 1fr)"
+    md: "repeat(5, 1fr)",
   },
   gap: 2,
   width: "100%",
-  alignItems: "stretch"
+  alignItems: "stretch",
 };
 
 const GRID_6_COL = {
@@ -23,11 +23,11 @@ const GRID_6_COL = {
     xs: "1fr",
     sm: "repeat(2, 1fr)",
     md: "repeat(3, 1fr)",
-    lg: "repeat(6, 1fr)"
+    lg: "repeat(6, 1fr)",
   },
   gap: 2,
   width: "100%",
-  alignItems: "stretch"
+  alignItems: "stretch",
 };
 
 const GRID_4_COL = {
@@ -35,22 +35,22 @@ const GRID_4_COL = {
   gridTemplateColumns: {
     xs: "1fr",
     sm: "repeat(2, 1fr)",
-    md: "repeat(4, 1fr)"
+    md: "repeat(4, 1fr)",
   },
   gap: 2,
   width: "100%",
-  alignItems: "stretch"
+  alignItems: "stretch",
 };
 
 const GRID_3_COL = {
   display: "grid",
   gridTemplateColumns: {
     xs: "1fr",
-    sm: "repeat(3, 1fr)"
+    sm: "repeat(3, 1fr)",
   },
   gap: 2,
   width: "100%",
-  alignItems: "stretch"
+  alignItems: "stretch",
 };
 
 export const MembershipOverview = () => {
@@ -117,7 +117,7 @@ export const IPResearchOverview = () => {
         badge="Schools + Totals"
         color="#4A90E2"
       />
-      
+
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
         {/* Row 1: Schools (4 Columns) */}
         <Box sx={GRID_4_COL}>

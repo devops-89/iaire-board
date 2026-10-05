@@ -9,15 +9,14 @@ import {
   Chip,
 } from "@mui/material";
 import { Colors } from "@/utils/enum";
-import { 
-  Lightbulb as InnovationIcon, 
-  Description as ResearchIcon, 
-  AutoAwesome as BothIcon, 
-  Group as TotalIcon 
+import {
+  Lightbulb as InnovationIcon,
+  Description as ResearchIcon,
+  AutoAwesome as BothIcon,
+  Group as TotalIcon,
 } from "@mui/icons-material";
 import { DashboardData } from "@/assets/generic-data";
 
-// Icon mapping based on keys from generic-data.ts
 const IconMap: any = {
   innovation: InnovationIcon,
   research: ResearchIcon,
@@ -27,7 +26,7 @@ const IconMap: any = {
 
 const MiniStat = ({ label, value, pct, iconKey, color }: any) => {
   const Icon = IconMap[iconKey] || TotalIcon;
-  
+
   return (
     <Paper
       sx={{
@@ -67,7 +66,11 @@ const MiniStat = ({ label, value, pct, iconKey, color }: any) => {
         </Typography>
 
         <Typography
-          sx={{ fontSize: "11px", fontWeight: 600, color: "rgba(16, 18, 22, 0.6)" }}
+          sx={{
+            fontSize: "11px",
+            fontWeight: 600,
+            color: "rgba(16, 18, 22, 0.6)",
+          }}
         >
           {pct}
         </Typography>
@@ -86,7 +89,9 @@ const ProgressBar = ({ label, value, color, max }: any) => (
         mb: 0.8,
       }}
     >
-      <Typography sx={{ fontSize: "12px", fontWeight: 700, color: Colors.PRIMARY_DARK }}>
+      <Typography
+        sx={{ fontSize: "12px", fontWeight: 700, color: Colors.PRIMARY_DARK }}
+      >
         {label}
       </Typography>
     </Box>
@@ -97,7 +102,10 @@ const ProgressBar = ({ label, value, color, max }: any) => (
         height: 8,
         borderRadius: 4,
         bgcolor: "rgba(212, 210, 205, 0.4)",
-        "& .MuiLinearProgress-bar": { bgcolor: color || Colors.PRIMARY_DARK, borderRadius: 4 },
+        "& .MuiLinearProgress-bar": {
+          bgcolor: color || Colors.PRIMARY_DARK,
+          borderRadius: 4,
+        },
       }}
     />
   </Box>
@@ -126,7 +134,12 @@ export const TeacherTrainingStatus = () => {
           }}
         >
           <Typography
-            sx={{ fontSize: "15px", fontWeight: 800, mb: 2, color: Colors.PRIMARY_DARK }}
+            sx={{
+              fontSize: "15px",
+              fontWeight: 800,
+              mb: 2,
+              color: Colors.PRIMARY_DARK,
+            }}
           >
             Teacher Status Breakdown
           </Typography>

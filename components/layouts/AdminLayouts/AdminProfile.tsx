@@ -253,7 +253,7 @@ export const AdminProfile = () => {
             }}
           >
             <Avatar
-              src={userAvatar}
+              src={userAvatar || "/images/default-avatar.svg"}
               sx={{
                 width: { xs: 80, sm: 100 },
                 height: { xs: 80, sm: 100 },
@@ -355,10 +355,7 @@ export const AdminProfile = () => {
                 >
                   EMAIL ADDRESS
                 </Typography>
-                <Typography
-                  noWrap
-                  sx={{ fontSize: "14px", fontWeight: 600 }}
-                >
+                <Typography noWrap sx={{ fontSize: "14px", fontWeight: 600 }}>
                   {userEmail}
                 </Typography>
               </Box>
@@ -386,10 +383,7 @@ export const AdminProfile = () => {
                 >
                   PHONE NUMBER
                 </Typography>
-                <Typography
-                  noWrap
-                  sx={{ fontSize: "14px", fontWeight: 600 }}
-                >
+                <Typography noWrap sx={{ fontSize: "14px", fontWeight: 600 }}>
                   {userPhone}
                 </Typography>
               </Box>

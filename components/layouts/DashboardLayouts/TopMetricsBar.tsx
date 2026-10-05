@@ -1,44 +1,17 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Typography,
-  Paper,
-  Grid,
-  Skeleton,
-  alpha,
-} from "@mui/material";
+import { Box, Typography, Paper, Grid, Skeleton } from "@mui/material";
 import {
   School as SchoolIcon,
   People as TeachersIcon,
   Groups as StudentsIcon,
-  HourglassEmpty as PendingIcon,
-  WorkspacePremium as PatentsIcon,
-  Description as ResearchIcon,
-  RocketLaunch as StartupsIcon,
 } from "@mui/icons-material";
 import { schoolControllers } from "@/api/school";
 import { Colors } from "@/utils/enum";
 
-const defaultStats = {
-  totalSchools: 0,
-  activeSchools: 0,
-  inactiveSchools: 0,
-  totalTeachers: 0,
-  activeTeachers: 0,
-  inactiveTeachers: 0,
-  totalStudents: 0,
-  activeStudents: 0,
-  inactiveStudents: 0,
-  innovationsPendingCount: 0,
-  patentGrantedCount: 0,
-  researchCount: 0,
-  startupCount: 0,
-};
+const formatValue = (val: number | string | null | undefined) =>
+  val !== null && val !== undefined && val !== "" ? val : "--";
 
-const formatValue = (val: number | null | undefined) => (val ?? 0);
-
-// Grouped Metric Card (Schools, Teachers, Students)
 const GroupedMetricCard = ({
   title,
   value,
@@ -48,10 +21,10 @@ const GroupedMetricCard = ({
   loading,
 }: {
   title: string;
-  value: number;
+  value?: number | string | null;
   icon: React.ReactNode;
-  activeValue: number;
-  inactiveValue: number;
+  activeValue?: number | string | null;
+  inactiveValue?: number | string | null;
   loading: boolean;
 }) => {
   return (
@@ -207,97 +180,6 @@ const GroupedMetricCard = ({
   );
 };
 
-// Single Metric Card (Pending Innovations, Patents, Research, Startups)
-const SingleMetricCard = ({
-  title,
-  value,
-  icon,
-  loading,
-}: {
-  title: string;
-  value: number;
-  icon: React.ReactNode;
-  loading: boolean;
-}) => {
-  return (
-    <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-      <Paper
-        elevation={0}
-        sx={{
-          p: { xs: 2, sm: 2.5 },
-          borderRadius: "20px",
-          bgcolor: "#FFFFFF",
-          border: `1px solid ${Colors.BORDER_STONE}`,
-          boxShadow: "0 4px 16px rgba(16, 18, 22, 0.04)",
-          transition: "all 0.25s ease-in-out",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          height: "100%",
-          minHeight: { xs: "110px", sm: "125px" },
-          "&:hover": {
-            transform: "translateY(-4px)",
-            boxShadow: "0 12px 28px rgba(16, 18, 22, 0.08)",
-            borderColor: Colors.PRIMARY_DARK,
-          },
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-start",
-            mb: 1.5,
-          }}
-        >
-          <Typography
-            sx={{
-              fontSize: { xs: "11px", sm: "12px" },
-              fontWeight: 700,
-              color: "rgba(16, 18, 22, 0.6)",
-              textTransform: "uppercase",
-              letterSpacing: "0.5px",
-              maxWidth: "75%",
-              lineHeight: 1.3,
-            }}
-          >
-            {title}
-          </Typography>
-          <Box
-            sx={{
-              bgcolor: Colors.ACCENT_MINT,
-              color: Colors.PRIMARY_DARK,
-              p: { xs: 0.8, sm: 1 },
-              borderRadius: "10px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            {icon}
-          </Box>
-        </Box>
-
-        {loading ? (
-          <Skeleton width="45%" height={40} sx={{ my: 0.5 }} />
-        ) : (
-          <Typography
-            sx={{
-              fontSize: { xs: "26px", sm: "32px" },
-              fontWeight: 800,
-              color: Colors.PRIMARY_DARK,
-              lineHeight: 1.1,
-              letterSpacing: "-1px",
-            }}
-          >
-            {formatValue(value)}
-          </Typography>
-        )}
-      </Paper>
-    </Grid>
-  );
-};
-
 export const TopMetricsBar = () => {
   const [stats, setStats] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -311,15 +193,11 @@ export const TopMetricsBar = () => {
           setStats(res.data.data.data);
         } else {
           const body = res?.data?.data || res?.data;
-          if (body && typeof body.totalSchools === "number") {
-            setStats(body);
-          } else {
-            setStats(defaultStats);
-          }
+          setStats(body || null);
         }
       } catch (error) {
         console.error("Failed to fetch dashboard stats:", error);
-        setStats(defaultStats);
+        setStats(null);
       } finally {
         setLoading(false);
       }
@@ -327,8 +205,6 @@ export const TopMetricsBar = () => {
 
     fetchStats();
   }, []);
-
-  const data = stats || defaultStats;
 
   return (
     <Box sx={{ mb: 4 }}>
@@ -358,27 +234,27 @@ export const TopMetricsBar = () => {
       <Grid container spacing={3}>
         <GroupedMetricCard
           title="Schools Overview"
-          value={data.totalSchools}
-          activeValue={data.activeSchools}
-          inactiveValue={data.inactiveSchools}
+          value={stats?.totalSchools}
+          activeValue={stats?.activeSchools}
+          inactiveValue={stats?.inactiveSchools}
           icon={<SchoolIcon sx={{ fontSize: 22 }} />}
           loading={loading}
         />
 
         <GroupedMetricCard
           title="Teachers Engagement"
-          value={data.totalTeachers}
-          activeValue={data.activeTeachers}
-          inactiveValue={data.inactiveTeachers}
+          value={stats?.totalTeachers}
+          activeValue={stats?.activeTeachers}
+          inactiveValue={stats?.inactiveTeachers}
           icon={<TeachersIcon sx={{ fontSize: 22 }} />}
           loading={loading}
         />
 
         <GroupedMetricCard
           title="Students Development"
-          value={data.totalStudents}
-          activeValue={data.activeStudents}
-          inactiveValue={data.inactiveStudents}
+          value={stats?.totalStudents}
+          activeValue={stats?.activeStudents}
+          inactiveValue={stats?.inactiveStudents}
           icon={<StudentsIcon sx={{ fontSize: 22 }} />}
           loading={loading}
         />

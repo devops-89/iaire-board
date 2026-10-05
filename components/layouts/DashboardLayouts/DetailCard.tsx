@@ -2,17 +2,16 @@
 import React from "react";
 import { Box, Typography, Paper, alpha } from "@mui/material";
 import { Colors } from "@/utils/enum";
-import { 
-  School as SchoolIcon, 
-  WorkspacePremium as PremiumIcon, 
+import {
+  School as SchoolIcon,
+  WorkspacePremium as PremiumIcon,
   Verified as VerifiedIcon,
   CheckCircle as SuccessIcon,
   HourglassEmpty as PendingIcon,
   EmojiEvents as AwardIcon,
-  Groups as GroupsIcon
+  Groups as GroupsIcon,
 } from "@mui/icons-material";
 
-// Local Icon Mapping for Detail Cards
 const IconMap: any = {
   school: SchoolIcon,
   premium: PremiumIcon,
@@ -69,7 +68,7 @@ export const DetailCard = ({ title, value, subtext, iconKey, color }: any) => {
           >
             {title}
           </Typography>
-          
+
           {/* Top Right Icon Box */}
           <Box
             sx={{
@@ -85,8 +84,6 @@ export const DetailCard = ({ title, value, subtext, iconKey, color }: any) => {
             <Icon sx={{ fontSize: 18 }} />
           </Box>
         </Box>
-        
-
       </Box>
 
       <Typography
