@@ -59,7 +59,7 @@ export const MembershipOverview = () => {
   return (
     <Box sx={{ mb: 6 }}>
       <SectionHeader
-        title="School Membership Status"
+        title="School Management Status"
         badge={`${metrics.length} metrics`}
         color="#00D1C1"
       />

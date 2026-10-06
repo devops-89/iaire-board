@@ -86,6 +86,8 @@ export interface School {
   displayId: string | null;
   membershipCode: string | null;
   registrationYear: number | null;
+  teacherCount?: number;
+  studentCount?: number;
 }
 
 export interface Teacher {

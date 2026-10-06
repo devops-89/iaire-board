@@ -36,7 +36,7 @@ const menuGroups = [
     title: "ANALYTICS",
     items: [
       {
-        text: "School Membership",
+        text: "School Management",
         icon: <InstitutionIcon />,
         path: "/membership-overview",
       },

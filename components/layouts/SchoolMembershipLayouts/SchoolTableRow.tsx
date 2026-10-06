@@ -2,7 +2,6 @@ import React from "react";
 import { Box, Typography, TableCell, TableRow, Chip, IconButton, Avatar } from "@mui/material";
 import {
   MoreVert as MoreIcon,
-  CalendarTodayOutlined as CalendarIcon,
 } from "@mui/icons-material";
 import { School } from "@/utils/types";
 import { Colors } from "@/utils/enum";
@@ -92,61 +91,30 @@ export const SchoolTableRow: React.FC<SchoolTableRowProps> = ({
         </Box>
       </TableCell>
 
-      {/* Membership Code Monospace Badge */}
+      {/* Teachers Count */}
       <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 } }} align="center">
-        {school.membershipCode ? (
-          <Box
-            component="span"
-            sx={{
-              fontFamily: "'Courier New', Courier, monospace",
-              fontWeight: 800,
-              fontSize: "12px",
-              color: Colors.PRIMARY_DARK,
-              bgcolor: "#FAFBFD",
-              border: `1px solid ${Colors.BORDER_STONE}`,
-              px: 1.2,
-              py: 0.5,
-              borderRadius: "8px",
-              display: "inline-block",
-              letterSpacing: "0.2px",
-            }}
-          >
-            {school.membershipCode}
-          </Box>
-        ) : (
-          <Typography
-            sx={{
-              fontSize: "13px",
-              color: "#94a3b8",
-              fontWeight: 600,
-              textAlign: "center",
-            }}
-          >
-            --
-          </Typography>
-        )}
+        <Typography
+          sx={{
+            fontSize: "13px",
+            fontWeight: 700,
+            color: Colors.PRIMARY_DARK,
+          }}
+        >
+          {school.teacherCount ?? (school as any).teachersCount ?? 0}
+        </Typography>
       </TableCell>
 
-      {/* Registration Year with Calendar Icon */}
-      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 } }}>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <CalendarIcon
-            sx={{
-              fontSize: 16,
-              color: Colors.PRIMARY_DARK,
-              opacity: 0.5,
-            }}
-          />
-          <Typography
-            sx={{
-              fontSize: "13px",
-              fontWeight: 700,
-              color: Colors.PRIMARY_DARK,
-            }}
-          >
-            {school.registrationYear || "--"}
-          </Typography>
-        </Box>
+      {/* Students Count */}
+      <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 } }} align="center">
+        <Typography
+          sx={{
+            fontSize: "13px",
+            fontWeight: 700,
+            color: Colors.PRIMARY_DARK,
+          }}
+        >
+          {school.studentCount ?? (school as any).studentsCount ?? 0}
+        </Typography>
       </TableCell>
 
       {/* Status Chips */}

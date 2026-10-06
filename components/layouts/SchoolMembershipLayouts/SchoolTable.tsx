@@ -220,9 +220,10 @@ export const SchoolTable = () => {
                       px: { xs: 2, sm: 3 },
                     }}
                   >
-                    Membership Code
+                    Teachers
                   </TableCell>
                   <TableCell
+                    align="center"
                     sx={{
                       fontWeight: 800,
                       fontSize: "11px",
@@ -233,7 +234,7 @@ export const SchoolTable = () => {
                       px: { xs: 2, sm: 3 },
                     }}
                   >
-                    Registration Year
+                    Students
                   </TableCell>
                   <TableCell
                     sx={{

@@ -24,7 +24,7 @@ export const MembershipHeader = () => {
               mb: 1,
             }}
           >
-            School Membership Overview
+            School Management Overview
           </Typography>
           <Typography
             sx={{
