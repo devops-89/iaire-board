@@ -60,18 +60,29 @@ export const SchoolDetailsLayout = () => {
   const [studentPage, setStudentPage] = useState<number>(1);
   const itemsPerPage = 10;
 
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   useEffect(() => {
     if (!schoolId) return;
 
     const fetchDetails = async () => {
       try {
         setLoading(true);
+        setErrorMessage(null);
         const res = await schoolControllers.getSchoolDetails(schoolId);
         if (res?.data && res.data.success) {
           setSchoolData(res.data.data.data || res.data.data);
         }
-      } catch (error) {
+      } catch (error: any) {
         console.error("Failed to fetch school details:", error);
+        const serverMsg = error?.response?.data?.message;
+        if (serverMsg) {
+          setErrorMessage(serverMsg);
+        } else if (error?.response?.status === 403) {
+          setErrorMessage("You can only access schools in your board");
+        } else {
+          setErrorMessage("School Details Not Found");
+        }
       } finally {
         setLoading(false);
       }
@@ -161,10 +172,24 @@ export const SchoolDetailsLayout = () => {
           >
             <Typography
               variant="h5"
-              sx={{ color: Colors.PRIMARY_DARK, fontWeight: 700 }}
+              sx={{ color: Colors.PRIMARY_DARK, fontWeight: 700, textAlign: "center" }}
             >
-              School Details Not Found
+              {errorMessage || "School Details Not Found"}
             </Typography>
+            {errorMessage && (
+              <Typography
+                sx={{
+                  color: "rgba(18, 35, 51, 0.55)",
+                  fontSize: "14px",
+                  fontWeight: 500,
+                  maxWidth: "420px",
+                  textAlign: "center",
+                  mb: 1,
+                }}
+              >
+                This school is not affiliated with your board account, so access is restricted.
+              </Typography>
+            )}
             <Button
               startIcon={<BackIcon />}
               onClick={handleBack}

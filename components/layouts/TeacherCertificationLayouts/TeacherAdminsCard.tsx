@@ -20,7 +20,14 @@ export const TeacherAdminsCard = ({ schoolAdmins }: TeacherAdminsCardProps) => {
         boxShadow: "0 4px 20px rgba(16, 18, 22, 0.04)",
       }}
     >
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: { xs: 2, sm: 3 } }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: 1.5,
+          mb: { xs: 2, sm: 3 },
+        }}
+      >
         <Box
           sx={{
             display: "flex",
@@ -38,7 +45,11 @@ export const TeacherAdminsCard = ({ schoolAdmins }: TeacherAdminsCardProps) => {
           <AdminIcon sx={{ fontSize: 18 }} />
         </Box>
         <Typography
-          sx={{ fontSize: { xs: "15px", sm: "16px" }, fontWeight: 800, color: Colors.PRIMARY_DARK }}
+          sx={{
+            fontSize: { xs: "15px", sm: "16px" },
+            fontWeight: 800,
+            color: Colors.PRIMARY_DARK,
+          }}
         >
           School Administrators
         </Typography>

@@ -1,22 +1,33 @@
 import React from "react";
-import { Box, Typography, TableCell, TableRow, Chip, IconButton, Avatar } from "@mui/material";
 import {
-  MoreVert as MoreIcon,
-} from "@mui/icons-material";
+  Box,
+  Typography,
+  TableCell,
+  TableRow,
+  Chip,
+  IconButton,
+  Avatar,
+  Tooltip,
+} from "@mui/material";
+import { VisibilityOutlined as EyeIcon } from "@mui/icons-material";
 import { School } from "@/utils/types";
 import { Colors } from "@/utils/enum";
+import { useRouter } from "next/navigation";
 
 interface SchoolTableRowProps {
   school: School;
-  onOpenMenu: (event: React.MouseEvent<HTMLElement>, school: School) => void;
+  onOpenMenu?: (event: React.MouseEvent<HTMLElement>, school: School) => void;
   onRowClick?: (school: School) => void;
+  onViewDetails?: (school: School) => void;
 }
 
 export const SchoolTableRow: React.FC<SchoolTableRowProps> = ({
   school,
   onOpenMenu,
   onRowClick,
+  onViewDetails,
 }) => {
+  const router = useRouter();
   return (
     <TableRow
       key={school.id}
@@ -72,9 +83,7 @@ export const SchoolTableRow: React.FC<SchoolTableRowProps> = ({
               boxShadow: "0 2px 8px rgba(16, 18, 22, 0.04)",
             }}
           >
-            {!school.logoDownloadUrl && !school.logo
-              ? school.name.charAt(0)
-              : undefined}
+            {school.name ? school.name.charAt(0).toUpperCase() : ""}
           </Avatar>
           <Box>
             <Typography
@@ -83,6 +92,7 @@ export const SchoolTableRow: React.FC<SchoolTableRowProps> = ({
                 fontWeight: 700,
                 color: Colors.PRIMARY_DARK,
                 lineHeight: 1.3,
+                textTransform: "capitalize",
               }}
             >
               {school.name}
@@ -176,28 +186,37 @@ export const SchoolTableRow: React.FC<SchoolTableRowProps> = ({
         />
       </TableCell>
 
-      {/* More Action Button */}
+      {/* View Details Action Button */}
       <TableCell align="right" sx={{ py: 2, px: { xs: 2, sm: 3 } }}>
-        <IconButton
-          size="small"
-          onClick={(e) => {
-            e.stopPropagation();
-            onOpenMenu(e, school);
-          }}
-          sx={{
-            color: Colors.PRIMARY_DARK,
-            opacity: 0.6,
-            borderRadius: "8px",
-            transition: "all 0.2s ease",
-            "&:hover": {
-              bgcolor: Colors.ACCENT_MINT,
-              opacity: 1,
+        <Tooltip title="View Details">
+          <IconButton
+            size="small"
+            onClick={(e) => {
+              e.stopPropagation();
+              if (onViewDetails) {
+                onViewDetails(school);
+              } else if (onRowClick) {
+                onRowClick(school);
+              } else {
+                router.push(`/membership-overview/${school.id}`);
+              }
+            }}
+            sx={{
               color: Colors.PRIMARY_DARK,
-            },
-          }}
-        >
-          <MoreIcon sx={{ fontSize: "20px" }} />
-        </IconButton>
+              bgcolor: "rgba(18, 35, 51, 0.04)",
+              borderRadius: "8px",
+              p: 0.8,
+              transition: "all 0.2s ease",
+              "&:hover": {
+                bgcolor: Colors.ACCENT_MINT,
+                color: Colors.PRIMARY_DARK,
+                transform: "scale(1.08)",
+              },
+            }}
+          >
+            <EyeIcon sx={{ fontSize: "19px" }} />
+          </IconButton>
+        </Tooltip>
       </TableCell>
     </TableRow>
   );

@@ -270,6 +270,9 @@ export const TeacherTable = () => {
                       key={teacher.id}
                       teacher={teacher}
                       onOpenMenu={handleOpenMenu}
+                      onViewDetails={(teacher) =>
+                        router.push(`/teacher-certification/${teacher.id}`)
+                      }
                       onRowClick={(teacher) =>
                         router.push(`/teacher-certification/${teacher.id}`)
                       }

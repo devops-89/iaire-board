@@ -622,7 +622,9 @@ export const StartupTable = () => {
                         borderRadius: "8px",
                         fontSize: "13px",
                         fontWeight: isActive ? 800 : 600,
-                        color: isActive ? Colors.ACCENT_MINT : Colors.PRIMARY_DARK,
+                        color: isActive
+                          ? Colors.ACCENT_MINT
+                          : Colors.PRIMARY_DARK,
                         bgcolor: isActive ? Colors.PRIMARY_DARK : "transparent",
                         border: isActive
                           ? `1px solid ${Colors.PRIMARY_DARK}`
@@ -720,7 +722,13 @@ export const StartupTable = () => {
           </ListItemIcon>
           <ListItemText
             primary={
-              <Typography sx={{ fontSize: "13px", fontWeight: 700, color: Colors.PRIMARY_DARK }}>
+              <Typography
+                sx={{
+                  fontSize: "13px",
+                  fontWeight: 700,
+                  color: Colors.PRIMARY_DARK,
+                }}
+              >
                 View Details
               </Typography>
             }

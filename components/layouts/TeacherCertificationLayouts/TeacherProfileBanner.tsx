@@ -35,7 +35,8 @@ export const TeacherProfileBanner = ({
           width: "300px",
           height: "300px",
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(221, 255, 247, 0.08) 0%, transparent 70%)",
+          background:
+            "radial-gradient(circle, rgba(221, 255, 247, 0.08) 0%, transparent 70%)",
         },
       }}
     >
@@ -111,7 +112,9 @@ export const TeacherProfileBanner = ({
             bgcolor: isTeacherActive
               ? Colors.ACCENT_MINT
               : "rgba(255, 255, 255, 0.1)",
-            color: isTeacherActive ? Colors.PRIMARY_DARK : "rgba(255, 255, 255, 0.65)",
+            color: isTeacherActive
+              ? Colors.PRIMARY_DARK
+              : "rgba(255, 255, 255, 0.65)",
             fontWeight: 800,
             fontSize: "11px",
             borderRadius: "8px",
@@ -129,4 +132,4 @@ export const TeacherProfileBanner = ({
       </Box>
     </Paper>
   );
-};
+}

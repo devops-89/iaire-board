@@ -141,7 +141,6 @@ export const AdminProfile = () => {
     (typeof user?.profileImage === "string" ? user?.profileImage : "") ||
     "";
 
-  // Board details strictly extracted from API
   const boardName = getStringVal(
     user?.board?.name ||
       user?.boardName ||

@@ -23,11 +23,12 @@ import { School } from "@/utils/types";
 import { SchoolTableHeader } from "./SchoolTableHeader";
 import { SchoolTableRow } from "./SchoolTableRow";
 import { SchoolTablePagination } from "./SchoolTablePagination";
-
+import { useAuth } from "@/hooks/auth/useAuth";
 import { useRouter } from "next/navigation";
 
 export const SchoolTable = () => {
   const router = useRouter();
+  const { user, fetchUserDetails } = useAuth();
   const [schools, setSchools] = useState<School[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -60,11 +61,20 @@ export const SchoolTable = () => {
   };
 
   useEffect(() => {
+    if (!user && fetchUserDetails) {
+      fetchUserDetails();
+    }
+  }, []);
+
+  const activeBoardId =
+    user?.board?.id || user?.boardId || user?.board_id || (user as any)?.board_admin?.boardId || 1;
+
+  useEffect(() => {
     const fetchSchools = async () => {
       try {
         setLoading(true);
         const res = await schoolControllers.getSchools(
-          1,
+          activeBoardId,
           currentPage,
           10,
           searchQuery,
@@ -107,7 +117,7 @@ export const SchoolTable = () => {
     }, 300);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [currentPage, searchQuery]);
+  }, [currentPage, searchQuery, activeBoardId]);
 
   // Handle page resets on search changes
   useEffect(() => {
@@ -286,6 +296,7 @@ export const SchoolTable = () => {
                       key={school.id}
                       school={school}
                       onOpenMenu={handleOpenMenu}
+                      onViewDetails={(school) => router.push(`/membership-overview/${school.id}`)}
                       onRowClick={(school) => router.push(`/membership-overview/${school.id}`)}
                     />
                   ))

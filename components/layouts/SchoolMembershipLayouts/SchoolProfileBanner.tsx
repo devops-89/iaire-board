@@ -70,9 +70,7 @@ export const SchoolProfileBanner = ({
               flexShrink: 0,
             }}
           >
-            {!school.schoolLogoDownloadUrl && !school.logo
-              ? school.name?.charAt(0).toUpperCase()
-              : undefined}
+            {school.name ? school.name.charAt(0).toUpperCase() : ""}
           </Avatar>
 
           <Box sx={{ flex: 1, minWidth: 0 }}>
@@ -83,6 +81,7 @@ export const SchoolProfileBanner = ({
                 color: "#fff",
                 letterSpacing: "-0.5px",
                 lineHeight: 1.2,
+                textTransform: "capitalize",
               }}
             >
               {school.name}

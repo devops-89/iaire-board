@@ -7,22 +7,27 @@ import {
   Chip,
   IconButton,
   Avatar,
+  Tooltip,
 } from "@mui/material";
-import { MoreVert as MoreIcon } from "@mui/icons-material";
+import { VisibilityOutlined as EyeIcon } from "@mui/icons-material";
 import { Teacher } from "@/utils/types";
 import { Colors } from "@/utils/enum";
+import { useRouter } from "next/navigation";
 
 interface TeacherTableRowProps {
   teacher: Teacher;
-  onOpenMenu: (event: React.MouseEvent<HTMLElement>, teacher: Teacher) => void;
+  onOpenMenu?: (event: React.MouseEvent<HTMLElement>, teacher: Teacher) => void;
   onRowClick?: (teacher: Teacher) => void;
+  onViewDetails?: (teacher: Teacher) => void;
 }
 
 export const TeacherTableRow: React.FC<TeacherTableRowProps> = ({
   teacher,
   onOpenMenu,
   onRowClick,
+  onViewDetails,
 }) => {
+  const router = useRouter();
   const rawDisplayName = teacher.fullName || teacher.username || "Teacher";
   const displayName = rawDisplayName
     .split(" ")
@@ -194,28 +199,37 @@ export const TeacherTableRow: React.FC<TeacherTableRowProps> = ({
         />
       </TableCell>
 
-      {/* More Actions Menu Button */}
+      {/* View Details Action Button */}
       <TableCell align="right" sx={{ py: 2, px: 3 }}>
-        <IconButton
-          size="small"
-          onClick={(e) => {
-            e.stopPropagation();
-            onOpenMenu(e, teacher);
-          }}
-          sx={{
-            color: Colors.PRIMARY_DARK,
-            opacity: 0.6,
-            borderRadius: "8px",
-            transition: "all 0.2s ease",
-            "&:hover": {
-              bgcolor: Colors.ACCENT_MINT,
-              opacity: 1,
+        <Tooltip title="View Details">
+          <IconButton
+            size="small"
+            onClick={(e) => {
+              e.stopPropagation();
+              if (onViewDetails) {
+                onViewDetails(teacher);
+              } else if (onRowClick) {
+                onRowClick(teacher);
+              } else {
+                router.push(`/teacher-certification/${teacher.id}`);
+              }
+            }}
+            sx={{
               color: Colors.PRIMARY_DARK,
-            },
-          }}
-        >
-          <MoreIcon sx={{ fontSize: "20px" }} />
-        </IconButton>
+              bgcolor: "rgba(18, 35, 51, 0.04)",
+              borderRadius: "8px",
+              p: 0.8,
+              transition: "all 0.2s ease",
+              "&:hover": {
+                bgcolor: Colors.ACCENT_MINT,
+                color: Colors.PRIMARY_DARK,
+                transform: "scale(1.08)",
+              },
+            }}
+          >
+            <EyeIcon sx={{ fontSize: "19px" }} />
+          </IconButton>
+        </Tooltip>
       </TableCell>
     </TableRow>
   );

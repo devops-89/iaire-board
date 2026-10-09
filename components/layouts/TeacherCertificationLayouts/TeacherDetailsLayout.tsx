@@ -279,7 +279,13 @@ export const TeacherDetailsLayout = () => {
         <Grid container spacing={{ xs: 2.5, sm: 3, md: 4 }}>
           {/* Left Column */}
           <Grid size={{ xs: 12, md: 8 }}>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 2.5, sm: 3, md: 4 } }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: { xs: 2.5, sm: 3, md: 4 },
+              }}
+            >
               {/* Personal Details Card */}
               <TeacherPersonalCard
                 teacherData={teacherData}

@@ -111,7 +111,8 @@ export default function Home() {
           left: "-10%",
           width: "80%",
           height: "70%",
-          background: "linear-gradient(to top, rgba(192, 132, 252, 0.6) 0%, transparent 70%)",
+          background:
+            "linear-gradient(to top, rgba(192, 132, 252, 0.6) 0%, transparent 70%)",
           filter: "blur(120px)",
           zIndex: 0,
         },
@@ -122,7 +123,8 @@ export default function Home() {
           right: "-5%",
           width: "70%",
           height: "60%",
-          background: "linear-gradient(to bottom, rgba(254, 215, 170, 0.6) 0%, transparent 70%)",
+          background:
+            "linear-gradient(to bottom, rgba(254, 215, 170, 0.6) 0%, transparent 70%)",
           filter: "blur(100px)",
           zIndex: 0,
         },
@@ -242,7 +244,9 @@ export default function Home() {
                 input: {
                   startAdornment: (
                     <InputAdornment position="start">
-                      <EmailIcon sx={{ color: "#94a3b8", fontSize: 20, ml: 1 }} />
+                      <EmailIcon
+                        sx={{ color: "#94a3b8", fontSize: 20, ml: 1 }}
+                      />
                     </InputAdornment>
                   ),
                 },
@@ -265,7 +269,9 @@ export default function Home() {
                 input: {
                   startAdornment: (
                     <InputAdornment position="start">
-                      <LockIcon sx={{ color: "#94a3b8", fontSize: 20, ml: 1 }} />
+                      <LockIcon
+                        sx={{ color: "#94a3b8", fontSize: 20, ml: 1 }}
+                      />
                     </InputAdornment>
                   ),
                   endAdornment: (
