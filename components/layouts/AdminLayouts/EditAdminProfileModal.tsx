@@ -107,6 +107,7 @@ export const EditAdminProfileModal = ({
 
   const [boardLogoFile, setBoardLogoFile] = useState<File | null>(null);
   const [boardLogoPreview, setBoardLogoPreview] = useState<string>("");
+  const [boardLogoPreviewError, setBoardLogoPreviewError] = useState(false);
   const [isBoardLogoRemoved, setIsBoardLogoRemoved] = useState(false);
 
   const [loading, setLoading] = useState(false);
@@ -171,20 +172,36 @@ export const EditAdminProfileModal = ({
         "";
       setProfileImagePreview(pAvatar);
 
-      const bLogo =
+      const sanitizeImageUrl = (url: any) => {
+        if (!url || typeof url !== "string") return "";
+        const trimmed = url.trim();
+        if (
+          trimmed === "" ||
+          trimmed === "null" ||
+          trimmed === "undefined" ||
+          trimmed === "none"
+        ) {
+          return "";
+        }
+        return trimmed;
+      };
+
+      const bLogo = sanitizeImageUrl(
         user?.boardLogoDownloadUrl ||
-        user?.board?.boardLogoDownloadUrl ||
-        user?.board?.logoDownloadUrl ||
-        user?.board?.logo_download_url ||
-        user?.board?.logoDownloadPath ||
-        user?.board?.logo_download_path ||
-        user?.board_logo_download_url ||
-        user?.logoDownloadUrl ||
-        user?.logo_download_url ||
-        (typeof user?.board?.logo === "string" ? user?.board?.logo : "") ||
-        (typeof user?.logo === "string" ? user?.logo : "") ||
-        "";
+          user?.board?.boardLogoDownloadUrl ||
+          user?.board?.logoDownloadUrl ||
+          user?.board?.logo_download_url ||
+          user?.board?.logoDownloadPath ||
+          user?.board?.logo_download_path ||
+          user?.board_logo_download_url ||
+          user?.logoDownloadUrl ||
+          user?.logo_download_url ||
+          (typeof user?.board?.logo === "string" ? user?.board?.logo : "") ||
+          (typeof user?.logo === "string" ? user?.logo : "") ||
+          "",
+      );
       setBoardLogoPreview(bLogo);
+      setBoardLogoPreviewError(false);
 
       setProfileImageFile(null);
       setBoardLogoFile(null);
@@ -257,6 +274,7 @@ export const EditAdminProfileModal = ({
       }
       setBoardLogoFile(file);
       setBoardLogoPreview(URL.createObjectURL(file));
+      setBoardLogoPreviewError(false);
       setIsBoardLogoRemoved(false);
     }
   };
@@ -763,12 +781,13 @@ export const EditAdminProfileModal = ({
                         flexShrink: 0,
                       }}
                     >
-                      {boardLogoPreview ? (
+                      {boardLogoPreview && !boardLogoPreviewError ? (
                         <Box
                           component="img"
                           src={boardLogoPreview}
                           alt="Board Logo Preview"
                           referrerPolicy="no-referrer"
+                          onError={() => setBoardLogoPreviewError(true)}
                           sx={{
                             maxHeight: "100%",
                             maxWidth: "100%",

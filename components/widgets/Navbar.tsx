@@ -16,6 +16,7 @@ import {
   FiberManualRecord as LiveIcon,
   Menu as MenuIcon,
   KeyboardArrowDown as ArrowDownIcon,
+  ChevronRight as ChevronRightIcon,
   PersonOutlined as PersonIcon,
   Logout as LogoutIcon,
 } from "@mui/icons-material";
@@ -275,18 +276,22 @@ export const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
           sx={{
             display: "flex",
             alignItems: "center",
-            gap: 1.4,
-            p: 0.6,
-            pr: { xs: 0.6, sm: 1.8 },
+            gap: 1.2,
+            p: "4px 12px 4px 5px",
             borderRadius: "100px",
             bgcolor: "#FFFFFF",
-            border: `1px solid ${Colors.BORDER_STONE}`,
-            boxShadow: "0 2px 8px rgba(16, 18, 22, 0.04)",
+            border: openMenu
+              ? "1.5px solid #00D1C1"
+              : "1px solid rgba(18, 35, 51, 0.12)",
+            boxShadow: openMenu
+              ? "0 0 0 3px rgba(0, 209, 193, 0.14), 0 4px 12px rgba(18, 35, 51, 0.06)"
+              : "0 2px 6px rgba(18, 35, 51, 0.03)",
             cursor: "pointer",
-            transition: "all 0.2s ease",
+            transition: "all 0.2s cubic-bezier(0.16, 1, 0.3, 1)",
             "&:hover": {
-              borderColor: Colors.PRIMARY_DARK,
-              boxShadow: "0 4px 14px rgba(16, 18, 22, 0.08)",
+              borderColor: openMenu ? "#00D1C1" : "rgba(18, 35, 51, 0.25)",
+              boxShadow: "0 4px 14px rgba(18, 35, 51, 0.08)",
+              transform: "translateY(-0.5px)",
             },
           }}
         >
@@ -294,19 +299,20 @@ export const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
             src={displayAvatar}
             alt={userName}
             sx={{
-              bgcolor: Colors.ACCENT_MINT,
-              color: Colors.PRIMARY_DARK,
+              bgcolor: "rgba(0, 209, 193, 0.15)",
+              color: "#008B80",
               fontWeight: 800,
-              fontSize: "13px",
-              width: 36,
-              height: 36,
-              border: "1px solid rgba(13, 148, 136, 0.25)",
+              fontSize: "12.5px",
+              width: 34,
+              height: 34,
+              border: "1px solid rgba(0, 209, 193, 0.3)",
+              boxShadow: "0 1px 4px rgba(0, 209, 193, 0.15)",
               "& img": {
                 objectFit: "cover",
               },
             }}
           >
-            <PersonIcon sx={{ fontSize: 20, color: Colors.PRIMARY_DARK }} />
+            {getInitials(userName)}
           </Avatar>
 
           <Box
@@ -319,11 +325,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
             <Typography
               noWrap
               sx={{
-                fontSize: "13.5px",
+                fontSize: "13px",
                 fontWeight: 700,
-                color: Colors.PRIMARY_DARK,
+                color: "#122333",
                 lineHeight: 1.2,
                 fontFamily: Poppins.style.fontFamily,
+                maxWidth: 130,
               }}
             >
               {userName}
@@ -331,9 +338,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
             <Typography
               noWrap
               sx={{
-                fontSize: "11.5px",
+                fontSize: "11px",
                 fontWeight: 500,
-                color: "rgba(16, 18, 22, 0.55)",
+                color: "rgba(18, 35, 51, 0.5)",
                 lineHeight: 1.2,
                 mt: 0.2,
                 fontFamily: Poppins.style.fontFamily,
@@ -345,11 +352,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
 
           <ArrowDownIcon
             sx={{
-              fontSize: 20,
-              color: "rgba(16, 18, 22, 0.5)",
-              transition: "transform 0.2s ease",
+              fontSize: 18,
+              color: openMenu ? "#008B80" : "rgba(18, 35, 51, 0.45)",
+              transition: "transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
               transform: openMenu ? "rotate(180deg)" : "rotate(0deg)",
               display: { xs: "none", sm: "block" },
+              ml: 0.2,
             }}
           />
         </Box>
@@ -359,29 +367,40 @@ export const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
           anchorEl={anchorEl}
           open={openMenu}
           onClose={handleCloseMenu}
+          autoFocus={false}
+          disableAutoFocusItem
           transformOrigin={{ horizontal: "right", vertical: "top" }}
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           slotProps={{
             paper: {
               elevation: 0,
               sx: {
-                mt: 1.2,
-                minWidth: 220,
-                borderRadius: "16px",
-                border: `1px solid ${Colors.BORDER_STONE}`,
-                boxShadow: "0 10px 30px rgba(16, 18, 22, 0.1)",
+                mt: 1.4,
+                minWidth: 280,
+                maxWidth: 320,
+                borderRadius: "20px",
+                border: "1px solid rgba(18, 35, 51, 0.08)",
+                bgcolor: "#FFFFFF",
+                boxShadow:
+                  "0 20px 45px -10px rgba(18, 35, 51, 0.16), 0 0 1px 1px rgba(18, 35, 51, 0.05)",
+                p: "8px",
                 overflow: "hidden",
-                p: 0.8,
+                "& .MuiList-root": {
+                  p: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "4px",
+                },
               },
             },
           }}
         >
-          {/* Header Info */}
+          {/* Header Identity Card - Seamless integrated profile info */}
           <Box
             sx={{
-              px: 1.5,
-              py: 1,
-              mb: 0.5,
+              px: 1.6,
+              py: 1.4,
+              mb: 0.3,
               display: "flex",
               alignItems: "center",
               gap: 1.5,
@@ -391,96 +410,244 @@ export const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
               src={displayAvatar}
               alt={userName}
               sx={{
-                bgcolor: Colors.ACCENT_MINT,
-                color: Colors.PRIMARY_DARK,
-                fontWeight: 800,
-                fontSize: "13px",
-                width: 36,
-                height: 36,
-                border: "1px solid rgba(13, 148, 136, 0.25)",
+                bgcolor: "#00D1C1",
+                color: "#FFFFFF",
+                fontWeight: 700,
+                fontSize: "15px",
+                width: 44,
+                height: 44,
+                boxShadow: "0 4px 14px rgba(0, 209, 193, 0.3)",
+                border: "2px solid #FFFFFF",
                 "& img": {
                   objectFit: "cover",
                 },
               }}
             >
-              <PersonIcon sx={{ fontSize: 20, color: Colors.PRIMARY_DARK }} />
+              {getInitials(userName)}
             </Avatar>
-            <Box sx={{ minWidth: 0 }}>
+
+            <Box sx={{ minWidth: 0, flex: 1 }}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 0.8, mb: 0.2 }}>
+                <Typography
+                  noWrap
+                  sx={{
+                    fontSize: "14px",
+                    fontWeight: 700,
+                    color: "#122333",
+                    fontFamily: Poppins.style.fontFamily,
+                    letterSpacing: "-0.2px",
+                  }}
+                >
+                  {userName}
+                </Typography>
+                <Chip
+                  size="small"
+                  label={formatRoleName(userRole)}
+                  sx={{
+                    height: 18,
+                    fontSize: "9.5px",
+                    fontWeight: 700,
+                    bgcolor: "rgba(0, 209, 193, 0.12)",
+                    color: "#008B80",
+                    borderRadius: "6px",
+                    fontFamily: Poppins.style.fontFamily,
+                    "& .MuiChip-label": { px: 0.8 },
+                  }}
+                />
+              </Box>
               <Typography
                 noWrap
                 sx={{
-                  fontSize: "13px",
-                  fontWeight: 700,
-                  color: Colors.PRIMARY_DARK,
+                  fontSize: "11.5px",
+                  color: "rgba(18, 35, 51, 0.55)",
                   fontFamily: Poppins.style.fontFamily,
+                  lineHeight: 1.3,
                 }}
               >
-                {userName}
-              </Typography>
-              <Typography
-                noWrap
-                sx={{
-                  fontSize: "11px",
-                  color: "rgba(16, 18, 22, 0.5)",
-                  fontFamily: Poppins.style.fontFamily,
-                  mt: 0.2,
-                }}
-              >
-                {user?.email || formatRoleName(userRole)}
+                {user?.email || "No email available"}
               </Typography>
             </Box>
           </Box>
 
-          <Divider sx={{ my: 0.5, borderColor: "rgba(16, 18, 22, 0.08)" }} />
+          <Divider sx={{ my: 0.4, borderColor: "rgba(18, 35, 51, 0.06)", mx: 0.5 }} />
 
           {/* Option 1: View Details */}
           <MenuItem
             onClick={handleViewDetails}
+            disableRipple
             sx={{
-              borderRadius: "10px",
-              py: 1,
-              px: 1.5,
-              fontSize: "13px",
-              fontWeight: 600,
-              color: Colors.PRIMARY_DARK,
-              fontFamily: Poppins.style.fontFamily,
+              borderRadius: "14px",
+              py: 1.1,
+              px: 1.4,
               display: "flex",
               alignItems: "center",
-              gap: 1.2,
-              transition: "all 0.15s ease",
+              justifyContent: "space-between",
+              transition: "all 0.18s cubic-bezier(0.16, 1, 0.3, 1)",
+              bgcolor: "transparent !important",
+              border: "1px solid transparent",
+              "&.Mui-focusVisible, &:focus, &.Mui-selected": {
+                bgcolor: "transparent !important",
+              },
               "&:hover": {
-                bgcolor: Colors.ACCENT_MINT,
-                color: Colors.PRIMARY_DARK,
+                bgcolor: "rgba(18, 35, 51, 0.035) !important",
+                borderColor: "rgba(18, 35, 51, 0.05)",
+                transform: "translateX(2px)",
+                "& .menu-icon-box": {
+                  bgcolor: "#00D1C1",
+                  color: "#FFFFFF",
+                  boxShadow: "0 4px 10px rgba(0, 209, 193, 0.3)",
+                },
+                "& .chevron-arrow": {
+                  color: "#122333",
+                  transform: "translateX(3px)",
+                },
               },
             }}
           >
-            <PersonIcon sx={{ fontSize: 18, color: Colors.PRIMARY_DARK }} />
-            View Details
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+              <Box
+                className="menu-icon-box"
+                sx={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: "10px",
+                  bgcolor: "rgba(18, 35, 51, 0.05)",
+                  color: "#122333",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  transition: "all 0.2s cubic-bezier(0.16, 1, 0.3, 1)",
+                  flexShrink: 0,
+                }}
+              >
+                <PersonIcon sx={{ fontSize: 20 }} />
+              </Box>
+              <Box>
+                <Typography
+                  sx={{
+                    fontSize: "13.5px",
+                    fontWeight: 600,
+                    color: "#122333",
+                    fontFamily: Poppins.style.fontFamily,
+                    lineHeight: 1.2,
+                  }}
+                >
+                  View Details
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "11px",
+                    color: "rgba(18, 35, 51, 0.45)",
+                    fontFamily: Poppins.style.fontFamily,
+                    lineHeight: 1.2,
+                    mt: 0.3,
+                  }}
+                >
+                  Profile & board settings
+                </Typography>
+              </Box>
+            </Box>
+
+            <ChevronRightIcon
+              className="chevron-arrow"
+              sx={{
+                fontSize: 17,
+                color: "rgba(18, 35, 51, 0.25)",
+                transition: "all 0.2s ease",
+              }}
+            />
           </MenuItem>
 
           {/* Option 2: Logout */}
           <MenuItem
             onClick={handleLogout}
+            disableRipple
             sx={{
-              borderRadius: "10px",
-              py: 1,
-              px: 1.5,
-              fontSize: "13px",
-              fontWeight: 600,
-              color: "#DC2626",
-              fontFamily: Poppins.style.fontFamily,
+              borderRadius: "14px",
+              py: 1.1,
+              px: 1.4,
               display: "flex",
               alignItems: "center",
-              gap: 1.2,
-              transition: "all 0.15s ease",
+              justifyContent: "space-between",
+              transition: "all 0.18s cubic-bezier(0.16, 1, 0.3, 1)",
+              bgcolor: "transparent !important",
+              border: "1px solid transparent",
+              "&.Mui-focusVisible, &:focus, &.Mui-selected": {
+                bgcolor: "transparent !important",
+              },
               "&:hover": {
-                bgcolor: "rgba(220, 38, 38, 0.08)",
-                color: "#DC2626",
+                bgcolor: "#FEF2F2 !important",
+                borderColor: "rgba(239, 68, 68, 0.1)",
+                transform: "translateX(2px)",
+                "& .logout-icon-box": {
+                  bgcolor: "#EF4444",
+                  color: "#FFFFFF",
+                  boxShadow: "0 4px 10px rgba(239, 68, 68, 0.3)",
+                },
+                "& .logout-label": {
+                  color: "#DC2626",
+                },
+                "& .chevron-arrow-logout": {
+                  color: "#DC2626",
+                  transform: "translateX(3px)",
+                },
               },
             }}
           >
-            <LogoutIcon sx={{ fontSize: 18, color: "#DC2626" }} />
-            Logout
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+              <Box
+                className="logout-icon-box"
+                sx={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: "10px",
+                  bgcolor: "rgba(239, 68, 68, 0.08)",
+                  color: "#EF4444",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  transition: "all 0.2s cubic-bezier(0.16, 1, 0.3, 1)",
+                  flexShrink: 0,
+                }}
+              >
+                <LogoutIcon sx={{ fontSize: 18 }} />
+              </Box>
+              <Box>
+                <Typography
+                  className="logout-label"
+                  sx={{
+                    fontSize: "13.5px",
+                    fontWeight: 600,
+                    color: "#DC2626",
+                    fontFamily: Poppins.style.fontFamily,
+                    lineHeight: 1.2,
+                    transition: "color 0.2s ease",
+                  }}
+                >
+                  Logout
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "11px",
+                    color: "rgba(220, 38, 38, 0.6)",
+                    fontFamily: Poppins.style.fontFamily,
+                    lineHeight: 1.2,
+                    mt: 0.3,
+                  }}
+                >
+                  Sign out of this session
+                </Typography>
+              </Box>
+            </Box>
+
+            <ChevronRightIcon
+              className="chevron-arrow-logout"
+              sx={{
+                fontSize: 17,
+                color: "rgba(220, 38, 38, 0.35)",
+                transition: "all 0.2s ease",
+              }}
+            />
           </MenuItem>
         </Menu>
       </Box>

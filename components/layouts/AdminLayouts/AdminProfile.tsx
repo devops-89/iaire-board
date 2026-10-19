@@ -87,6 +87,7 @@ export const AdminProfile = () => {
   );
   const [toastOpen, setToastOpen] = React.useState(false);
   const [toastMsg, setToastMsg] = React.useState("");
+  const [boardLogoError, setBoardLogoError] = React.useState(false);
 
   const handleOpenModal = (mode: "profile" | "board") => {
     setModalMode(mode);
@@ -153,7 +154,21 @@ export const AdminProfile = () => {
     "--",
   );
 
-  const boardLogo =
+  const sanitizeImageUrl = (url: any) => {
+    if (!url || typeof url !== "string") return "";
+    const trimmed = url.trim();
+    if (
+      trimmed === "" ||
+      trimmed === "null" ||
+      trimmed === "undefined" ||
+      trimmed === "none"
+    ) {
+      return "";
+    }
+    return trimmed;
+  };
+
+  const rawBoardLogo =
     user?.boardLogoDownloadUrl ||
     user?.board?.boardLogoDownloadUrl ||
     user?.board?.logoDownloadUrl ||
@@ -163,9 +178,15 @@ export const AdminProfile = () => {
     user?.board_logo_download_url ||
     user?.logoDownloadUrl ||
     user?.logo_download_url ||
-    user?.board?.logo ||
-    user?.logo ||
+    (typeof user?.board?.logo === "string" ? user?.board?.logo : "") ||
+    (typeof user?.logo === "string" ? user?.logo : "") ||
     "";
+
+  const boardLogo = sanitizeImageUrl(rawBoardLogo);
+
+  React.useEffect(() => {
+    setBoardLogoError(false);
+  }, [boardLogo]);
 
   const countryObj = user?.board?.country || user?.country;
   const boardCountry = getStringVal(countryObj?.name || countryObj, "--");
@@ -483,19 +504,32 @@ export const AdminProfile = () => {
                   overflow: "hidden",
                 }}
               >
-                {boardLogo ? (
-                  <Box
-                    component="img"
+                {boardLogo && !boardLogoError ? (
+                  <Avatar
+                    variant="rounded"
                     src={boardLogo}
                     alt="Board Logo"
-                    referrerPolicy="no-referrer"
+                    slotProps={{
+                      img: {
+                        referrerPolicy: "no-referrer",
+                        onError: () => setBoardLogoError(true),
+                        style: {
+                          objectFit: "contain",
+                          maxHeight: "32px",
+                          maxWidth: "48px",
+                        },
+                      },
+                    }}
                     sx={{
-                      maxHeight: 32,
-                      maxWidth: 64,
-                      objectFit: "contain",
+                      width: 44,
+                      height: 44,
+                      bgcolor: "transparent",
+                      color: "#122333",
                       borderRadius: "8px",
                     }}
-                  />
+                  >
+                    <BoardIcon fontSize="small" />
+                  </Avatar>
                 ) : (
                   <BoardIcon fontSize="small" />
                 )}
