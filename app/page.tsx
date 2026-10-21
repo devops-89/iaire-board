@@ -9,8 +9,6 @@ import {
   Container,
   Link,
   InputAdornment,
-  Checkbox,
-  FormControlLabel,
   IconButton,
   Snackbar,
   Alert,
@@ -94,87 +92,149 @@ export default function Home() {
     },
   };
 
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollLeft = 0;
+      document.body.scrollLeft = 0;
+    }
+  }, []);
+
   return (
     <Box
       sx={{
         minHeight: "100vh",
+        width: "100%",
         bgcolor: "#f8fafc",
         position: "relative",
-        overflowY: "auto",
         display: "flex",
         flexDirection: "column",
         fontFamily: Poppins.style.fontFamily,
-        "&::before": {
-          content: '""',
-          position: "absolute",
-          top: "-40%",
-          left: "-10%",
-          width: "80%",
-          height: "70%",
-          background:
-            "linear-gradient(to top, rgba(192, 132, 252, 0.6) 0%, transparent 70%)",
-          filter: "blur(120px)",
-          zIndex: 0,
-        },
-        "&::after": {
-          content: '""',
-          position: "absolute",
-          top: "5%",
-          right: "-5%",
-          width: "70%",
-          height: "60%",
-          background:
-            "linear-gradient(to bottom, rgba(254, 215, 170, 0.6) 0%, transparent 70%)",
-          filter: "blur(100px)",
-          zIndex: 0,
-        },
       }}
     >
+      {/* Background Blobs strictly contained within viewport without causing scroll */}
+      <Box
+        sx={{
+          position: "fixed",
+          inset: 0,
+          overflow: "hidden",
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
+      >
+        {/* Left: Brand Teal & ACCENT_MINT Glow */}
+        <Box
+          sx={{
+            position: "absolute",
+            top: "-30%",
+            left: "-10%",
+            width: "70%",
+            height: "70%",
+            background:
+              "linear-gradient(to top, rgba(0, 209, 193, 0.35) 0%, rgba(221, 255, 247, 0.45) 55%, transparent 75%)",
+            filter: "blur(110px)",
+            borderRadius: "50%",
+          }}
+        />
+        {/* Right: Brand BACKGROUND_BLOB Periwinkle Glow */}
+        <Box
+          sx={{
+            position: "absolute",
+            top: "5%",
+            right: "-10%",
+            width: "65%",
+            height: "60%",
+            background:
+              "linear-gradient(to bottom, rgba(209, 213, 255, 0.55) 0%, rgba(196, 202, 255, 0.35) 55%, transparent 75%)",
+            filter: "blur(100px)",
+            borderRadius: "50%",
+          }}
+        />
+      </Box>
+
       {/* Header */}
       <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          px: { xs: 4, md: 8 },
-          py: 2,
+          px: { xs: 3, sm: 5, md: 8 },
+          py: 2.2,
           zIndex: 1,
         }}
       >
-        <Typography
+        <Link href="/" sx={{ display: "inline-flex", textDecoration: "none" }}>
+          <Box
+            component="img"
+            src="/IAIRE_logo.png"
+            alt="IAIRE"
+            sx={{
+              height: { xs: 34, sm: 40 },
+              width: "auto",
+              objectFit: "contain",
+              filter: "brightness(0)",
+              cursor: "pointer",
+              display: "block",
+            }}
+          />
+        </Link>
+
+        <Box
           sx={{
-            fontSize: FontSizes.TITLE,
-            fontWeight: FontWeights.BOLD,
-            color: Colors.DARK,
-            letterSpacing: "-0.04em",
+            display: "flex",
+            alignItems: "center",
+            gap: 1.5,
+            height: { xs: 34, sm: 40 },
           }}
         >
-          IAIRE
-        </Typography>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <Typography
             sx={{
-              color: Colors.PRIMARY_BLACK || "rgba(0,0,0,0.6)",
+              color: "rgba(18, 35, 51, 0.65)",
               fontWeight: 500,
-              fontSize: "14px",
+              fontSize: { xs: "13px", sm: "14px" },
+              display: { xs: "none", sm: "block" },
+              fontFamily: Poppins.style.fontFamily,
+              lineHeight: 1,
             }}
           >
-            Don't have an account?
+            Don&apos;t have an account?
           </Typography>
-          <Link
+          <Button
+            component={Link}
             href="/signup"
-            underline="none"
+            endIcon={
+              <ArrowForwardIcon
+                sx={{
+                  fontSize: "15px !important",
+                  transition: "transform 0.2s cubic-bezier(0.16, 1, 0.3, 1)",
+                }}
+              />
+            }
             sx={{
-              color: Colors.PRIMARY_BLACK,
-              fontWeight: 700,
-              display: "flex",
-              alignItems: "center",
-              gap: 0.5,
-              fontSize: "14px",
+              height: { xs: 34, sm: 40 },
+              borderRadius: "100px",
+              bgcolor: "#122333",
+              color: "#FFFFFF",
+              fontWeight: 600,
+              fontSize: "13.5px",
+              textTransform: "none",
+              px: { xs: 2.2, sm: 2.6 },
+              fontFamily: Poppins.style.fontFamily,
+              boxShadow: "0 2px 8px rgba(18, 35, 51, 0.12)",
+              transition: "all 0.2s cubic-bezier(0.16, 1, 0.3, 1)",
+              "&:hover": {
+                bgcolor: "#000000",
+                color: "#FFFFFF",
+                boxShadow: "0 4px 14px rgba(18, 35, 51, 0.22)",
+                transform: "translateY(-1px)",
+                "& svg": {
+                  transform: "translateX(3px)",
+                },
+              },
             }}
           >
-            Sign up <ArrowForwardIcon sx={{ fontSize: 16 }} />
-          </Link>
+            Sign up
+          </Button>
         </Box>
       </Box>
 
@@ -296,37 +356,17 @@ export default function Home() {
             <Box
               sx={{
                 display: "flex",
-                justifyContent: "space-between",
+                justifyContent: "flex-end",
                 alignItems: "center",
               }}
             >
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    name="rememberMe"
-                    checked={formik.values.rememberMe}
-                    onChange={formik.handleChange}
-                    sx={{
-                      color: "rgba(18, 35, 51, 0.2)",
-                      "&.Mui-checked": { color: "#122333" },
-                    }}
-                  />
-                }
-                label={
-                  <Typography
-                    sx={{ fontSize: "13px", color: "rgba(18, 35, 51, 0.6)" }}
-                  >
-                    Remember me
-                  </Typography>
-                }
-              />
               <Link
                 href="/forgot-password"
                 underline="none"
                 sx={{
                   fontSize: "13px",
                   color: "#122333",
-                  fontWeight: 700,
+                  fontWeight: 600,
                   cursor: "pointer",
                   "&:hover": { opacity: 0.8 },
                 }}

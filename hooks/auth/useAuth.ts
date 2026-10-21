@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import {
   login as loginAction,
   logout as logoutAction,
@@ -15,6 +15,7 @@ let hasFetchedDetails = false;
 export const useAuth = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const pathname = usePathname();
   const { user, isAuthenticated, token } = useSelector(
     (state: any) =>
       state.auth || { user: null, isAuthenticated: false, token: null },
@@ -67,12 +68,21 @@ export const useAuth = () => {
   };
 
   useEffect(() => {
+    const isAuthPage =
+      pathname === "/" ||
+      pathname === "/signup" ||
+      pathname?.startsWith("/forgot-password") ||
+      pathname?.startsWith("/verify-otp") ||
+      pathname?.startsWith("/reset-password");
+
+    if (isAuthPage) return;
+
     const storedToken =
       typeof window !== "undefined" ? localStorage.getItem("token") : null;
     if (storedToken && !user && !hasFetchedDetails && !isFetchingDetails) {
       fetchUserDetails();
     }
-  }, [user]);
+  }, [user, pathname]);
 
   const login = async (values: any) => {
     const response = await authControllers.login({
@@ -89,8 +99,6 @@ export const useAuth = () => {
 
     if (accessToken) {
       localStorage.setItem("token", accessToken);
-
-      // Fetch complete user profile from backend immediately so avatar & details are present
       try {
         const detailsRes = await fetchUserDetails();
         if (detailsRes?.success && detailsRes?.user) {
@@ -131,11 +139,19 @@ export const useAuth = () => {
   };
 
   const logout = () => {
-    localStorage.removeItem("token");
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("token");
+      localStorage.removeItem("accessToken");
+      sessionStorage.clear();
+    }
     hasFetchedDetails = false;
     isFetchingDetails = false;
     dispatch(logoutAction());
-    router.push("/");
+    if (typeof window !== "undefined") {
+      window.location.href = "/";
+    } else {
+      router.push("/");
+    }
   };
 
   const updateUser = (data: any) => {
