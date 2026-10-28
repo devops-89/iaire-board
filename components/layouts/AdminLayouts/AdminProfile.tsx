@@ -490,7 +490,7 @@ export const AdminProfile = () => {
             >
               <Box
                 sx={{
-                  p: 0.8,
+                  p: 0.5,
                   borderRadius: "16px",
                   bgcolor: "#fff",
                   color: "#122333",
@@ -499,8 +499,10 @@ export const AdminProfile = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  minWidth: 48,
-                  minHeight: 48,
+                  width: 52,
+                  height: 52,
+                  minWidth: 52,
+                  minHeight: 52,
                   overflow: "hidden",
                 }}
               >
@@ -515,23 +517,28 @@ export const AdminProfile = () => {
                         onError: () => setBoardLogoError(true),
                         style: {
                           objectFit: "contain",
-                          maxHeight: "32px",
-                          maxWidth: "48px",
+                          width: "100%",
+                          height: "100%",
                         },
                       },
                     }}
                     sx={{
-                      width: 44,
-                      height: 44,
+                      width: "100%",
+                      height: "100%",
                       bgcolor: "transparent",
                       color: "#122333",
-                      borderRadius: "8px",
+                      borderRadius: "10px",
+                      "& img": {
+                        objectFit: "contain",
+                        width: "100%",
+                        height: "100%",
+                      },
                     }}
                   >
-                    <BoardIcon fontSize="small" />
+                    <BoardIcon fontSize="medium" />
                   </Avatar>
                 ) : (
-                  <BoardIcon fontSize="small" />
+                  <BoardIcon fontSize="medium" />
                 )}
               </Box>
               <Box>

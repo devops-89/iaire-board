@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Grid, Card, CardContent, Box, Typography } from "@mui/material";
+import { Grid, Card, CardActionArea, Box, Typography } from "@mui/material";
 import {
   PeopleOutlined as PeopleIcon,
   SchoolOutlined as SchoolIcon,
@@ -10,11 +10,13 @@ import { Colors } from "@/utils/enum";
 interface SchoolStatsProps {
   teachersCount: number;
   studentsCount: number;
+  onTabSelect?: (index: number) => void;
 }
 
 export const SchoolStats = ({
   teachersCount,
   studentsCount,
+  onTabSelect,
 }: SchoolStatsProps) => {
   return (
     <Grid container spacing={{ xs: 2, sm: 3 }} sx={{ mb: 4 }}>
@@ -34,13 +36,15 @@ export const SchoolStats = ({
             },
           }}
         >
-          <CardContent
+          <CardActionArea
+            onClick={() => onTabSelect && onTabSelect(1)}
+            disabled={!onTabSelect}
             sx={{
               display: "flex",
               alignItems: "center",
+              justifyContent: "flex-start",
               gap: 2.5,
               p: { xs: 2, sm: 3 },
-              "&:last-child": { pb: { xs: 2, sm: 3 } },
             }}
           >
             <Box
@@ -82,7 +86,7 @@ export const SchoolStats = ({
                 {teachersCount}
               </Typography>
             </Box>
-          </CardContent>
+          </CardActionArea>
         </Card>
       </Grid>
 
@@ -102,13 +106,15 @@ export const SchoolStats = ({
             },
           }}
         >
-          <CardContent
+          <CardActionArea
+            onClick={() => onTabSelect && onTabSelect(2)}
+            disabled={!onTabSelect}
             sx={{
               display: "flex",
               alignItems: "center",
+              justifyContent: "flex-start",
               gap: 2.5,
               p: { xs: 2, sm: 3 },
-              "&:last-child": { pb: { xs: 2, sm: 3 } },
             }}
           >
             <Box
@@ -150,7 +156,7 @@ export const SchoolStats = ({
                 {studentsCount}
               </Typography>
             </Box>
-          </CardContent>
+          </CardActionArea>
         </Card>
       </Grid>
     </Grid>

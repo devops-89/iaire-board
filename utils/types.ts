@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-// --- Authentication & Account ---
+// Authentication & Account
 export interface LoginFormValues {
   email: string;
   password: string;
@@ -35,7 +35,7 @@ export interface UserProfile {
   lastLogin?: string;
 }
 
-// --- Dashboard & Analytical Components ---
+// Dashboard & Analytical Components 
 export interface IndividualDistributionCardProps {
   label: string;
   value: number;
@@ -61,7 +61,7 @@ export interface DetailCardProps {
   color: string;
 }
 
-// --- Sidebar & Navigation ---
+// Sidebar & Navigation 
 export interface MenuItem {
   text: string;
   icon: ReactNode;
@@ -73,7 +73,7 @@ export interface MenuGroup {
   items: MenuItem[];
 }
 
-// --- Shared Data Models & Structures ---
+// Shared Data Models & Structures 
 export interface School {
   id: number;
   name: string;
@@ -128,7 +128,7 @@ export interface DashboardStats {
   distribution: DistributionItem[];
 }
 
-// --- Filter & Search State ---
+// Filter & Search State 
 export interface FilterState {
   searchQuery: string;
   tabValue: number;

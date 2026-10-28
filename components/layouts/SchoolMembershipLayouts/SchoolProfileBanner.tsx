@@ -107,7 +107,9 @@ export const SchoolProfileBanner = ({
               bgcolor: school.isActive
                 ? Colors.ACCENT_MINT
                 : "rgba(255, 255, 255, 0.1)",
-              color: school.isActive ? Colors.PRIMARY_DARK : "rgba(255, 255, 255, 0.65)",
+              color: school.isActive
+                ? Colors.PRIMARY_DARK
+                : "rgba(255, 255, 255, 0.65)",
               fontWeight: 800,
               fontSize: "11px",
               borderRadius: "8px",
