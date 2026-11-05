@@ -11,12 +11,7 @@ import {
   Paper,
   Typography,
   CircularProgress,
-  Menu,
-  MenuItem,
-  ListItemIcon,
-  ListItemText,
 } from "@mui/material";
-import { VisibilityOutlined as ViewIcon } from "@mui/icons-material";
 import { schoolControllers } from "@/api/school";
 import { Colors } from "@/utils/enum";
 import { School } from "@/utils/types";
@@ -37,29 +32,6 @@ export const SchoolTable = () => {
   const [totalPages, setTotalPages] = useState(1);
   const schoolsPerPage = 10;
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
-
-  const handleOpenMenu = (
-    event: React.MouseEvent<HTMLElement>,
-    school: School,
-  ) => {
-    setAnchorEl(event.currentTarget);
-    setSelectedSchool(school);
-  };
-
-  const handleCloseMenu = () => {
-    setAnchorEl(null);
-    setSelectedSchool(null);
-  };
-
-  const handleViewDetails = () => {
-    if (selectedSchool) {
-      router.push(`/membership-overview/${selectedSchool.id}`);
-    }
-    handleCloseMenu();
-  };
-
   useEffect(() => {
     if (!user && fetchUserDetails) {
       fetchUserDetails();
@@ -67,7 +39,11 @@ export const SchoolTable = () => {
   }, []);
 
   const activeBoardId =
-    user?.board?.id || user?.boardId || user?.board_id || (user as any)?.board_admin?.boardId || 1;
+    user?.board?.id ||
+    user?.boardId ||
+    user?.board_id ||
+    (user as any)?.board_admin?.boardId ||
+    1;
 
   useEffect(() => {
     const fetchSchools = async () => {
@@ -76,7 +52,7 @@ export const SchoolTable = () => {
         const res = await schoolControllers.getSchools(
           activeBoardId,
           currentPage,
-          10,
+          schoolsPerPage,
           searchQuery,
         );
         if (res?.data && res.data.success) {
@@ -119,12 +95,10 @@ export const SchoolTable = () => {
     return () => clearTimeout(delayDebounceFn);
   }, [currentPage, searchQuery, activeBoardId]);
 
-  // Handle page resets on search changes
   useEffect(() => {
     setCurrentPage(1);
   }, [searchQuery]);
 
-  // Filter logic
   const filteredSchools = schools.filter((school) => {
     const query = searchQuery.toLowerCase();
     return (
@@ -148,9 +122,13 @@ export const SchoolTable = () => {
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   };
 
+  const handleNavigate = (school: School) => {
+    router.push(`/membership-overview/${school.id}`);
+  };
+
   return (
     <Box>
-      {/* Header bar with Search and Add Actions */}
+      {/* Header bar with Capsule Search */}
       <SchoolTableHeader
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -203,7 +181,7 @@ export const SchoolTable = () => {
                       px: { xs: 2, sm: 3 },
                     }}
                   >
-                    Display ID
+                    School ID
                   </TableCell>
                   <TableCell
                     sx={{
@@ -275,14 +253,15 @@ export const SchoolTable = () => {
                   </TableCell>
                 </TableRow>
               </TableHead>
+
               <TableBody>
                 {currentSchools.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={6} align="center" sx={{ py: 6 }}>
+                    <TableCell colSpan={6} align="center" sx={{ py: 8 }}>
                       <Typography
                         sx={{
                           color: "rgba(18, 35, 51, 0.4)",
-                          fontWeight: 600,
+                          fontWeight: 700,
                           fontSize: "14px",
                         }}
                       >
@@ -295,16 +274,14 @@ export const SchoolTable = () => {
                     <SchoolTableRow
                       key={school.id}
                       school={school}
-                      onOpenMenu={handleOpenMenu}
-                      onViewDetails={(school) => router.push(`/membership-overview/${school.id}`)}
-                      onRowClick={(school) => router.push(`/membership-overview/${school.id}`)}
+                      onViewDetails={handleNavigate}
+                      onRowClick={handleNavigate}
                     />
                   ))
                 )}
               </TableBody>
             </Table>
 
-            {/* Premium Pagination Footer */}
             <SchoolTablePagination
               currentPage={currentPage}
               totalPages={totalPages}
@@ -318,68 +295,6 @@ export const SchoolTable = () => {
           </>
         )}
       </TableContainer>
-
-      {/* Action Menu */}
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleCloseMenu}
-        elevation={0}
-        slotProps={{
-          paper: {
-            sx: {
-              borderRadius: "14px",
-              boxShadow: "0 8px 24px rgba(16, 18, 22, 0.08)",
-              border: `1px solid ${Colors.BORDER_STONE}`,
-              bgcolor: "#fff",
-              minWidth: "135px",
-              py: 0.5,
-              mt: 0.5,
-              "& .MuiList-root": {
-                py: 0,
-              },
-              "& .MuiMenuItem-root": {
-                px: 1.8,
-                py: 1,
-                fontSize: "12px",
-                fontWeight: 700,
-                color: Colors.PRIMARY_DARK,
-                display: "flex",
-                alignItems: "center",
-                gap: 1.2,
-                transition: "all 0.2s ease",
-                "&:hover": {
-                  bgcolor: "rgba(221, 255, 247, 0.4)",
-                  "& .MuiListItemIcon-root": {
-                    color: Colors.PRIMARY_DARK,
-                  },
-                },
-              },
-            },
-          },
-        }}
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
-        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-      >
-        <MenuItem onClick={handleViewDetails}>
-          <ListItemIcon
-            sx={{
-              color: Colors.PRIMARY_DARK,
-              minWidth: "auto !important",
-              transition: "color 0.2s ease",
-            }}
-          >
-            <ViewIcon sx={{ fontSize: 18 }} />
-          </ListItemIcon>
-          <ListItemText
-            primary={
-              <Typography sx={{ fontSize: "13px", fontWeight: 700, color: Colors.PRIMARY_DARK }}>
-                View Details
-              </Typography>
-            }
-          />
-        </MenuItem>
-      </Menu>
     </Box>
   );
 };

@@ -1,9 +1,10 @@
+"use client";
 import React from "react";
-import { Box, Typography, Paper, InputBase, IconButton } from "@mui/material";
-import { Search as SearchIcon, PersonAdd as AddIcon } from "@mui/icons-material";
+import { Box, Paper, InputBase } from "@mui/material";
+import { Search as SearchIcon } from "@mui/icons-material";
 import { Colors } from "@/utils/enum";
 
-interface SchoolTableHeaderProps {
+export interface SchoolTableHeaderProps {
   searchQuery: string;
   onSearchChange: (value: string) => void;
   onAddClick?: () => void;
@@ -12,7 +13,6 @@ interface SchoolTableHeaderProps {
 export const SchoolTableHeader: React.FC<SchoolTableHeaderProps> = ({
   searchQuery,
   onSearchChange,
-  onAddClick,
 }) => {
   return (
     <Box
@@ -25,7 +25,7 @@ export const SchoolTableHeader: React.FC<SchoolTableHeaderProps> = ({
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, width: "100%" }}>
-        {/* Premium Search Box */}
+        {/* Premium Capsule Search Box */}
         <Paper
           elevation={0}
           sx={{
@@ -48,7 +48,7 @@ export const SchoolTableHeader: React.FC<SchoolTableHeaderProps> = ({
             sx={{ color: Colors.PRIMARY_DARK, fontSize: 20, mr: 1.2, opacity: 0.7 }}
           />
           <InputBase
-            placeholder="Search schools, codes..."
+            placeholder="Search schools..."
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             sx={{

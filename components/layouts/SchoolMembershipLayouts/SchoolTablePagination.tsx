@@ -50,8 +50,7 @@ export const SchoolTablePagination: React.FC<SchoolTablePaginationProps> = ({
         }}
       >
         Showing {totalSchools === 0 ? 0 : indexOfFirstSchool + 1} to{" "}
-        {Math.min(indexOfLastSchool, totalSchools)} of {totalSchools}{" "}
-        institutions
+        {Math.min(indexOfLastSchool, totalSchools)} of {totalSchools} schools
       </Typography>
 
       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>

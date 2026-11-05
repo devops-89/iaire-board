@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Box } from "@mui/material";
 import { Sidebar } from "@/components/widgets/Sidebar";
 import { Navbar } from "@/components/widgets/Navbar";
-import { MembershipFooter } from "./MembershipFooter";
 import { SchoolTable } from "./SchoolTable";
 import { Poppins } from "@/utils/font";
 import { Colors } from "@/utils/enum";
@@ -44,7 +43,6 @@ export const SchoolMembershipLayout = () => {
           <Box sx={{ mb: 2 }}>
             <SchoolTable />
           </Box>
-          <MembershipFooter />
         </Box>
       </Box>
     </Box>

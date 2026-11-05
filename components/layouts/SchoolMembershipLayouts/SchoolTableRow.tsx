@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   Box,
@@ -28,10 +29,26 @@ export const SchoolTableRow: React.FC<SchoolTableRowProps> = ({
   onViewDetails,
 }) => {
   const router = useRouter();
+
+  const handleRowClick = () => {
+    if (onViewDetails) {
+      onViewDetails(school);
+    } else if (onRowClick) {
+      onRowClick(school);
+    } else {
+      router.push(`/membership-overview/${school.id}`);
+    }
+  };
+
+  const teachersCount =
+    school.teacherCount ?? (school as any).teachersCount ?? 0;
+  const studentsCount =
+    school.studentCount ?? (school as any).studentsCount ?? 0;
+
   return (
     <TableRow
       key={school.id}
-      onClick={() => onRowClick?.(school)}
+      onClick={handleRowClick}
       sx={{
         cursor: "pointer",
         transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
@@ -44,7 +61,7 @@ export const SchoolTableRow: React.FC<SchoolTableRowProps> = ({
         },
       }}
     >
-      {/* Display ID badge */}
+      {/* Monospace Display ID */}
       <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 } }}>
         <Box
           component="span"
@@ -83,7 +100,7 @@ export const SchoolTableRow: React.FC<SchoolTableRowProps> = ({
               boxShadow: "0 2px 8px rgba(16, 18, 22, 0.04)",
             }}
           >
-            {school.name ? school.name.charAt(0).toUpperCase() : ""}
+            {school.name ? school.name.charAt(0).toUpperCase() : "S"}
           </Avatar>
           <Box>
             <Typography
@@ -92,7 +109,6 @@ export const SchoolTableRow: React.FC<SchoolTableRowProps> = ({
                 fontWeight: 700,
                 color: Colors.PRIMARY_DARK,
                 lineHeight: 1.3,
-                textTransform: "capitalize",
               }}
             >
               {school.name}
@@ -110,7 +126,7 @@ export const SchoolTableRow: React.FC<SchoolTableRowProps> = ({
             color: Colors.PRIMARY_DARK,
           }}
         >
-          {school.teacherCount ?? (school as any).teachersCount ?? 0}
+          {teachersCount}
         </Typography>
       </TableCell>
 
@@ -123,11 +139,11 @@ export const SchoolTableRow: React.FC<SchoolTableRowProps> = ({
             color: Colors.PRIMARY_DARK,
           }}
         >
-          {school.studentCount ?? (school as any).studentsCount ?? 0}
+          {studentsCount}
         </Typography>
       </TableCell>
 
-      {/* Status Chips */}
+      {/* Glowing Status Chip */}
       <TableCell sx={{ py: 2, px: { xs: 2, sm: 3 } }}>
         <Chip
           label={school.isActive ? "Active" : "Inactive"}
@@ -193,13 +209,7 @@ export const SchoolTableRow: React.FC<SchoolTableRowProps> = ({
             size="small"
             onClick={(e) => {
               e.stopPropagation();
-              if (onViewDetails) {
-                onViewDetails(school);
-              } else if (onRowClick) {
-                onRowClick(school);
-              } else {
-                router.push(`/membership-overview/${school.id}`);
-              }
+              handleRowClick();
             }}
             sx={{
               color: Colors.PRIMARY_DARK,
